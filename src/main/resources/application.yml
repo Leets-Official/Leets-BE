@@ -23,3 +23,11 @@ spring:
             scope:
               - email
               - profile
+
+jwt:
+  auth:
+    access_secret: ${JWT_ACCESS_SECRET}
+    refresh_secret: ${JWT_REFRESH_SECRET}
+    cookie_key: ${JWT_COOKIE_KEY}
+  oauth2:
+    authorizedRedirectUri: "http://localhost:8080/oauth2/redirect"
