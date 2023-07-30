@@ -1,8 +1,9 @@
-package land.leets.domain.user;
+package land.leets.domain.auth;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import land.leets.domain.auth.exception.CookieNotFound;
 import land.leets.domain.user.UserRepository;
 import land.leets.global.auth.CustomUserDetails;
 import land.leets.global.jwt.JwtTokenProvider;
@@ -26,8 +27,8 @@ public class AuthService {
 
     public String refreshToken(HttpServletRequest request, HttpServletResponse response, String oldAccessToken) {
         // 1. Validation Refresh Token
-        String oldRefreshToken = CookieUtil.getCookie(request, cookieKey)
-                .map(Cookie::getValue).orElseThrow(() -> new RuntimeException("no Refresh Token Cookie"));
+        String oldRefreshToken = CookieUtil.getCookie(request, cookieKey).map(Cookie::getValue)
+                .orElseThrow(CookieNotFound::new);
 
         if (!tokenProvider.validateToken(oldRefreshToken)) {
             throw new RuntimeException("Not Validated Refresh Token");

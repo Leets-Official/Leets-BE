@@ -2,7 +2,7 @@ package land.leets.domain.user.presentation;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import land.leets.domain.user.AuthService;
+import land.leets.domain.auth.AuthService;
 import land.leets.domain.user.User;
 import land.leets.domain.user.UserRepository;
 import land.leets.global.auth.CustomUserDetails;
