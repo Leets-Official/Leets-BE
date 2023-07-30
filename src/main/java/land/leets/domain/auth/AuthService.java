@@ -3,10 +3,11 @@ package land.leets.domain.auth;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import land.leets.domain.auth.exception.CookieNotFound;
+import land.leets.domain.auth.exception.CookieNotFoundException;
 import land.leets.domain.user.UserRepository;
 import land.leets.global.auth.CustomUserDetails;
 import land.leets.global.jwt.JwtTokenProvider;
+import land.leets.global.jwt.exception.InvalidTokenException;
 import land.leets.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,10 +29,10 @@ public class AuthService {
     public String refreshToken(HttpServletRequest request, HttpServletResponse response, String oldAccessToken) {
         // 1. Validation Refresh Token
         String oldRefreshToken = CookieUtil.getCookie(request, cookieKey).map(Cookie::getValue)
-                .orElseThrow(CookieNotFound::new);
+                .orElseThrow(CookieNotFoundException::new);
 
         if (!tokenProvider.validateToken(oldRefreshToken)) {
-            throw new RuntimeException("Not Validated Refresh Token");
+            throw new InvalidTokenException();
         }
 
         // 2. 유저정보 얻기
@@ -44,7 +45,7 @@ public class AuthService {
         String savedToken = userRepository.getRefreshTokenById(id);
 
         if (!savedToken.equals(oldRefreshToken)) {
-            throw new RuntimeException("Not Matched Refresh Token");
+            throw new InvalidTokenException();
         }
 
         // 4. JWT 갱신
