@@ -4,6 +4,7 @@ import land.leets.global.auth.CustomOAuth2UserService;
 import land.leets.global.auth.OAuth2AuthenticationFailureHandler;
 import land.leets.global.auth.OAuth2AuthenticationSuccessHandler;
 import land.leets.global.auth.repository.CookieAuthorizationRequestRepository;
+import land.leets.global.filter.ExceptionHandleFilter;
 import land.leets.global.jwt.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -88,11 +89,13 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID");
 
         //jwt filter 설정
-        http.addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ExceptionHandleFilter(), JwtFilter.class);
 
         http.exceptionHandling()
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint);
+
 
         return http.build();
     }
