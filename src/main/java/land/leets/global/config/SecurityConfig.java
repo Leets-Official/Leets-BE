@@ -4,8 +4,7 @@ import land.leets.global.auth.CustomOAuth2UserService;
 import land.leets.global.auth.OAuth2AuthenticationFailureHandler;
 import land.leets.global.auth.OAuth2AuthenticationSuccessHandler;
 import land.leets.global.auth.repository.CookieAuthorizationRequestRepository;
-import land.leets.global.jwt.JwtFilter;
-import land.leets.global.jwt.JwtProvider;
+import land.leets.global.jwt.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,11 +26,14 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtProvider tokenProvider;
+//    private final JwtProvider jwtProvider;
+    private final JwtTokenProvider jwtProvider;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -64,15 +66,19 @@ public class SecurityConfig {
 
         //요청에 대한 권한 설정
         http.authorizeHttpRequests()
-                .requestMatchers("/oauth2/**").permitAll()
+                .requestMatchers("oauth2/**").permitAll()
+                .requestMatchers("login/**").permitAll()
                 .anyRequest().authenticated();
 
         //oauth2Login
         http.oauth2Login()
-                .userInfoEndpoint().userService(customOAuth2UserService)
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
                 .and()
                 .authorizationEndpoint()
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+                .and()
+                .redirectionEndpoint()
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler);
@@ -82,7 +88,11 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID");
 
         //jwt filter 설정
-        http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling()
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
         return http.build();
     }
