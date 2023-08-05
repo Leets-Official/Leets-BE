@@ -29,7 +29,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     @Value("${jwt.oauth2.authorizedRedirectUri}")
     private String redirectUri;
-    //    private final JwtProvider jwtProvider;
     private final JwtProvider jwtProvider;
     private final CookieAuthorizationRequestRepository authorizationRequestRepository;
 
