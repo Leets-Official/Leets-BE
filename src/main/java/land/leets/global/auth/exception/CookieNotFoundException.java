@@ -1,4 +1,4 @@
-package land.leets.domain.auth.exception;
+package land.leets.global.auth.exception;
 
 
 import land.leets.global.error.ErrorCode;
