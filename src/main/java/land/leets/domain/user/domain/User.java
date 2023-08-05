@@ -1,4 +1,4 @@
-package land.leets.domain.user;
+package land.leets.domain.user.domain;
 
 import jakarta.persistence.*;
 import land.leets.domain.shared.AuthRole;

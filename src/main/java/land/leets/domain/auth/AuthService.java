@@ -4,7 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import land.leets.domain.auth.exception.CookieNotFoundException;
-import land.leets.domain.user.UserRepository;
+import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.global.auth.CustomUserDetails;
 import land.leets.global.jwt.JwtProvider;
 import land.leets.global.jwt.exception.InvalidTokenException;
@@ -22,7 +22,6 @@ public class AuthService {
 
     @Value("${jwt.auth.cookie_key}")
     private String cookieKey;
-
     private final UserRepository userRepository;
     private final JwtProvider tokenProvider;
 

@@ -1,5 +1,6 @@
-package land.leets.domain.user;
+package land.leets.domain.user.domain.repository;
 
+import land.leets.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
