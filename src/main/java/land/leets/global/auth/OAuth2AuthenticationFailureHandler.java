@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
-import static land.leets.global.auth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+import static land.leets.global.auth.repository.CookieAuthorizationRequestRepository.REDIRECT_URI;
 
 
 @Component
@@ -27,13 +27,10 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException {
-        String targetUrl = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
+        String targetUrl = CookieUtil.getCookie(request, REDIRECT_URI)
                 .map(Cookie::getValue)
                 .orElse("/");
 
-//        targetUrl = UriComponentsBuilder.fromUriString(targetUrl)
-//                .queryParam("error", authenticationException.getLocalizedMessage())
-//                .build().toUriString();
         targetUrl = UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("error", authenticationException.getLocalizedMessage())
                 .build().encode().toUriString();
