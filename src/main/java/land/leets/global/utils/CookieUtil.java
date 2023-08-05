@@ -1,5 +1,6 @@
 package land.leets.global.utils;
 
+import com.nimbusds.jose.shaded.gson.Gson;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,11 +46,15 @@ public class CookieUtil {
     }
 
     public static String serialize(Object object) {
-        return Base64.getUrlEncoder()
-                .encodeToString(SerializationUtils.serialize(object));
+        Gson gson = new Gson();
+        String json = gson.toJson(object);
+        return Base64.getUrlEncoder().encodeToString(json.getBytes());
     }
 
     public static <T> T deserialize(Cookie cookie, Class<T> cls) {
-        return cls.cast(SerializationUtils.deserialize(Base64.getUrlDecoder().decode(cookie.getValue())));
+        Gson gson = new Gson();
+        byte[] decodedBytes = Base64.getUrlDecoder().decode(cookie.getValue());
+        String json = new String(decodedBytes);
+        return gson.fromJson(json, cls);
     }
 }
