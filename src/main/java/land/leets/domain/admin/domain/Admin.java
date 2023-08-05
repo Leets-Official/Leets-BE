@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity(name = "admins")
 @Builder
 @Getter
@@ -16,12 +18,18 @@ public class Admin extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID uuid;
 
-    @Column
+    @Column(nullable = false)
+    private String id;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String email;
 
     private String refreshToken;
