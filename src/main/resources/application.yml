@@ -20,9 +20,7 @@ spring:
           google:
             client-id: ${GOOGLE_ID}
             client-secret: ${GOOGLE_PASSWORD}
-            scope:
-              - email
-              - profile
+            scope: email, profile
 
 jwt:
   auth:
@@ -30,4 +28,4 @@ jwt:
     refresh_secret: ${JWT_REFRESH_SECRET}
     cookie_key: ${JWT_COOKIE_KEY}
   oauth2:
-    authorizedRedirectUri: "http://localhost:8080/oauth2/redirect"
+    authorizedRedirectUri: "http://localhost:8080/login/oauth2/code/google"
