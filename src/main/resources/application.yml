@@ -29,3 +29,7 @@ jwt:
     cookie_key: ${JWT_COOKIE_KEY}
   oauth2:
     authorizedRedirectUri: "http://localhost:8080/login/oauth2/code/google"
+
+springdoc:
+  swagger-ui:
+    persist-authorization: true

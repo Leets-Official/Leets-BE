@@ -68,8 +68,10 @@ public class SecurityConfig {
 
         //요청에 대한 권한 설정
         http.authorizeHttpRequests()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/oauth2/**", "/auth/**").permitAll()
                 .requestMatchers("/user/me").hasAnyAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers("/login/user").hasAnyAuthority(AuthRole.ROLE_USER.getRole())
                 .anyRequest().authenticated();
 
         //oauth2Login
