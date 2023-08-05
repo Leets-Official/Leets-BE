@@ -2,7 +2,7 @@ package land.leets.domain.user.domain;
 
 import jakarta.persistence.*;
 import land.leets.domain.shared.AuthRole;
-import land.leets.global.auth.user.OAuth2UserInfo;
+import land.leets.domain.shared.BaseTimeEntity;
 import land.leets.global.auth.type.AuthProvider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
