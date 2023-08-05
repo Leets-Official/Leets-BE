@@ -9,11 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 public class CustomAdminDetails implements UserDetails {
-    private final Long id;
+    private final UUID uuid;
     private final String email;
     private final AuthRole role;
 

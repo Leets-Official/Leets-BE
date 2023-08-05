@@ -114,7 +114,7 @@ public class JwtProvider {
             return new CustomUserDetails(user.getId(), user.getEmail(), AuthRole.ROLE_USER);
         }
         Admin admin = adminRepository.findById(Long.valueOf(id)).orElseThrow(AdminNotFoundException::new);
-        return new CustomAdminDetails(admin.getId(), admin.getEmail(), AuthRole.ROLE_ADMIN);
+        return new CustomAdminDetails(admin.getUuid(), admin.getEmail(), AuthRole.ROLE_ADMIN);
     }
 
     public Boolean validateToken(String token, boolean isRefreshToken) {
