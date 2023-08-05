@@ -72,9 +72,6 @@ public class SecurityConfig {
 
         //oauth2Login
         http.oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService)
-                .and()
                 .authorizationEndpoint()
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 .and()

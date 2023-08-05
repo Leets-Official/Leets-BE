@@ -44,14 +44,4 @@ public class User {
     private AuthProvider authProvider;
 
     private String refreshToken;
-
-    private String oauth2Id;
-
-    public User update(OAuth2UserInfo oAuth2UserInfo) {
-        this.name = oAuth2UserInfo.getName();
-        this.oauth2Id = oAuth2UserInfo.getId();
-        return this;
-    }
-
-
 }

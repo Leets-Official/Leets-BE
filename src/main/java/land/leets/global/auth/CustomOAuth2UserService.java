@@ -1,8 +1,8 @@
 package land.leets.global.auth;
 
 import land.leets.domain.shared.AuthRole;
-import land.leets.domain.user.User;
-import land.leets.domain.user.UserRepository;
+import land.leets.domain.user.domain.User;
+import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.global.auth.exception.OAuthProcessingException;
 import land.leets.global.auth.type.AuthProvider;
 import land.leets.global.auth.user.GoogleOAuth2UserInfo;
@@ -16,7 +16,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
 import java.util.Optional;
 
 @Log4j2
@@ -30,7 +29,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest); // 유저정보
-
         try {
             return process(oAuth2UserRequest, oAuth2User);
         } catch (Exception e) {
@@ -59,7 +57,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {			// 가입되지 않은 경우
             user = createUser(userInfo, authProvider);
         }
-        return CustomUserDetails.create(user, oAuth2User.getAttributes());
+        return new CustomUserDetails(user.getId(), user.getEmail(), user.getRole(), oAuth2User.getAttributes());
     }
 
     private User createUser(OAuth2UserInfo userInfo, AuthProvider authProvider) {
