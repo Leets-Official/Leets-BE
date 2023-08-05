@@ -1,5 +1,6 @@
 package land.leets.global.config;
 
+import land.leets.domain.shared.AuthRole;
 import land.leets.global.auth.CustomOAuth2UserService;
 import land.leets.global.auth.OAuth2AuthenticationFailureHandler;
 import land.leets.global.auth.OAuth2AuthenticationSuccessHandler;
@@ -21,6 +22,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -44,9 +46,9 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -66,8 +68,8 @@ public class SecurityConfig {
 
         //요청에 대한 권한 설정
         http.authorizeHttpRequests()
-                .requestMatchers("oauth2/**").permitAll()
-                .requestMatchers("login/**").permitAll()
+                .requestMatchers("/oauth2/**", "/auth/**").permitAll()
+                .requestMatchers("/user/me").hasAnyAuthority(AuthRole.ROLE_USER.getRole())
                 .anyRequest().authenticated();
 
         //oauth2Login
@@ -75,7 +77,8 @@ public class SecurityConfig {
                 .authorizationEndpoint()
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository)
                 .and()
-                .redirectionEndpoint()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler);
