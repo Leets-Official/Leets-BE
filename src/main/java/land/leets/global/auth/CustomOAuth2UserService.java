@@ -57,14 +57,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {			// 가입되지 않은 경우
             user = createUser(userInfo, authProvider);
         }
-        return new CustomUserDetails(user.getId(), user.getEmail(), user.getRole(), oAuth2User.getAttributes());
+        return new CustomUserDetails(user.getUid(), user.getEmail(), AuthRole.ROLE_USER, oAuth2User.getAttributes());
     }
 
     private User createUser(OAuth2UserInfo userInfo, AuthProvider authProvider) {
         User user = User.builder()
                 .name(userInfo.getName())
                 .email(userInfo.getEmail())
-                .role(AuthRole.ROLE_USER)
                 .authProvider(authProvider)
                 .build();
         return userRepository.save(user);

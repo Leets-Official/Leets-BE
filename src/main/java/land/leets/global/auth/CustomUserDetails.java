@@ -12,12 +12,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails, OAuth2User {
-    private final Long id;
+    private final UUID uid;
     private final String email;
     private final AuthRole role;
     private Map<String, Object> attributes;
@@ -57,10 +58,9 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
         return true;
     }
 
-    // OAuth2User Override
     @Override
     public String getName() {
-        return String.valueOf(id);
+        return uid.toString();
     }
 
     @Override

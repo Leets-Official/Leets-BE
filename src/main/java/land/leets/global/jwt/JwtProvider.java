@@ -62,6 +62,7 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setSubject(user.getName())
+                .claim("uuid", user.getUid().toString())
                 .claim(AUTHORITIES_KEY, AuthRole.ROLE_USER.getRole())
                 .setExpiration(Date.from(accessDate))
                 .signWith(SignatureAlgorithm.HS256, ACCESS_SECRET)
@@ -92,9 +93,9 @@ public class JwtProvider {
 
     private void saveRefreshToken(Authentication authentication, String refreshToken) {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
-        Long id = Long.valueOf(user.getName());
+        UUID uid = UUID.fromString(user.getName());
 
-        userRepository.updateRefreshToken(id, refreshToken);
+        userRepository.updateRefreshToken(uid, refreshToken);
     }
 
     // Access Token을 검사하고 얻은 정보로 Authentication 객체 생성
@@ -108,13 +109,13 @@ public class JwtProvider {
     }
 
     private UserDetails getDetails(Claims claims) {
-        String id = claims.getSubject();
+        UUID uuid = UUID.fromString(claims.get("uid", String.class));
         if (claims.get(AUTHORITIES_KEY).equals(AuthRole.ROLE_USER.getRole())) {
-            User user = userRepository.findById(Long.valueOf(id)).orElseThrow(UserNotFoundException::new);
-            return new CustomUserDetails(user.getId(), user.getEmail(), AuthRole.ROLE_USER);
+            User user = userRepository.findById(uuid).orElseThrow(UserNotFoundException::new);
+            return new CustomUserDetails(user.getUid(), user.getEmail(), AuthRole.ROLE_USER);
         }
-        Admin admin = adminRepository.findById(Long.valueOf(id)).orElseThrow(AdminNotFoundException::new);
-        return new CustomAdminDetails(admin.getUuid(), admin.getEmail(), AuthRole.ROLE_ADMIN);
+        Admin admin = adminRepository.findById(uuid).orElseThrow(AdminNotFoundException::new);
+        return new CustomAdminDetails(admin.getUid(), admin.getEmail(), AuthRole.ROLE_ADMIN);
     }
 
     public Boolean validateToken(String token, boolean isRefreshToken) {

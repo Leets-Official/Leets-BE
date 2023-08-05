@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -38,10 +40,11 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(oldAccessToken);
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
-        Long id = Long.valueOf(user.getName());
+        UUID uid = UUID.fromString(user.getName());
+
 
         // 3. Match Refresh Token
-        String savedToken = userRepository.getRefreshTokenById(id);
+        String savedToken = userRepository.getRefreshTokenById(uid);
 
         if (!savedToken.equals(oldRefreshToken)) {
             throw new InvalidTokenException();
