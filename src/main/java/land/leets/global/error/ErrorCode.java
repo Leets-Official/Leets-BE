@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    ADMIN_NOT_FOUND(404, "ADMIN_NOT_FOUND", "관리자를 찾을 수 없습니다."),
+    USER_NOT_FOUND(404, "USER_NOT_FOUND", "유저를 찾을 수 없습니다."),
     EXPIRED_TOKEN(403, "EXPIRED_TOKEN", "만료된 토큰입니다."),
     INVALID_TOKEN(401, "INVALID_TOKEN", "유효하지 않은 토큰입니다."),
     COOKIE_NOT_FOUND(400, "COOKIE_NOT_FOUND", "쿠키를 찾을 수 없습니다."),
