@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import land.leets.domain.auth.exception.CookieNotFoundException;
 import land.leets.domain.user.UserRepository;
 import land.leets.global.auth.CustomUserDetails;
-import land.leets.global.jwt.JwtTokenProvider;
+import land.leets.global.jwt.JwtProvider;
 import land.leets.global.jwt.exception.InvalidTokenException;
 import land.leets.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +24,14 @@ public class AuthService {
     private String cookieKey;
 
     private final UserRepository userRepository;
-    private final JwtTokenProvider tokenProvider;
+    private final JwtProvider tokenProvider;
 
     public String refreshToken(HttpServletRequest request, HttpServletResponse response, String oldAccessToken) {
         // 1. Validation Refresh Token
         String oldRefreshToken = CookieUtil.getCookie(request, cookieKey).map(Cookie::getValue)
                 .orElseThrow(CookieNotFoundException::new);
 
-        if (!tokenProvider.validateToken(oldRefreshToken)) {
+        if (!tokenProvider.validateToken(oldRefreshToken, true)) {
             throw new InvalidTokenException();
         }
 
@@ -49,8 +49,8 @@ public class AuthService {
         }
 
         // 4. JWT 갱신
-        String accessToken = tokenProvider.generateToken(authentication);
-        tokenProvider.createRefreshToken(authentication, response);
+        String accessToken = tokenProvider.generateAccessToken(authentication);
+        tokenProvider.generateRefreshToken(authentication, response);
 
         return accessToken;
     }

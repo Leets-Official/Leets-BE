@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import land.leets.global.auth.exception.BadRequestException;
 import land.leets.global.auth.repository.CookieAuthorizationRequestRepository;
-import land.leets.global.jwt.JwtTokenProvider;
+import land.leets.global.jwt.JwtProvider;
 import land.leets.global.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -30,7 +30,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Value("${jwt.oauth2.authorizedRedirectUri}")
     private String redirectUri;
     //    private final JwtProvider jwtProvider;
-    private final JwtTokenProvider jwtProvider;
+    private final JwtProvider jwtProvider;
     private final CookieAuthorizationRequestRepository authorizationRequestRepository;
 
     @Override

@@ -27,8 +27,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final JwtProvider jwtProvider;
-    private final JwtTokenProvider jwtProvider;
+    private final JwtProvider jwtProvider;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
