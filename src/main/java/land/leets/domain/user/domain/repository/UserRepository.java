@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByEmail(String email);
+    Optional<User> findBySub(String sub);
 
     @Query("SELECT u.refreshToken FROM users u WHERE u.uid=:uid")
     String getRefreshTokenById(@Param("uid") UUID uid);

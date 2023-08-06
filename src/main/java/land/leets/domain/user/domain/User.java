@@ -2,7 +2,6 @@ package land.leets.domain.user.domain;
 
 import jakarta.persistence.*;
 import land.leets.domain.shared.BaseTimeEntity;
-import land.leets.global.auth.type.AuthProvider;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -38,8 +37,8 @@ public class User extends BaseTimeEntity {
     private String major;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private AuthProvider authProvider;
+    private String sub;
 
+    @Column
     private String refreshToken;
 }
