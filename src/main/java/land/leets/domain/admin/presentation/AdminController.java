@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final AdminLogin adminLogin;
+    private final AdminRefreshToken adminRefreshToken;
 
     @Operation(summary = "(비로그인) 관리자 로그인", description = "관리자 계정으로 로그인합니다.")
     @ApiResponses({
@@ -42,4 +43,15 @@ public class AdminController {
         return jwt;
     }
 
+    @Operation(summary = "(관리자) 관리자 토큰 갱신", description = "관리자 계정의 AccessToken을 갱신합니다. Cookie에 저장된 RefreshToken을 자동으로 사용합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/refresh")
+    public JwtResponse refresh(@Parameter(hidden = true) @CookieValue("refreshToken") String tokenInput) {
+        return adminRefreshToken.execute(tokenInput);
+    }
 }
