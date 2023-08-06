@@ -41,14 +41,14 @@ public class JwtProvider {
         this.adminAuthDetailsService = adminAuthDetailsService;
     }
 
-    public String generateToken(UUID uuid, String id, AuthRole role, boolean isRefreshToken) {
+    public String generateToken(UUID uuid, String sub, AuthRole role, boolean isRefreshToken) {
         Instant accessDate = LocalDateTime.now().plusHours(6).atZone(ZoneId.systemDefault()).toInstant();
         Instant refreshDate = LocalDateTime.now().plusDays(30).atZone(ZoneId.systemDefault()).toInstant();
 
         return Jwts.builder()
                 .claim("role", role.getRole())
                 .claim("uid", uuid.toString())
-                .setSubject(id)
+                .setSubject(sub)
                 .setExpiration(isRefreshToken ? Date.from(refreshDate) : Date.from(accessDate))
                 .signWith(SignatureAlgorithm.HS256, isRefreshToken ? refreshSecret : accessSecret)
                 .compact();

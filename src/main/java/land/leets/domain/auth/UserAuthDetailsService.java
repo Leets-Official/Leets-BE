@@ -15,10 +15,10 @@ public class UserAuthDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public AuthDetails loadUserByUsername(String sid) throws UsernameNotFoundException {
+    public AuthDetails loadUserByUsername(String sub) throws UsernameNotFoundException {
         User user = this.userRepository
-                .findBySid(sid)
+                .findBySub(sub)
                 .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
-        return new AuthDetails(user.getUid(), user.getSid(), AuthRole.ROLE_USER);
+        return new AuthDetails(user.getUid(), user.getSub(), AuthRole.ROLE_USER);
     }
 }
