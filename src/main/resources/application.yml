@@ -1,3 +1,6 @@
+server:
+  port: ${PORT:8080}
+
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -20,6 +23,7 @@ spring:
           google:
             client-id: ${GOOGLE_ID}
             client-secret: ${GOOGLE_PASSWORD}
+            redirect-uri: "http://localhost:8080/login/oauth2/callback/google"
             scope: email, profile
 
 jwt:
@@ -28,8 +32,21 @@ jwt:
     refresh_secret: ${JWT_REFRESH_SECRET}
     cookie_key: ${JWT_COOKIE_KEY}
   oauth2:
-    authorizedRedirectUri: "http://localhost:8080/login/oauth2/code/google"
+    authorizedRedirectUri: "http://localhost:8080/login/oauth2/callback/google"
 
 springdoc:
   swagger-ui:
     persist-authorization: true
+
+cors:
+  origin:
+    development: ${CORS_ORIGIN_DEVELOPMENT}
+    production: ${CORS_ORIGIN_PRODUCTION}
+
+google:
+  auth:
+    url: ${GOOGLE_AUTH_URL}
+  login:
+    url: ${GOOGLE_LOGIN_URL}
+  redirect:
+    url: ${GOOGLE_REDIRECT_URL}
