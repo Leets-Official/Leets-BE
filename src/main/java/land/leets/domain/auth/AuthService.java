@@ -1,37 +1,30 @@
 package land.leets.domain.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.impl.Base64UrlCodec;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import land.leets.domain.auth.presentation.dto.OAuthTokenDto;
 import land.leets.domain.user.domain.User;
 import land.leets.domain.user.domain.repository.UserRepository;
-import lombok.extern.log4j.Log4j2;
+import land.leets.global.jwt.exception.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.*;
 
-@Log4j2
 @Service
 public class AuthService {
-
     private final String googleAuthUrl;
-
     private final String googleRedirectUrl;
-
     private final String googleClientId;
-
     private final String googleClientPassword;
-
     private final UserRepository userRepository;
 
     @Autowired
@@ -47,7 +40,8 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public User getGoogleAccessToken(String accessCode) {
+    public OAuthTokenDto getGoogleToken(String accessCode) {
+
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = new HashMap<>();
 
@@ -59,11 +53,7 @@ public class AuthService {
 
         ResponseEntity<OAuthTokenDto> responseEntity = restTemplate.postForEntity(googleAuthUrl, params, OAuthTokenDto.class);
 
-        String payload = Objects.requireNonNull(responseEntity.getBody()).getId_token().split("\\.")[1];
-        String decrypted = decryptBase64UrlToken(payload);
-        log.info(decrypted);
-
-        return transJsonToUser(decrypted);
+        return Objects.requireNonNull(responseEntity.getBody());
     }
 
     private String decryptBase64UrlToken(String jwtToken) {
@@ -82,6 +72,13 @@ public class AuthService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
 
+        User user = User.builder()
+                .sub(userId)
+                .name((String) payload.get("name"))
+                .email(payload.getEmail())
+                .build();
+
+        return userRepository.save(user);
+    }
 }
