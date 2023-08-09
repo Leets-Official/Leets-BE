@@ -56,21 +56,25 @@ public class AuthService {
         return Objects.requireNonNull(responseEntity.getBody());
     }
 
-    private String decryptBase64UrlToken(String jwtToken) {
-        byte[] decode = new Base64UrlCodec().decode(jwtToken);
-        return new String(decode, StandardCharsets.UTF_8);
-    }
 
-    private User transJsonToUser(String json) {
-        try {
-            ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            User user = mapper.readValue(json, User.class);
+    public User getUser(OAuthTokenDto request) throws GeneralSecurityException, IOException {
 
-            Optional<User> bySub = userRepository.findBySub(user.getSub());
-            return bySub.orElseGet(() -> userRepository.save(user));
+        final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), GsonFactory.getDefaultInstance())
+                .setAudience(Collections.singletonList(googleClientId))
+                .build();
 
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        GoogleIdToken idToken = verifier.verify(request.getId_token());
+        if (idToken == null) {
+            throw new InvalidTokenException();
+        }
+
+        Payload payload = idToken.getPayload();
+
+        String userId = payload.getSubject();
+        Optional<User> bySub = userRepository.findBySub(userId);
+
+        if (bySub.isPresent()) {
+            return bySub.get();
         }
 
         User user = User.builder()
