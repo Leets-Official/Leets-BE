@@ -1,11 +1,9 @@
 package land.leets.domain.auth.presentation.dto;
 
-import jakarta.persistence.Id;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 @Getter
 public class OAuthTokenDto {
     private String access_token;
