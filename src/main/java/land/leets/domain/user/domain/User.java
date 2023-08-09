@@ -24,19 +24,19 @@ public class User extends BaseTimeEntity {
     @Column
     private String sid;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Column
     private String phone;
 
-    @Column
+    @Column(nullable = false)
     private String email;
 
     @Column
     private String major;
 
-    @Column
+    @Column(nullable = false)
     private String sub;
 
     @Column
