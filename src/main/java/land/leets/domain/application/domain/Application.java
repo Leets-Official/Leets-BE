@@ -6,8 +6,6 @@ import land.leets.domain.shared.BaseTimeEntity;
 import land.leets.domain.user.domain.User;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity(name = "applications")
 @Builder
 @Getter
@@ -25,7 +23,7 @@ public class Application extends BaseTimeEntity {
     private User user;
 
     @Column(nullable = false)
-    private float score;
+    private float gpa;
 
     @Column
     private String algorithm;
@@ -37,9 +35,20 @@ public class Application extends BaseTimeEntity {
     private String position;
 
     @Column(nullable = false)
-    private String major;
+    private String interview;
 
     @Column(nullable = false)
-    private LocalDateTime meetingAt;
+    private String enhancement;
 
+    @Column(nullable = false)
+    private String level;
+
+    @Column(nullable = false)
+    private String pros;
+
+    @Column(nullable = false)
+    private String goal;
+
+    @Column(nullable = false)
+    private String completion;
 }
