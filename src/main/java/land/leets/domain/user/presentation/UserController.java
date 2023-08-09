@@ -52,7 +52,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/login")
+    @PostMapping("/login")
     public JwtResponse login(@RequestBody OAuthTokenDto dto) throws GeneralSecurityException, IOException {
 
         User user = authService.getUser(dto);
