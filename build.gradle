@@ -43,6 +43,8 @@ dependencies {
 
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+	implementation 'com.google.api-client:google-api-client:1.32.1'
 }
 
 tasks.named('test') {
