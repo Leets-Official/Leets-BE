@@ -62,6 +62,9 @@ public class Application extends BaseTimeEntity {
     @Column(nullable = false)
     private String completion;
 
+    @Column(columnDefinition = "tinyint(1) default 1")
+    private boolean hasInterview;
+
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
     private Result result;
