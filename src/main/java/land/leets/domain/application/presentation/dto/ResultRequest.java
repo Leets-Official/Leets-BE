@@ -1,5 +1,6 @@
 package land.leets.domain.application.presentation.dto;
 
+import jakarta.validation.constraints.NotNull;
 import land.leets.domain.application.type.Result;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ResultRequest {
-    private Result docResult;
-    private Result finalResult;
+
+    @NotNull
+    private Result result;
 }

@@ -64,9 +64,5 @@ public class Application extends BaseTimeEntity {
 
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
-    private Result docResult;
-
-    @Column(columnDefinition = "char(10)")
-    @Enumerated(EnumType.STRING)
-    private Result finalResult;
+    private Result result;
 }

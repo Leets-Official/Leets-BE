@@ -16,14 +16,7 @@ public class UpdateResultImpl implements UpdateResult {
     @Override
     public Application execute(Long id, ResultRequest request) {
         Application application = applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
-
-        if (request.getDocResult() != null) {
-            application.setDocResult(request.getDocResult());
-        }
-
-        if (request.getFinalResult() != null) {
-            application.setFinalResult(request.getFinalResult());
-        }
+        application.setResult(request.getResult());
 
         return applicationRepository.save(application);
     }
