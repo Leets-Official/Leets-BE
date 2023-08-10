@@ -6,7 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ApplicationRequest {
+    private String name;
     private float gpa;
+    private String major;
+    private int grade;
     private String algorithm;
     private String portfolio;
     private String position;

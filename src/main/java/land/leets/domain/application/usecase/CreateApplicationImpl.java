@@ -22,6 +22,9 @@ public class CreateApplicationImpl implements CreateApplication {
 
         Application application = Application.builder()
                 .user(user)
+                .name(request.getName())
+                .grade(request.getGrade())
+                .major(request.getMajor())
                 .gpa(request.getGpa())
                 .position(request.getPosition())
                 .algorithm(request.getAlgorithm())

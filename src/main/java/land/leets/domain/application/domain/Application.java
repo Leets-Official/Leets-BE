@@ -24,7 +24,16 @@ public class Application extends BaseTimeEntity {
     private User user;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private float gpa;
+
+    @Column(nullable = false)
+    private String major;
+
+    @Column(nullable = false)
+    private int grade;
 
     @Column
     private String algorithm;
