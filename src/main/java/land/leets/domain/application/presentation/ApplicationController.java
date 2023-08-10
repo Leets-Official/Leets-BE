@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
+import land.leets.domain.application.presentation.dto.ApplicationResponse;
 import land.leets.domain.application.presentation.dto.ResultRequest;
 import land.leets.domain.application.usecase.*;
 import land.leets.domain.auth.AuthDetails;
@@ -52,7 +53,7 @@ public class ApplicationController {
         return updateApplication.execute(authDetails, request);
     }
 
-    @Operation(summary = "(관리자) 지원서 조회", description = "all, develop, design 포지션 별 조회합니다.")
+    @Operation(summary = "(관리자) 지원서 목록 조회", description = "all, develop, design 포지션 별 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
@@ -60,7 +61,7 @@ public class ApplicationController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping()
-    public List<Application> get(@RequestParam(required = false) String position) {
+    public List<ApplicationResponse> get(@RequestParam(required = false) String position) {
         return getApplication.execute(position);
     }
 

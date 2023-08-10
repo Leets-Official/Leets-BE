@@ -1,9 +1,9 @@
 package land.leets.domain.application.usecase;
 
-import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.presentation.dto.ApplicationResponse;
 
 import java.util.List;
 
 public interface GetAllApplication {
-    List<Application> execute(String position);
+    List<ApplicationResponse> execute(String position);
 }
