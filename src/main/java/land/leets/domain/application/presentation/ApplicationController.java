@@ -7,9 +7,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
-import land.leets.domain.application.usecase.CreateApplication;
-import land.leets.domain.application.usecase.GetAllApplication;
-import land.leets.domain.application.usecase.UpdateApplication;
+import land.leets.domain.application.presentation.dto.ResultRequest;
+import land.leets.domain.application.usecase.*;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +25,8 @@ public class ApplicationController {
     private final CreateApplication createApplication;
     private final UpdateApplication updateApplication;
     private final GetAllApplication getApplication;
+    private final GetApplicationDetails getApplicationDetails;
+    private final UpdateResult updateResult;
 
     @Operation(summary = "(유저) 지원서 작성", description = "지원서를 작성합니다.")
     @ApiResponses({
@@ -73,5 +74,17 @@ public class ApplicationController {
     @GetMapping("/{id}")
     public Application get(@PathVariable Long id) {
         return getApplicationDetails.execute(id);
+    }
+
+    @Operation(summary = "(관리자) 지원 결과 변경", description = "지원 결과를 변경합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PatchMapping("/{id}")
+    public Application get(@PathVariable Long id, @RequestBody ResultRequest request) {
+        return updateResult.execute(id, request);
     }
 }
