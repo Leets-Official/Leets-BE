@@ -33,9 +33,6 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column
-    private String major;
-
     @Column(nullable = false)
     private String sub;
 
