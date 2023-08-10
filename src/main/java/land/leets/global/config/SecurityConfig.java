@@ -40,13 +40,17 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers(CorsUtils::isCorsRequest).permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+
                 .requestMatchers("/oauth2/**", "/auth/**").permitAll()
-                .requestMatchers("/user/login", "/admin/login").permitAll()
-                .requestMatchers("/user/me").permitAll()
-                .requestMatchers("/login/user").hasAnyAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers("/login/oauth2/callback/*").permitAll()
                 .requestMatchers("/oauth2/authorization/*").permitAll()
-                .requestMatchers("/**").permitAll()
+
+                .requestMatchers("/user/login", "/admin/login").permitAll()
+
+                .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers("/login/user").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers("/application").hasAuthority(AuthRole.ROLE_USER.getRole())
+
                 .anyRequest().authenticated();
 
         //oauth2Login
