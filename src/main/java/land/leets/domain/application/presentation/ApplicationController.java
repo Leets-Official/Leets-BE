@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
 import land.leets.domain.application.usecase.CreateApplication;
-import land.leets.domain.application.usecase.GetApplication;
+import land.leets.domain.application.usecase.GetAllApplication;
 import land.leets.domain.application.usecase.UpdateApplication;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.global.error.ErrorResponse;
@@ -25,7 +25,7 @@ public class ApplicationController {
 
     private final CreateApplication createApplication;
     private final UpdateApplication updateApplication;
-    private final GetApplication getApplication;
+    private final GetAllApplication getApplication;
 
     @Operation(summary = "(유저) 지원서 작성", description = "지원서를 작성합니다.")
     @ApiResponses({

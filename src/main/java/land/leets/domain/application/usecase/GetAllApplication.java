@@ -4,6 +4,6 @@ import land.leets.domain.application.domain.Application;
 
 import java.util.List;
 
-public interface GetApplication {
+public interface GetAllApplication {
     List<Application> execute(String position);
 }

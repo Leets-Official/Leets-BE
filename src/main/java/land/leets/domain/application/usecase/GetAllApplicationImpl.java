@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GetApplicationImpl implements GetApplication{
+public class GetAllApplicationImpl implements GetAllApplication {
     private final ApplicationRepository applicationRepository;
 
     @Override
