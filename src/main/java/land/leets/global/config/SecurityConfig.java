@@ -60,9 +60,11 @@ public class SecurityConfig {
                 .requestMatchers("/user/login", "/admin/login").permitAll()
 
                 .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers(HttpMethod.GET,"/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.POST,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers(HttpMethod.PATCH,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.GET,"/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.GET,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.PATCH,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
                 .anyRequest().authenticated();
 
