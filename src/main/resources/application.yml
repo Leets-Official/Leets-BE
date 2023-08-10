@@ -25,6 +25,25 @@ spring:
             client-secret: ${GOOGLE_PASSWORD}
             redirect-uri: "http://localhost:8080/login/oauth2/callback/google"
             scope: email, profile
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    cache: false
+    template-resolver-order: 0
 
 jwt:
   auth:
