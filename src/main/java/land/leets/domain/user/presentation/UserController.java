@@ -32,7 +32,7 @@ public class UserController {
     private final AuthService authService;
     private final JwtProvider jwtProvider;
 
-    @Operation(summary = "(로그인) 유저 정보 상세 조회", description = "유저 정보를 상세 조회합니다.")
+    @Operation(summary = "(유저) 유저 정보 상세 조회", description = "유저 정보를 상세 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
