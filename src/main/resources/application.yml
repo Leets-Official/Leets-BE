@@ -43,7 +43,5 @@ cors:
 google:
   auth:
     url: ${GOOGLE_AUTH_URL}
-  login:
-    url: ${GOOGLE_LOGIN_URL}
   redirect:
     url: ${GOOGLE_REDIRECT_URL}
