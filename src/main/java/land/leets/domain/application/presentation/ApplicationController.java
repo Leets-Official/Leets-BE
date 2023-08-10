@@ -62,4 +62,16 @@ public class ApplicationController {
     public List<Application> get(@RequestParam(required = false) String position) {
         return getApplication.execute(position);
     }
+
+    @Operation(summary = "(관리자) 지원서 상세 조회", description = "지원서를 상세 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/{id}")
+    public Application get(@PathVariable Long id) {
+        return getApplicationDetails.execute(id);
+    }
 }
