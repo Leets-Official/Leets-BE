@@ -32,6 +32,4 @@ public class Admin extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String email;
-
-    private String refreshToken;
 }

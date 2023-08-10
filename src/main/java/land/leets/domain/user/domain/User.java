@@ -35,7 +35,4 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String sub;
-
-    @Column
-    private String refreshToken;
 }
