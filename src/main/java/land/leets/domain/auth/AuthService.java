@@ -5,12 +5,14 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import land.leets.domain.auth.exception.PermissionDeniedException;
 import land.leets.domain.auth.presentation.dto.OAuthTokenDto;
 import land.leets.domain.user.domain.User;
 import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.global.jwt.exception.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -40,35 +42,39 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public OAuthTokenDto getGoogleToken(String accessCode) {
+    public User getGoogleToken(String code) throws GeneralSecurityException, IOException {
 
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = new HashMap<>();
 
-        params.put("code", accessCode);
+        params.put("code", code);
         params.put("client_id", googleClientId);
         params.put("client_secret", googleClientPassword);
         params.put("redirect_uri", googleRedirectUrl);
         params.put("grant_type", "authorization_code");
 
         ResponseEntity<OAuthTokenDto> responseEntity = restTemplate.postForEntity(googleAuthUrl, params, OAuthTokenDto.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK || responseEntity.getBody() == null) {
+            throw new PermissionDeniedException();
+        }
 
-        return Objects.requireNonNull(responseEntity.getBody());
+        String idToken = responseEntity.getBody().getId_token();
+        return getUser(idToken);
     }
 
 
-    public User getUser(OAuthTokenDto request) throws GeneralSecurityException, IOException {
+    private User getUser(String idToken) throws GeneralSecurityException, IOException {
 
         final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), GsonFactory.getDefaultInstance())
                 .setAudience(Collections.singletonList(googleClientId))
                 .build();
 
-        GoogleIdToken idToken = verifier.verify(request.getId_token());
+        GoogleIdToken googleIdToken = verifier.verify(idToken);
         if (idToken == null) {
             throw new InvalidTokenException();
         }
 
-        Payload payload = idToken.getPayload();
+        Payload payload = googleIdToken.getPayload();
 
         String userId = payload.getSubject();
         Optional<User> bySub = userRepository.findBySub(userId);
