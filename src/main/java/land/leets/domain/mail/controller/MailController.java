@@ -32,7 +32,7 @@ public class MailController {
     public boolean sendMail(@PathVariable Long id) {
         Application application = getApplicationDetails.execute(id);
 
-        sendMail.execute(application.getUser().getEmail(), application.getName(), application.getResult());
+        sendMail.execute(application.getUser().getEmail(), application.getName(), application.getApplicationStatus());
         return true;
     }
 }
