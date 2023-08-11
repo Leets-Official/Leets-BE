@@ -11,12 +11,14 @@ import land.leets.domain.application.presentation.dto.ApplicationResponse;
 import land.leets.domain.application.presentation.dto.ResultRequest;
 import land.leets.domain.application.usecase.*;
 import land.leets.domain.auth.AuthDetails;
+import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class ApplicationController {
     private final GetAllApplication getApplication;
     private final GetApplicationDetails getApplicationDetails;
     private final UpdateResult updateResult;
+    private final UserRepository userRepository;
 
     @Operation(summary = "(유저) 지원서 작성", description = "지원서를 작성합니다.")
     @ApiResponses({
@@ -87,5 +90,18 @@ public class ApplicationController {
     @PatchMapping("/{id}")
     public Application get(@PathVariable Long id, @RequestBody ResultRequest request) {
         return updateResult.execute(id, request);
+    }
+
+    @Operation(summary = "(유저) 지원서 불러오기", description = "작성한 지원서를 불러옵니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/mine")
+    public Application get(@AuthenticationPrincipal AuthDetails authDetails) {
+        UUID uid = authDetails.getUid();
+        return getApplicationDetails.execute(uid);
     }
 }

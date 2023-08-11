@@ -6,6 +6,8 @@ import land.leets.domain.application.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class GetApplicationDetailsImpl implements GetApplicationDetails{
@@ -15,5 +17,10 @@ public class GetApplicationDetailsImpl implements GetApplicationDetails{
     @Override
     public Application execute(Long id) {
         return applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
+    }
+
+    @Override
+    public Application execute(UUID uid) {
+        return applicationRepository.findByUser_Uid(uid).orElseThrow(ApplicationNotFoundException::new);
     }
 }
