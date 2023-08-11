@@ -58,11 +58,14 @@ public class SecurityConfig {
                 .requestMatchers("/oauth2/authorization/*").permitAll()
 
                 .requestMatchers("/user/login", "/admin/login").permitAll()
+                .requestMatchers("/user/refresh","/admin/refresh").permitAll()
 
                 .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+
                 .requestMatchers(HttpMethod.GET,"/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.POST,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers(HttpMethod.PATCH,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers(HttpMethod.GET,"/application/me").hasAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers(HttpMethod.GET,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.PATCH,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 

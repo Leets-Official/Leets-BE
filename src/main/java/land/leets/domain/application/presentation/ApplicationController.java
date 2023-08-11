@@ -97,7 +97,7 @@ public class ApplicationController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/mine")
+    @GetMapping("/me")
     public Application get(@AuthenticationPrincipal AuthDetails authDetails) {
         UUID uid = authDetails.getUid();
         return getApplicationDetails.execute(uid);
