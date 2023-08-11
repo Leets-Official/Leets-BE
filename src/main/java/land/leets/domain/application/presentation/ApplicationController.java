@@ -11,7 +11,6 @@ import land.leets.domain.application.presentation.dto.ApplicationResponse;
 import land.leets.domain.application.presentation.dto.ResultRequest;
 import land.leets.domain.application.usecase.*;
 import land.leets.domain.auth.AuthDetails;
-import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +29,6 @@ public class ApplicationController {
     private final GetAllApplication getApplication;
     private final GetApplicationDetails getApplicationDetails;
     private final UpdateResult updateResult;
-    private final UserRepository userRepository;
 
     @Operation(summary = "(유저) 지원서 작성", description = "지원서를 작성합니다.")
     @ApiResponses({
