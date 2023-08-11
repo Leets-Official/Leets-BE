@@ -1,6 +1,6 @@
 package land.leets.domain.mail.usercase;
 
-import land.leets.domain.application.type.Result;
+import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class SendMailImpl implements SendMail {
     private final TemplateEngine templateEngine;
 
     @Override
-    public void execute(String to, String name, Result result) {
+    public void execute(String to, String name, ApplicationStatus result) {
 
         Context context = getContext(name);
         String message = templateEngine.process(EXAMPLE_LINK_TEMPLATE, context);
 
         MailDto mailDto = null;
-        if (result == Result.FAIL_PAPER || result == Result.PASS_PAPER) {
+        if (result == ApplicationStatus.FAIL_PAPER || result == ApplicationStatus.PASS_PAPER) {
             mailDto = MailDto.builder()
                     .to(new String[]{to})
                     .title("[Leets] 서류 결과 안내 메일입니다.")

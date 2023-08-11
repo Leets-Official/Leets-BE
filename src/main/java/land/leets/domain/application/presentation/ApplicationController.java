@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
 import land.leets.domain.application.presentation.dto.ApplicationResponse;
-import land.leets.domain.application.presentation.dto.ResultRequest;
+import land.leets.domain.application.presentation.dto.StatusRequest;
 import land.leets.domain.application.usecase.*;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.global.error.ErrorResponse;
@@ -86,7 +86,7 @@ public class ApplicationController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PatchMapping("/{id}")
-    public Application get(@PathVariable Long id, @RequestBody ResultRequest request) {
+    public Application get(@PathVariable Long id, @RequestBody StatusRequest request) {
         return updateResult.execute(id, request);
     }
 

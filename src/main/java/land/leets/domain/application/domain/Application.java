@@ -2,7 +2,7 @@ package land.leets.domain.application.domain;
 
 
 import jakarta.persistence.*;
-import land.leets.domain.application.type.Result;
+import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.shared.BaseTimeEntity;
 import land.leets.domain.user.domain.User;
 import lombok.*;
@@ -67,5 +67,5 @@ public class Application extends BaseTimeEntity {
 
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
-    private Result result;
+    private ApplicationStatus applicationStatus;
 }
