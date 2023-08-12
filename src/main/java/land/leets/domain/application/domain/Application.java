@@ -48,7 +48,10 @@ public class Application extends BaseTimeEntity {
     private String position;
 
     @Column(nullable = false)
-    private String interview;
+    private String interviewDay;
+
+    @Column(nullable = false)
+    private String interviewTime;
 
     @Column(nullable = false)
     private String enhancement;

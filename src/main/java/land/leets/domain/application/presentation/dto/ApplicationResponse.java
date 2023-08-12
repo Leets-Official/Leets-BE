@@ -13,7 +13,8 @@ public class ApplicationResponse {
     private float gpa;
     private int grade;
     private String position;
-    private String interview;
+    private String interviewDay;
+    private String interviewTime;
     private String hasInterview;
     private ApplicationStatus applicationStatus;
 }

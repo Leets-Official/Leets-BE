@@ -16,7 +16,8 @@ public class ApplicationRequest {
     private String algorithm;
     private String portfolio;
     private String position;
-    private String interview;
+    private String interviewDay;
+    private String interviewTime;
     private String enhancement;
     private String level;
     private String pros;
