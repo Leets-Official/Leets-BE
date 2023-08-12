@@ -78,7 +78,7 @@ public class ApplicationController {
         return getApplicationDetails.execute(id);
     }
 
-    @Operation(summary = "(관리자) 지원 결과 변경", description = "지원 결과를 변경합니다.")
+    @Operation(summary = "(관리자) 지원 상태 변경", description = "지원 상태를 변경합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
