@@ -40,7 +40,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/login")
+    @PostMapping("/login")
     public JwtResponse getUserDetails(@RequestBody LoginRequest request) throws GeneralSecurityException, IOException {
         User user = authService.getUser(request.getIdToken());
 
