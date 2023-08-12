@@ -71,6 +71,9 @@ public class Application extends BaseTimeEntity {
     @Column(columnDefinition = "tinyint(1)")
     private boolean hasInterview;
 
+    @Column
+    private String fixedInterviewDate;
+
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
