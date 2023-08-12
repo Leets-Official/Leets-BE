@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ApplicationResponse {
+
+    private Long id;
     private String name;
     private float gpa;
     private int grade;
