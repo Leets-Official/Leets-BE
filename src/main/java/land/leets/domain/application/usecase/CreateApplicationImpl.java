@@ -19,16 +19,20 @@ public class CreateApplicationImpl implements CreateApplication {
     @Override
     public Application execute(AuthDetails authDetails, ApplicationRequest request) {
         User user = userRepository.findById(authDetails.getUid()).orElseThrow(UserNotFoundException::new);
+        user.setSid(request.getSid());
+        user.setPhone(request.getPhone());
+        userRepository.save(user);
 
         Application application = Application.builder()
                 .user(user)
                 .name(request.getName())
-                .grade(request.getGrade())
-                .major(request.getMajor())
                 .gpa(request.getGpa())
-                .position(request.getPosition())
+                .major(request.getMajor())
+                .grade(request.getGrade())
+                .project(request.getProject())
                 .algorithm(request.getAlgorithm())
                 .portfolio(request.getPortfolio())
+                .position(request.getPosition())
                 .interview(request.getInterview())
                 .level(request.getLevel())
                 .pros(request.getPros())

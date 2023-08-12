@@ -7,9 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ApplicationRequest {
     private String name;
+    private String sid;
+    private String phone;
     private float gpa;
     private String major;
     private int grade;
+    private String project;
     private String algorithm;
     private String portfolio;
     private String position;
