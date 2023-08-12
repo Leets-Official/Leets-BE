@@ -1,6 +1,5 @@
 package land.leets.domain.user.presentation.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

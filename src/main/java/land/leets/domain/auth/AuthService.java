@@ -63,7 +63,7 @@ public class AuthService {
     }
 
 
-    private User getUser(String idToken) throws GeneralSecurityException, IOException {
+    public User getUser(String idToken) throws GeneralSecurityException, IOException {
 
         final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), GsonFactory.getDefaultInstance())
                 .setAudience(Collections.singletonList(googleClientId))
