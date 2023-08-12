@@ -36,6 +36,9 @@ public class Application extends BaseTimeEntity {
     private int grade;
 
     @Column
+    private String project;
+
+    @Column
     private String algorithm;
 
     @Column
