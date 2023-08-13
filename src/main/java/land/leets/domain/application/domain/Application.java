@@ -51,8 +51,7 @@ public class Application extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Position position;
 
-    @Column(columnDefinition = "char(10)")
-    @Enumerated(EnumType.STRING)
+    @Column()
     private String career;
 
     @Column(nullable = false)
