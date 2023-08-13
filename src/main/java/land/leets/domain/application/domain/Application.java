@@ -8,6 +8,8 @@ import land.leets.domain.shared.BaseTimeEntity;
 import land.leets.domain.user.domain.User;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "applications")
 @Builder
 @Getter
@@ -78,7 +80,7 @@ public class Application extends BaseTimeEntity {
     private boolean hasInterview;
 
     @Column
-    private String fixedInterviewDate;
+    private LocalDateTime fixedInterviewDate;
 
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
