@@ -1,5 +1,6 @@
 package land.leets.domain.application.presentation.dto;
 
+import land.leets.domain.application.type.Position;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,7 +16,8 @@ public class ApplicationRequest {
     private String project;
     private String algorithm;
     private String portfolio;
-    private String position;
+    private Position position;
+    private String career;
     private String interviewDay;
     private String interviewTime;
     private String enhancement;

@@ -3,6 +3,7 @@ package land.leets.domain.application.domain;
 
 import jakarta.persistence.*;
 import land.leets.domain.application.type.ApplicationStatus;
+import land.leets.domain.application.type.Position;
 import land.leets.domain.shared.BaseTimeEntity;
 import land.leets.domain.user.domain.User;
 import lombok.*;
@@ -44,8 +45,13 @@ public class Application extends BaseTimeEntity {
     @Column
     private String portfolio;
 
-    @Column(nullable = false)
-    private String position;
+    @Column(nullable = false, columnDefinition = "char(10)")
+    @Enumerated(EnumType.STRING)
+    private Position position;
+
+    @Column(columnDefinition = "char(10)")
+    @Enumerated(EnumType.STRING)
+    private String career;
 
     @Column(nullable = false)
     private String interviewDay;

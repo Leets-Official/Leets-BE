@@ -33,6 +33,7 @@ public class CreateApplicationImpl implements CreateApplication {
                 .algorithm(request.getAlgorithm())
                 .portfolio(request.getPortfolio())
                 .position(request.getPosition())
+                .career(request.getCareer())
                 .interviewDay(request.getInterviewDay())
                 .interviewTime(request.getInterviewTime())
                 .level(request.getLevel())
