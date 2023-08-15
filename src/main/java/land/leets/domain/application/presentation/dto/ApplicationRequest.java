@@ -1,6 +1,7 @@
 package land.leets.domain.application.presentation.dto;
 
 import land.leets.domain.application.type.Position;
+import land.leets.domain.application.type.SubmitStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -25,4 +26,5 @@ public class ApplicationRequest {
     private String pros;
     private String goal;
     private String completion;
+    private SubmitStatus submitStatus;
 }

@@ -41,6 +41,7 @@ public class CreateApplicationImpl implements CreateApplication {
                 .completion(request.getCompletion())
                 .enhancement(request.getEnhancement())
                 .goal(request.getGoal())
+                .submitStatus(request.getSubmitStatus())
                 .build();
 
         return applicationRepository.save(application);
