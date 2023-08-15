@@ -82,9 +82,10 @@ public class Application extends BaseTimeEntity {
     @Column
     private LocalDateTime fixedInterviewDate;
 
+    @Builder.Default
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
-    private ApplicationStatus applicationStatus;
+    private ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
 
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
