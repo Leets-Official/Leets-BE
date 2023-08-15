@@ -1,5 +1,6 @@
 package land.leets.domain.user.presentation.dto;
 
+import land.leets.domain.application.type.SubmitStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,5 +16,5 @@ public class UserDetailsResponse {
     private String phone;
     private String email;
     private String major;
-
+    private SubmitStatus submitStatus;
 }
