@@ -61,6 +61,7 @@ public class SecurityConfig {
                 .requestMatchers("/user/refresh","/admin/refresh").permitAll()
 
                 .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers("/admin/me").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
                 .requestMatchers(HttpMethod.GET,"/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.POST,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
