@@ -18,17 +18,14 @@ public class GetAllApplicationImpl implements GetAllApplication {
     @Override
     public List<ApplicationResponse> execute(String position) {
 
-        if (position.equals("dev")) {
-            return applicationRepository.findAllByPosition(Position.DEV).stream()
+        if (position == null) {
+            return applicationRepository.findAll().stream()
                     .map(applicationMapper::mappingApplicationToDto).toList();
         }
 
-        if (position.equals("design")) {
-            return applicationRepository.findAllByPosition(Position.DESIGN).stream()
-                    .map(applicationMapper::mappingApplicationToDto).toList();
-        }
+        Position filter = Position.valueOf(position.toUpperCase());
 
-        return applicationRepository.findAll().stream()
+        return applicationRepository.findAllByPosition(filter).stream()
                 .map(applicationMapper::mappingApplicationToDto).toList();
 
     }
