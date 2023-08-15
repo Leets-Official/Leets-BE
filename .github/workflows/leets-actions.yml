@@ -30,7 +30,26 @@ jobs:
       with:
         files: ${{ env.RESOURCE_PATH }}
       env:
+        spring.datasource.username: ${{ secrets.DATABASE_USERNAME }}
+        spring.datasource.url: ${{ secrets.DATABASE_URL }}
+        spring.datasource.password: ${{ secrets.DATABASE_PASSWORD }}
+        
         spring.mail.host: ${{ secrets.MAIL_HOST }}
+        spring.mail.username: ${{ secrets.MAIL_USERNAME }}
+        spring.mail.password: ${{ secrets.MAIL_PASSWORD }}
+        
+        spring.security.oauth2.client.registration.google.client-id: ${{ secrets.GOOGLE_ID }}
+        spring.security.oauth2.client.registration.google.client-secret: ${{ secrets.GOOGLE_PASSWORD }}
+        spring.security.oauth2.client.registration.google.client-uri: ${{ secrets.GOOGLE_REDIRECT_URL }}
+        
+        jwt.auth.access_secret: ${{ secrets.JWT_ACCESS_SECRET }}
+        jwt.auth.refresh_secret: ${{ secrets.JWT_REFRESH_SECRET }}
+        
+        cors.origin.development: ${{ secrets.CORS_ORIGIN_DEVELOPMENT }}
+        cors.origin.production: ${{ secrets.CORS_ORIGIN_PRODUCTION }}
+        
+        google.auth.url: ${{ secrets.GOOGLE_AUTH_URL }}
+        google.redirect.url: ${{ secrets.GOOGLE_REDIRECT_URL }}
         
     - name: gradlew에 실행 권한 부여
       run: chmod +x ./gradlew
