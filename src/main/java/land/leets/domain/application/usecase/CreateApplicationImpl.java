@@ -2,6 +2,7 @@ package land.leets.domain.application.usecase;
 
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
+import land.leets.domain.application.exception.ApplicationAlreadyExistsException;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.user.domain.User;
@@ -19,6 +20,11 @@ public class CreateApplicationImpl implements CreateApplication {
     @Override
     public Application execute(AuthDetails authDetails, ApplicationRequest request) {
         User user = userRepository.findById(authDetails.getUid()).orElseThrow(UserNotFoundException::new);
+
+        if (applicationRepository.findByUser_Uid(user.getUid()).isPresent()) {
+            throw new ApplicationAlreadyExistsException();
+        }
+
         user.setSid(request.getSid());
         user.setPhone(request.getPhone());
         userRepository.save(user);
