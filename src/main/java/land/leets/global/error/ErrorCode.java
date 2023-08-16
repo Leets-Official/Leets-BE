@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    APPLICATION_ALREADY_EXISTS(409, "APPLICATION_ALREADY_EXISTS", "이미 지원한 지원자입니다."),
     PERMISSION_DENIED(403, "PERMISSION_DENIED", "권한이 없습니다."),
     APPLICATION_NOT_FOUND(404, "APPLICATION_NOT_FOUND", "신청서를 찾을 수 없습니다."),
     PASSWORD_NOT_MATCH(403, "PASSWORD_NOT_MATCH", "비밀번호가 일치하지 않습니다."),
