@@ -62,8 +62,10 @@ public class ApplicationController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping()
-    public List<ApplicationResponse> get(@RequestParam(required = false) String position) {
-        return getApplication.execute(position);
+    public List<ApplicationResponse> get(@RequestParam(required = false) String position,
+                                         @RequestParam(required = false) String status) {
+        if (position == null && status == null) return getApplication.execute();
+        return getApplication.execute(position, status);
     }
 
     @Operation(summary = "(관리자) 지원서 상세 조회", description = "지원서를 상세 조회합니다.")
