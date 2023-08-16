@@ -40,7 +40,7 @@ jobs:
 
           spring.security.oauth2.client.registration.google.client-id: ${{ secrets.GOOGLE_ID }}
           spring.security.oauth2.client.registration.google.client-secret: ${{ secrets.GOOGLE_PASSWORD }}
-          spring.security.oauth2.client.registration.google.client-uri: ${{ secrets.GOOGLE_REDIRECT_URL }}
+          spring.security.oauth2.client.registration.google.redirect-uri: ${{ secrets.GOOGLE_REDIRECT_URL }}
 
           jwt.auth.access_secret: ${{ secrets.JWT_ACCESS_SECRET }}
           jwt.auth.refresh_secret: ${{ secrets.JWT_REFRESH_SECRET }}
