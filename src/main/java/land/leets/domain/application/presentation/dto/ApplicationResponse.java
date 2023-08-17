@@ -5,6 +5,8 @@ import land.leets.domain.application.type.Position;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 public class ApplicationResponse {
@@ -15,8 +17,7 @@ public class ApplicationResponse {
     private int grade;
     private Position position;
     private String career;
-    private String interviewDay;
-    private String interviewTime;
+    private LocalDateTime fixedInterviewDate;
     private String hasInterview;
     private ApplicationStatus applicationStatus;
 }
