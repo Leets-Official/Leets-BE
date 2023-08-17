@@ -45,8 +45,8 @@ public class UserController {
     public JwtResponse getUserDetails(@RequestBody LoginRequest request) throws GeneralSecurityException, IOException {
         User user = authService.getUser(request.getIdToken());
 
-        String accessToken = this.jwtProvider.generateToken(user.getUid(), user.getSub(), AuthRole.ROLE_USER, false);
-        String refreshToken = this.jwtProvider.generateToken(user.getUid(), user.getSub(), AuthRole.ROLE_USER, true);
+        String accessToken = this.jwtProvider.generateToken(user.getUid(), user.getEmail(), AuthRole.ROLE_USER, false);
+        String refreshToken = this.jwtProvider.generateToken(user.getUid(), user.getEmail(), AuthRole.ROLE_USER, true);
 
         return new JwtResponse(accessToken, refreshToken);
     }

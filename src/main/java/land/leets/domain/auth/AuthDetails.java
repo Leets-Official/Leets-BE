@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthDetails implements UserDetails {
     private final UUID uid;
-    private final String sub;
+    private final String email;
     private final AuthRole role;
 
     @Override
@@ -30,7 +30,7 @@ public class AuthDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return sub;
+        return email;
     }
 
     @Override

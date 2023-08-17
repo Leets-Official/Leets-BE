@@ -35,8 +35,8 @@ public class AuthController {
     @GetMapping("/login/oauth2/callback/google")
     public JwtResponse get(@RequestParam("code") String code) throws GeneralSecurityException, IOException {
         User user = authService.getGoogleToken(code);
-        String accessToken = this.jwtProvider.generateToken(user.getUid(), user.getSub(), AuthRole.ROLE_USER, false);
-        String refreshToken = this.jwtProvider.generateToken(user.getUid(), user.getSub(), AuthRole.ROLE_USER, true);
+        String accessToken = this.jwtProvider.generateToken(user.getUid(), user.getEmail(), AuthRole.ROLE_USER, false);
+        String refreshToken = this.jwtProvider.generateToken(user.getUid(), user.getEmail(), AuthRole.ROLE_USER, true);
 
         return new JwtResponse(accessToken, refreshToken);
     }
