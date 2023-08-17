@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.presentation.dto.ApplicationDetailsResponse;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
 import land.leets.domain.application.presentation.dto.ApplicationResponse;
 import land.leets.domain.application.presentation.dto.StatusRequest;
@@ -80,7 +81,7 @@ public class ApplicationController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/{id}")
-    public Application get(@PathVariable Long id) {
+    public ApplicationDetailsResponse get(@PathVariable Long id) {
         return getApplicationDetails.execute(id);
     }
 

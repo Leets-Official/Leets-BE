@@ -1,6 +1,7 @@
 package land.leets.domain.application.presentation.mapper;
 
 import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.presentation.dto.ApplicationDetailsResponse;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
 import land.leets.domain.application.presentation.dto.ApplicationResponse;
 import land.leets.domain.application.presentation.dto.StatusRequest;
@@ -16,4 +17,7 @@ public interface ApplicationMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ApplicationResponse mappingApplicationToDto(Application application);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    ApplicationDetailsResponse mappingApplicationToDto(Application application, String phone);
 }
