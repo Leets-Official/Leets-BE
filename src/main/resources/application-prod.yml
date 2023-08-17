@@ -9,7 +9,7 @@
         use_sql_comments: false
         show_sql: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 
 springdoc:
   swagger-ui:
