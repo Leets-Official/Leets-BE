@@ -23,8 +23,8 @@ public class GetUserDetailsImpl implements GetUserDetails {
     @Override
     public UserDetailsResponse execute(AuthDetails authDetails) {
 
-        String sub = authDetails.getUsername();
-        User user = userRepository.findBySub(sub).orElseThrow(UserNotFoundException::new);
+        String email = authDetails.getUsername();
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
         Application application = applicationRepository.findByUser_Uid(user.getUid()).orElse(null);
 

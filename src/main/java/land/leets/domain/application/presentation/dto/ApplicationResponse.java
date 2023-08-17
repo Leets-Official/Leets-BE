@@ -18,6 +18,6 @@ public class ApplicationResponse {
     private Position position;
     private String career;
     private LocalDateTime fixedInterviewDate;
-    private String hasInterview;
+    private boolean hasInterview;
     private ApplicationStatus applicationStatus;
 }
