@@ -11,7 +11,7 @@ public class ApplicationResponse {
 
     private Long id;
     private String name;
-    private float gpa;
+    private String gpa;
     private int grade;
     private Position position;
     private String career;

@@ -31,7 +31,7 @@ public class Application extends BaseTimeEntity {
     private String name;
 
     @Column(nullable = false)
-    private float gpa;
+    private String gpa;
 
     @Column(nullable = false)
     private String major;

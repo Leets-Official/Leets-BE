@@ -11,7 +11,7 @@ public class ApplicationRequest {
     private String name;
     private String sid;
     private String phone;
-    private float gpa;
+    private String gpa;
     private String major;
     private int grade;
     private String project;
