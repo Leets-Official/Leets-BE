@@ -2,8 +2,6 @@ package land.leets.global.mail;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import land.leets.global.error.ErrorCode;
-import land.leets.global.error.exception.ServiceException;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,7 +25,7 @@ public class MailProvider {
             mimeMessageHelper.setText(mailDto.body(), true);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new ServiceException(ErrorCode.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
         }
     }
 }

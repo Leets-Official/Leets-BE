@@ -1,5 +1,7 @@
 package land.leets.domain.mail.usercase;
 
+import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
@@ -9,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -16,25 +20,42 @@ import org.thymeleaf.context.Context;
 public class SendMailImpl implements SendMail {
 
     private final MailProvider mailProvider;
-    private static final String EXAMPLE_LINK_TEMPLATE = "mail.html";
+    private final ApplicationRepository applicationRepository;
+    private static final String PASS_PAPER_TEMPLATE = "pass-paper.html";
+    private static final String FAIL_PAPER_TEMPLATE = "fail-paper.html";
+    private static final String PASS_TEMPLATE = "pass.html";
+    private static final String FAIL_TEMPLATE = "fail.html";
     private final TemplateEngine templateEngine;
 
     @Override
-    public void execute(String to, String name, ApplicationStatus result) {
+    public void execute() {
 
-        Context context = getContext(name);
-        String message = templateEngine.process(EXAMPLE_LINK_TEMPLATE, context);
+        List<Application> applications = applicationRepository.findAll();
 
-        MailDto mailDto = null;
-        if (result == ApplicationStatus.FAIL_PAPER || result == ApplicationStatus.PASS_PAPER) {
-            mailDto = MailDto.builder()
-                    .to(new String[]{to})
+        for (Application application : applications) {
+            Context context = getContext(application.getName());
+            String message = "";
+
+            if (application.getApplicationStatus() == ApplicationStatus.PASS_PAPER) {
+                message = templateEngine.process(PASS_PAPER_TEMPLATE, context);
+            }
+            if (application.getApplicationStatus() == ApplicationStatus.FAIL_PAPER) {
+                message = templateEngine.process(FAIL_PAPER_TEMPLATE, context);
+            }
+            if (application.getApplicationStatus() == ApplicationStatus.PASS) {
+                message = templateEngine.process(PASS_TEMPLATE, context);
+            }
+            if (application.getApplicationStatus() == ApplicationStatus.FAIL) {
+                message = templateEngine.process(FAIL_TEMPLATE, context);
+            }
+            MailDto mailDto = MailDto.builder()
+                    .to(new String[]{application.getUser().getEmail()})
                     .title("[Leets] 서류 결과 안내 메일입니다.")
                     .body(message)
                     .build();
+
+            mailProvider.sendEmail(mailDto);
         }
-        assert mailDto != null;
-        mailProvider.sendEmail(mailDto);
     }
 
     private Context getContext(String name) {
