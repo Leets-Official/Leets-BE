@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 
@@ -33,7 +36,7 @@ public class SendMailImpl implements SendMail {
         List<Application> applications = applicationRepository.findAll();
 
         for (Application application : applications) {
-            Context context = getContext(application.getName());
+            Context context = getContext(application.getName(), application.getFixedInterviewDate());
             String message = "";
 
             if (application.getApplicationStatus() == ApplicationStatus.PASS_PAPER) {
@@ -58,9 +61,12 @@ public class SendMailImpl implements SendMail {
         }
     }
 
-    private Context getContext(String name) {
+    private Context getContext(String name, LocalDateTime fixedInterviewDate) {
         Context context = new Context();
         context.setVariable("name", name);
+        String date = fixedInterviewDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
+        String time = fixedInterviewDate.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+        context.setVariable("fixedInterviewDate", date + " " + time);
         return context;
     }
 }
