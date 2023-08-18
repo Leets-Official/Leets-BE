@@ -66,3 +66,8 @@ google:
     url: ${GOOGLE_AUTH_URL}
   redirect:
     url: ${GOOGLE_REDIRECT_URL}
+
+target:
+  url:
+    dev: ${TARGET_URL_DEV}
+    prod: ${TARGET_URL_PROD}
