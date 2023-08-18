@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 
 @RequiredArgsConstructor
@@ -88,6 +89,11 @@ public class SendMailImpl implements SendMail {
                 .queryParam("email", email)
                 .build();
         context.setVariable("url", url);
+
+        Random random = new Random();
+        int theme = random.nextInt(3) + 1;
+        context.setVariable("theme", theme);
+
         return context;
     }
 }
