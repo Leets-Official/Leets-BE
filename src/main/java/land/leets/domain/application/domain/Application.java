@@ -37,7 +37,7 @@ public class Application extends BaseTimeEntity {
     private String major;
 
     @Column(nullable = false)
-    private int grade;
+    private String grade;
 
     @Column
     private String project;

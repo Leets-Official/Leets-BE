@@ -17,7 +17,7 @@ public class ApplicationDetailsResponse {
     private String name;
     private String gpa;
     private String major;
-    private int grade;
+    private String grade;
     private String project;
     private String algorithm;
     private String portfolio;

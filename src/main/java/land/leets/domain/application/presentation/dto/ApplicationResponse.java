@@ -14,7 +14,7 @@ public class ApplicationResponse {
     private Long id;
     private String name;
     private String gpa;
-    private int grade;
+    private String grade;
     private Position position;
     private String career;
     private LocalDateTime fixedInterviewDate;
