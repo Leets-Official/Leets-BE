@@ -1,4 +1,4 @@
-가spring:
+spring:
   config:
     activate:
       on-profile: prod
