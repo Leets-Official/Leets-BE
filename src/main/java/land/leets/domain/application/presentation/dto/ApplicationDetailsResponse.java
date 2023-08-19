@@ -34,4 +34,5 @@ public class ApplicationDetailsResponse {
     private LocalDateTime fixedInterviewDate;
     private ApplicationStatus applicationStatus;
     private SubmitStatus submitStatus;
+    private LocalDateTime appliedAt;
 }

@@ -82,6 +82,9 @@ public class Application extends BaseTimeEntity {
     @Column
     private LocalDateTime fixedInterviewDate;
 
+    @Column
+    private LocalDateTime appliedAt;
+
     @Builder.Default
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)

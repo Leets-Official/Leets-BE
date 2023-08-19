@@ -4,12 +4,15 @@ import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.exception.ApplicationAlreadyExistsException;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
+import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.user.domain.User;
 import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,11 @@ public class CreateApplicationImpl implements CreateApplication {
         user.setSid(request.getSid());
         user.setPhone(request.getPhone());
         userRepository.save(user);
+
+        LocalDateTime appliedAt = null;
+        if (request.getSubmitStatus() == SubmitStatus.SUBMIT) {
+            appliedAt = LocalDateTime.now();
+        }
 
         Application application = Application.builder()
                 .user(user)
@@ -48,6 +56,7 @@ public class CreateApplicationImpl implements CreateApplication {
                 .enhancement(request.getEnhancement())
                 .goal(request.getGoal())
                 .submitStatus(request.getSubmitStatus())
+                .appliedAt(appliedAt)
                 .build();
 
         return applicationRepository.save(application);
