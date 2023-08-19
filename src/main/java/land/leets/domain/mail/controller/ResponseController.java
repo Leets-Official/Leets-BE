@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletResponse;
 import land.leets.domain.application.usecase.HasInterview;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
@@ -29,10 +32,11 @@ public class ResponseController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/interview")
-    public RedirectView hasInterview(@RequestParam String email) {
+    public RedirectView hasInterview(@RequestParam String email, HttpServletResponse response) throws IOException {
         hasInterview.execute(email);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://www.leets.land");
+//        redirectView.setUrl("https://www.leets.land");
+        redirectView.setUrl("http://localhost:3000/interview");
         return redirectView;
     }
 }
