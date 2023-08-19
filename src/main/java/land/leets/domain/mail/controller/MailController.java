@@ -26,8 +26,8 @@ public class MailController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping()
-    public boolean sendMail() {
-        sendMail.execute();
+    public boolean sendMail(@RequestParam String paperOrFinal) {
+        sendMail.execute(paperOrFinal);
         return true;
     }
 }

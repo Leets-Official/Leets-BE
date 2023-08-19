@@ -1,5 +1,5 @@
 package land.leets.domain.mail.usercase;
 
 public interface SendMail {
-    void execute();
+    void execute(String paperOrFinal);
 }

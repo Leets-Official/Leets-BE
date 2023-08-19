@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Arrays;
@@ -44,56 +43,60 @@ public class SendMailImpl implements SendMail {
     private String SERVER_TARGET_URL;
 
     @Override
-    public void execute() {
-
-        List<Application> applications = applicationRepository.findAll();
-
-        for (Application application : applications) {
-            Context context = getContext(application.getName(), application.getFixedInterviewDate(), application.getUser().getEmail());
-            String message = "";
-
-            if (application.getApplicationStatus() == ApplicationStatus.PASS_PAPER) {
-                message = templateEngine.process(PASS_PAPER_TEMPLATE, context);
-            }
-            if (application.getApplicationStatus() == ApplicationStatus.FAIL_PAPER) {
-                message = templateEngine.process(FAIL_PAPER_TEMPLATE, context);
-            }
-            if (application.getApplicationStatus() == ApplicationStatus.PASS) {
-                message = templateEngine.process(PASS_TEMPLATE, context);
-            }
-            if (application.getApplicationStatus() == ApplicationStatus.FAIL) {
-                message = templateEngine.process(FAIL_TEMPLATE, context);
-            }
-            MailDto mailDto = MailDto.builder()
-                    .to(new String[]{application.getUser().getEmail()})
-                    .title("[Leets] 서류 결과 안내 메일입니다.")
-                    .body(message)
-                    .build();
-
-            mailProvider.sendEmail(mailDto);
+    public void execute(String paperOrFinal) {
+        if ("paper".equals(paperOrFinal)) {
+            processApplications(ApplicationStatus.PASS_PAPER, PASS_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
+            processApplications(ApplicationStatus.FAIL_PAPER, FAIL_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
+        } else if ("final".equals(paperOrFinal)) {
+            processApplications(ApplicationStatus.PASS, PASS_TEMPLATE, "[Leets] 면접 결과 안내 메일입니다.");
+            processApplications(ApplicationStatus.FAIL, FAIL_TEMPLATE, "[Leets] 면접 결과 안내 메일입니다.");
         }
     }
 
-    private Context getContext(String name, LocalDateTime fixedInterviewDate, String email) {
+    private void processApplications(ApplicationStatus status, String templateName, String mailTitle) {
+        List<Application> applications = applicationRepository.findAllByApplicationStatus(status);
+        for (Application application : applications) {
+            Context context = getContext(application.getName());
+            setContextTheme(context);
+            if (status == ApplicationStatus.PASS_PAPER) {
+                setPaperContextVariables(context, application);
+            }
+            String message = templateEngine.process(templateName, context);
+            sendMail(application.getUser().getEmail(), mailTitle, message);
+        }
+    }
+
+    private Context getContext(String name) {
         Context context = new Context();
         context.setVariable("name", name);
+        return context;
+    }
 
-        String date = fixedInterviewDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
-        String time = fixedInterviewDate.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
-        context.setVariable("fixedInterviewDate", date + " " + time);
-        context.setVariable("interviewPlace", "김성민 하우스");
-
+    private void setPaperContextVariables(Context context, Application application) {
         boolean isProd = Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.equalsIgnoreCase("prod"));
-
         UriComponents url = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
-                .queryParam("email", email)
-                .build();
+                .queryParam("email", application.getUser().getEmail()).build();
         context.setVariable("url", url);
 
+        String date = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
+        String time = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+        context.setVariable("fixedInterviewDate", date + " " + time);
+
+        context.setVariable("interviewPlace", "김성민 하우스");
+    }
+
+    private void setContextTheme(Context context) {
         Random random = new Random();
         int theme = random.nextInt(3) + 1;
         context.setVariable("theme", theme);
+    }
 
-        return context;
+    private void sendMail(String toEmail, String title, String message) {
+        MailDto mailDto = MailDto.builder()
+                .to(new String[]{toEmail})
+                .title(title)
+                .body(message)
+                .build();
+        mailProvider.sendEmail(mailDto);
     }
 }
