@@ -35,4 +35,5 @@ public class ApplicationDetailsResponse {
     private ApplicationStatus applicationStatus;
     private SubmitStatus submitStatus;
     private LocalDateTime appliedAt;
+    private LocalDateTime updateAt;
 }
