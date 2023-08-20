@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -78,8 +79,8 @@ public class SendMailImpl implements SendMail {
                 .queryParam("email", application.getUser().getEmail()).build();
         context.setVariable("url", url);
 
-        String date = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
-        String time = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
+        String date = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.KOREAN));
+        String time = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));
         context.setVariable("fixedInterviewDate", date + " " + time);
 
         context.setVariable("interviewPlace", "김성민 하우스");
