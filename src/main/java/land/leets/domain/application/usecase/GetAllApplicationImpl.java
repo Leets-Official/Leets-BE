@@ -18,7 +18,7 @@ public class GetAllApplicationImpl implements GetAllApplication {
 
     @Override
     public List<ApplicationResponse> execute() {
-        return applicationRepository.findAll().stream()
+        return applicationRepository.findAllByOrderByAppliedAtDesc().stream()
                 .map(applicationMapper::mappingApplicationToDto).toList();
     }
 
@@ -27,12 +27,12 @@ public class GetAllApplicationImpl implements GetAllApplication {
 
         if (position != null) {
             Position filter = Position.valueOf(position.toUpperCase());
-            return applicationRepository.findAllByPosition(filter).stream()
+            return applicationRepository.findAllByPositionOrderByAppliedAtDesc(filter).stream()
                     .map(applicationMapper::mappingApplicationToDto).toList();
         }
 
         SubmitStatus filter = SubmitStatus.valueOf(status.toUpperCase());
-        return applicationRepository.findAllBySubmitStatus(filter).stream()
+        return applicationRepository.findAllBySubmitStatusOrderByAppliedAtDesc(filter).stream()
                 .map(applicationMapper::mappingApplicationToDto).toList();
 
     }

@@ -12,7 +12,8 @@ import java.util.UUID;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Optional<Application> findByUser_Uid(UUID uid);
-    List<Application> findAllByPosition(Position position);
-    List<Application> findAllBySubmitStatus(SubmitStatus submitStatus);
+    List<Application> findAllByOrderByAppliedAtDesc();
+    List<Application> findAllByPositionOrderByAppliedAtDesc(Position position);
+    List<Application> findAllBySubmitStatusOrderByAppliedAtDesc(SubmitStatus submitStatus);
     List<Application> findAllByApplicationStatus(ApplicationStatus applicationStatus);
 }
