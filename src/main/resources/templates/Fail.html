@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leets 면접 안내</title>
-  </head>
-  <body>
-    <div
-      th:if="${theme == 1}"
-      style="background-color: rgb(255, 255, 255)"
-    >
-      <table
-        style="
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leets 면접 안내</title>
+</head>
+<body>
+<div th:if="${theme == 1}" style="background-color: rgb(255, 255, 255)">
+  <table
+          style="
           width: 100%;
           max-width: 536px;
           margin: 0px auto;
@@ -20,92 +17,25 @@
           color: rgb(255, 255, 255);
           padding-left: 2px;
         "
-      >
-        <tr>
-          <td style="padding: 20px">
-            <img
-              src="https://i.imgur.com/FvQO2Uk.png"
-              alt="logo"
-              style="
+  >
+    <tr>
+      <td style="padding: 20px">
+        <img
+                src="https://i.imgur.com/FvQO2Uk.png"
+                alt="logo"
+                style="
                 width: 39px;
                 height: 25px;
                 vertical-align: middle;
                 fill: rgb(74, 147, 255);
               "
-            />
-            Leets
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <div
-      th:if="${theme == 2}"
-      style="background-color: rgb(255, 255, 255)"
-    >
-      <table
-        style="
-          width: 100%;
-          max-width: 536px;
-          margin: 0px auto;
-          background-color: rgba(46, 183, 156, 0.5);
-          font-size: 30px;
-          color: rgb(255, 255, 255);
-          padding-left: 2px;
-        "
-      >
-        <tr>
-          <td style="padding: 20px">
-            <img
-              src="https://i.imgur.com/Qmejhsi.png"
-              alt="logo"
-              style="
-                width: 39px;
-                height: 25px;
-                vertical-align: middle;
-                fill: rgb(46, 183, 156);
-              "
-            />
-            Leets
-          </td>
-        </tr>
-      </table>
-
-      <div
-      th:if="${theme == 3}"
-      style="background-color: rgb(255, 255, 255)"
-    >
-      <table
-        style="
-          width: 100%;
-          max-width: 536px;
-          margin: 0px auto;
-          background-color: rgba(252, 184, 54, 0.5);
-          font-size: 30px;
-          color: rgb(255, 255, 255);
-          padding-left: 2px;
-        "
-      >
-        <tr>
-          <td style="padding: 20px">
-            <img
-              src="https://i.imgur.com/me971ls.png"
-              alt="logo"
-              style="
-                width: 39px;
-                height: 25px;
-                vertical-align: middle;
-                fill: rgb(252, 184, 54);
-              "
-            />
-            Leets
-          </td>
-        </tr>
-      </table>
-
-      <table
-        th:if="${theme == 1}"
-        style="
+        />
+        Leets
+      </td>
+    </tr>
+  </table>
+  <table
+          style="
           width: 100%;
           max-width: 536px;
           margin: 0px auto;
@@ -116,10 +46,10 @@
           background-repeat: no-repeat;
           background-position: center 35%;
         "
-      >
-        <tr>
-          <td
-            style="
+  >
+    <tr>
+      <td
+              style="
               color: black;
               font-size: 14.5px;
               font-weight: 700;
@@ -128,43 +58,74 @@
               text-align: left;
               margin-bottom: 30px;
             "
-          >
-            안녕하세요. Leets입니다. <br />
-            귀한 시간을 내어 Leets에 많은 관심을 가지고 지원해 주셔서 감사합니다.
-            <br />
-            <br />
-            최종 합격은 지원서와 면접을 면밀히 검토하여 결정했습니다. <br />
-            <br />
-            제한 된 모집 인원으로 인해 Leets와 함께할 수 없다는 말씀을 전해드려 아쉬운 마음입니다.
-            <br />
-            비록 이번에는 지원자와 임원진의 입장에서 만나 뵙게 되었지만 <br />
-            추후 동료 대 동료의 입장으로 다시 만나 뵐 날을 기대하겠습니다.
-            <br />
-            <br />
-            Leets에 지원해 주셔서 다시 한 번 감사합니다.
-          </td>
-        </tr>
-        <td style="height: 80px"></td>
-        <tr>
-          <td
-            style="
+      >
+        안녕하세요. Leets입니다. <br />
+        귀한 시간을 내어 Leets에 많은 관심을 가지고 지원해 주셔서
+        감사합니다.
+        <br />
+        <br />
+        최종 합격은 지원서와 면접을 면밀히 검토하여 결정했습니다. <br />
+        <br />
+        제한 된 모집 인원으로 인해 Leets와 함께할 수 없다는 말씀을 전해드려
+        아쉬운 마음입니다.
+        <br />
+        비록 이번에는 지원자와 임원진의 입장에서 만나 뵙게 되었지만 <br />
+        추후 동료 대 동료의 입장으로 다시 만나 뵐 날을 기대하겠습니다.
+        <br />
+        <br />
+        Leets에 지원해 주셔서 다시 한 번 감사합니다.
+      </td>
+    </tr>
+    <td style="height: 80px"></td>
+    <tr>
+      <td
+              style="
               text-align: center;
               color: rgb(78, 78, 78);
               font-size: 14.5px;
             "
+      >
+        <div style="margin-bottom: 8px">
+          오픈채팅:
+          <a href="https://open.kakao.com/o/sObD2U5e"
+          >https://open.kakao.com/o/sObD2U5e</a
           >
-            <div style="margin-bottom: 8px">
-              오픈채팅:
-              <a href="https://open.kakao.com/o/sObD2U5e"
-                >https://open.kakao.com/o/sObD2U5e</a
-              >
-            </div>
-          </td>
-        </tr>
-      </table>
-      <table
-        th:if="${theme == 2}"
-        style="
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div th:if="${theme == 2}" style="background-color: rgb(255, 255, 255)">
+  <table
+          style="
+          width: 100%;
+          max-width: 536px;
+          margin: 0px auto;
+          background-color: rgba(46, 183, 156, 0.5);
+          font-size: 30px;
+          color: rgb(255, 255, 255);
+          padding-left: 2px;
+        "
+  >
+    <tr>
+      <td style="padding: 20px">
+        <img
+                src="https://i.imgur.com/Qmejhsi.png"
+                alt="logo"
+                style="
+                width: 39px;
+                height: 25px;
+                vertical-align: middle;
+                fill: rgb(46, 183, 156);
+              "
+        />
+        Leets
+      </td>
+    </tr>
+  </table>
+  <table
+          style="
           width: 100%;
           max-width: 536px;
           margin: 0px auto;
@@ -175,10 +136,10 @@
           background-repeat: no-repeat;
           background-position: center 35%;
         "
-      >
-        <tr>
-          <td
-            style="
+  >
+    <tr>
+      <td
+              style="
               color: black;
               font-size: 14.5px;
               font-weight: 700;
@@ -187,43 +148,75 @@
               text-align: left;
               margin-bottom: 30px;
             "
-          >
-          안녕하세요. Leets입니다. <br />
-          귀한 시간을 내어 Leets에 많은 관심을 가지고 지원해 주셔서 감사합니다.
-          <br />
-          <br />
-          최종 합격은 지원서와 면접을 면밀히 검토하여 결정했습니다. <br />
-          <br />
-          제한 된 모집 인원으로 인해 Leets와 함께할 수 없다는 말씀을 전해드려 아쉬운 마음입니다.
-          <br />
-          비록 이번에는 지원자와 임원진의 입장에서 만나 뵙게 되었지만 <br />
-          추후 동료 대 동료의 입장으로 다시 만나 뵐 날을 기대하겠습니다.
-          <br />
-          <br />
-          Leets에 지원해 주셔서 다시 한 번 감사합니다.
-          </td>
-        </tr>
-        <td style="height: 80px"></td>
-        <tr>
-          <td
-            style="
+      >
+        안녕하세요. Leets입니다. <br />
+        귀한 시간을 내어 Leets에 많은 관심을 가지고 지원해 주셔서
+        감사합니다.
+        <br />
+        <br />
+        최종 합격은 지원서와 면접을 면밀히 검토하여 결정했습니다. <br />
+        <br />
+        제한 된 모집 인원으로 인해 Leets와 함께할 수 없다는 말씀을 전해드려
+        아쉬운 마음입니다.
+        <br />
+        비록 이번에는 지원자와 임원진의 입장에서 만나 뵙게 되었지만 <br />
+        추후 동료 대 동료의 입장으로 다시 만나 뵐 날을 기대하겠습니다.
+        <br />
+        <br />
+        Leets에 지원해 주셔서 다시 한 번 감사합니다.
+      </td>
+    </tr>
+    <td style="height: 80px"></td>
+    <tr>
+      <td
+              style="
               text-align: center;
               color: rgb(78, 78, 78);
               font-size: 14.5px;
             "
+      >
+        <div style="margin-bottom: 8px">
+          오픈채팅:
+          <a href="https://open.kakao.com/o/sObD2U5e"
+          >https://open.kakao.com/o/sObD2U5e</a
           >
-            <div style="margin-bottom: 8px">
-              오픈채팅:
-              <a href="https://open.kakao.com/o/sObD2U5e"
-                >https://open.kakao.com/o/sObD2U5e</a
-              >
-            </div>
-          </td>
-        </tr>
-      </table>
-      <table
-        th:if="${theme == 3}"
-        style="
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div th:if="${theme == 3}" style="background-color: rgb(255, 255, 255)">
+  <table
+          style="
+          width: 100%;
+          max-width: 536px;
+          margin: 0px auto;
+          background-color: rgba(252, 184, 54, 0.5);
+          font-size: 30px;
+          color: rgb(255, 255, 255);
+          padding-left: 2px;
+        "
+  >
+    <tr>
+      <td style="padding: 20px">
+        <img
+                src="https://i.imgur.com/me971ls.png"
+                alt="logo"
+                style="
+                width: 39px;
+                height: 25px;
+                vertical-align: middle;
+                fill: rgb(252, 184, 54);
+              "
+        />
+        Leets
+      </td>
+    </tr>
+  </table>
+
+  <table
+          style="
           width: 100%;
           max-width: 536px;
           margin: 0px auto;
@@ -234,10 +227,10 @@
           background-repeat: no-repeat;
           background-position: center 35%;
         "
-      >
-        <tr>
-          <td
-            style="
+  >
+    <tr>
+      <td
+              style="
               color: black;
               font-size: 14.5px;
               font-weight: 700;
@@ -246,40 +239,42 @@
               text-align: left;
               margin-bottom: 30px;
             "
-          >
-          안녕하세요. Leets입니다. <br />
-          귀한 시간을 내어 Leets에 많은 관심을 가지고 지원해 주셔서 감사합니다.
-          <br />
-          <br />
-          최종 합격은 지원서와 면접을 면밀히 검토하여 결정했습니다. <br />
-          <br />
-          제한 된 모집 인원으로 인해 Leets와 함께할 수 없다는 말씀을 전해드려 아쉬운 마음입니다.
-          <br />
-          비록 이번에는 지원자와 임원진의 입장에서 만나 뵙게 되었지만 <br />
-          추후 동료 대 동료의 입장으로 다시 만나 뵐 날을 기대하겠습니다.
-          <br />
-          <br />
-          Leets에 지원해 주셔서 다시 한 번 감사합니다.
-          </td>
-        </tr>
-        <td style="height: 80px"></td>
-        <tr>
-          <td
-            style="
+      >
+        안녕하세요. Leets입니다. <br />
+        귀한 시간을 내어 Leets에 많은 관심을 가지고 지원해 주셔서
+        감사합니다.
+        <br />
+        <br />
+        최종 합격은 지원서와 면접을 면밀히 검토하여 결정했습니다. <br />
+        <br />
+        제한 된 모집 인원으로 인해 Leets와 함께할 수 없다는 말씀을 전해드려
+        아쉬운 마음입니다.
+        <br />
+        비록 이번에는 지원자와 임원진의 입장에서 만나 뵙게 되었지만 <br />
+        추후 동료 대 동료의 입장으로 다시 만나 뵐 날을 기대하겠습니다.
+        <br />
+        <br />
+        Leets에 지원해 주셔서 다시 한 번 감사합니다.
+      </td>
+    </tr>
+    <td style="height: 80px"></td>
+    <tr>
+      <td
+              style="
               text-align: center;
               color: rgb(78, 78, 78);
               font-size: 14.5px;
             "
+      >
+        <div style="margin-bottom: 8px">
+          오픈채팅:
+          <a href="https://open.kakao.com/o/sObD2U5e"
+          >https://open.kakao.com/o/sObD2U5e</a
           >
-            <div style="margin-bottom: 8px">
-              오픈채팅:
-              <a href="https://open.kakao.com/o/sObD2U5e"
-                >https://open.kakao.com/o/sObD2U5e</a
-              >
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </body>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
 </html>
