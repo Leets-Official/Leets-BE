@@ -32,11 +32,10 @@ public class ResponseController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/interview")
-    public RedirectView hasInterview(@RequestParam String email, HttpServletResponse response) throws IOException {
+    public RedirectView hasInterview(@RequestParam String email) {
         hasInterview.execute(email);
         RedirectView redirectView = new RedirectView();
-//        redirectView.setUrl("https://www.leets.land");
-        redirectView.setUrl("http://localhost:3000/interview");
+        redirectView.setUrl("https://www.leets.land");
         return redirectView;
     }
 }
