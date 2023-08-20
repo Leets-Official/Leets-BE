@@ -31,10 +31,10 @@ public class SendMailImpl implements SendMail {
     private final MailProvider mailProvider;
     private final ApplicationRepository applicationRepository;
     private final TemplateEngine templateEngine;
-    private static final String PASS_PAPER_TEMPLATE = "pass-paper.html";
-    private static final String FAIL_PAPER_TEMPLATE = "fail-paper.html";
-    private static final String PASS_TEMPLATE = "pass.html";
-    private static final String FAIL_TEMPLATE = "fail.html";
+    private static final String PASS_PAPER_TEMPLATE = "PassPaper.html";
+    private static final String FAIL_PAPER_TEMPLATE = "FailPaper.html";
+    private static final String PASS_TEMPLATE = "Pass.html";
+    private static final String FAIL_TEMPLATE = "Fail.html";
 
     @Value("${target.url.dev}")
     private String LOCAL_TARGET_URL;
