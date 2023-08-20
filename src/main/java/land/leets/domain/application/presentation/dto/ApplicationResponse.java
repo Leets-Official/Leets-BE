@@ -1,6 +1,7 @@
 package land.leets.domain.application.presentation.dto;
 
 import land.leets.domain.application.type.ApplicationStatus;
+import land.leets.domain.application.type.HasInterview;
 import land.leets.domain.application.type.Position;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,6 @@ public class ApplicationResponse {
     private Position position;
     private String career;
     private LocalDateTime fixedInterviewDate;
-    private boolean hasInterview;
+    private HasInterview hasInterview;
     private ApplicationStatus applicationStatus;
 }

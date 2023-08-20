@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static land.leets.domain.application.type.HasInterview.*;
+
 @Service
 @RequiredArgsConstructor
 public class HasInterviewImpl implements HasInterview {
@@ -22,7 +24,7 @@ public class HasInterviewImpl implements HasInterview {
     public Application execute(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Application application = applicationRepository.findByUser_Uid(user.getUid()).orElseThrow(ApplicationNotFoundException::new);
-        application.setHasInterview(true);
+        application.setHasInterview(CHECK);
         return applicationRepository.save(application);
     }
 }

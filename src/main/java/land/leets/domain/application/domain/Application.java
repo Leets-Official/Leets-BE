@@ -3,6 +3,7 @@ package land.leets.domain.application.domain;
 
 import jakarta.persistence.*;
 import land.leets.domain.application.type.ApplicationStatus;
+import land.leets.domain.application.type.HasInterview;
 import land.leets.domain.application.type.Position;
 import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.shared.BaseTimeEntity;
@@ -76,8 +77,10 @@ public class Application extends BaseTimeEntity {
     @Column(nullable = false)
     private String completion;
 
-    @Column(columnDefinition = "tinyint(1)")
-    private boolean hasInterview;
+    @Builder.Default
+    @Column(columnDefinition = "char(10)")
+    @Enumerated(EnumType.STRING)
+    private HasInterview hasInterview = HasInterview.UNCHECK;
 
     @Column
     private LocalDateTime fixedInterviewDate;
