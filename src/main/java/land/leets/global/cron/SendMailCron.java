@@ -13,7 +13,7 @@ public class SendMailCron {
     private final SendMail sendMail;
 
 //    @Scheduled(cron = "0 0 10 4 9 ?")
-    @Scheduled(cron = "0 42 22 20 8 ?")
+    @Scheduled(cron = "0 15 23 20 8 ?")
     public void sendPaperMail() {
         sendMail.execute("paper");
 
