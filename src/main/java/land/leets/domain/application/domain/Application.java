@@ -62,19 +62,19 @@ public class Application extends BaseTimeEntity {
     @Column(nullable = false)
     private String interviewTime;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text(700)")
     private String enhancement;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text(500)")
     private String level;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text(500)")
     private String pros;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text(700)")
     private String goal;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text(500)")
     private String completion;
 
     @Builder.Default
