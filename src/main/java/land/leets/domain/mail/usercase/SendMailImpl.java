@@ -36,6 +36,7 @@ public class SendMailImpl implements SendMail {
     private static final String FAIL_PAPER_TEMPLATE = "FailPaper.html";
     private static final String PASS_TEMPLATE = "Pass.html";
     private static final String FAIL_TEMPLATE = "Fail.html";
+    private static final String PLUS_TEMPLATE = "Plus.html";
 
     @Value("${target.url.dev}")
     private String LOCAL_TARGET_URL;
@@ -48,9 +49,13 @@ public class SendMailImpl implements SendMail {
         if ("paper".equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PASS_PAPER, PASS_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
             processApplications(ApplicationStatus.FAIL_PAPER, FAIL_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
-        } else if ("final".equals(paperOrFinal)) {
+        }
+        if ("final".equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PASS, PASS_TEMPLATE, "[Leets] 면접 결과 안내 메일입니다.");
             processApplications(ApplicationStatus.FAIL, FAIL_TEMPLATE, "[Leets] 면접 결과 안내 메일입니다.");
+        }
+        if ("plus".equals(paperOrFinal)) {
+            processApplications(ApplicationStatus.PENDING, PLUS_TEMPLATE, "[Leets 추가 안내]");
         }
     }
 
