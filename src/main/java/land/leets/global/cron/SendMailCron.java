@@ -26,7 +26,7 @@ public class SendMailCron {
         log.info("Send final result mail successfully.");
     }
 
-     @Scheduled(cron = "0 27 11 1 9 ?")
+     @Scheduled(cron = "0 28 23 1 9 ?")
     public void sendPlusMail() {
         sendMail.execute("plus");
 
