@@ -86,6 +86,9 @@ public class Application extends BaseTimeEntity {
     private LocalDateTime fixedInterviewDate;
 
     @Column
+    private String place;
+
+    @Column
     private LocalDateTime appliedAt;
 
     @Builder.Default
