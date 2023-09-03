@@ -21,4 +21,5 @@ public class ApplicationResponse {
     private LocalDateTime fixedInterviewDate;
     private HasInterview hasInterview;
     private ApplicationStatus applicationStatus;
+    private String phone;
 }

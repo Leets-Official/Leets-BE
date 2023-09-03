@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,11 @@ public class GetAllApplicationImpl implements GetAllApplication {
     @Override
     public List<ApplicationResponse> execute() {
         return applicationRepository.findAllByOrderByAppliedAtDesc().stream()
-                .map(applicationMapper::mappingApplicationToDto).toList();
+                .map(application -> {
+                    String phone = application.getUser().getPhone();
+                    return applicationMapper.mappingApplicationToDto(application, phone);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -28,12 +33,20 @@ public class GetAllApplicationImpl implements GetAllApplication {
         if (position != null) {
             Position filter = Position.valueOf(position.toUpperCase());
             return applicationRepository.findAllByPositionOrderByAppliedAtDesc(filter).stream()
-                    .map(applicationMapper::mappingApplicationToDto).toList();
+                    .map(application -> {
+                        String phone = application.getUser().getPhone();
+                        return applicationMapper.mappingApplicationToDto(application, phone);
+                    })
+                    .collect(Collectors.toList());
         }
 
         SubmitStatus filter = SubmitStatus.valueOf(status.toUpperCase());
         return applicationRepository.findAllBySubmitStatusOrderByAppliedAtDesc(filter).stream()
-                .map(applicationMapper::mappingApplicationToDto).toList();
+                .map(application -> {
+                    String phone = application.getUser().getPhone();
+                    return applicationMapper.mappingApplicationToDto(application, phone);
+                })
+                .collect(Collectors.toList());
 
     }
 }

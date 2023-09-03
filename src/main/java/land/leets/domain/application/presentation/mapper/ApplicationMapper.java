@@ -16,7 +16,7 @@ public interface ApplicationMapper {
     void updateApplicationFromDto(@MappingTarget Application application, StatusRequest request);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    ApplicationResponse mappingApplicationToDto(Application application);
+    ApplicationResponse mappingApplicationToDto(Application application, String phone);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ApplicationDetailsResponse mappingApplicationDetailsToDto(Application application, String phone);
