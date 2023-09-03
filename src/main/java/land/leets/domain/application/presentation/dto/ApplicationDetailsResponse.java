@@ -33,6 +33,7 @@ public class ApplicationDetailsResponse {
     private String completion;
     private HasInterview hasInterview;
     private LocalDateTime fixedInterviewDate;
+    private String place;
     private ApplicationStatus applicationStatus;
     private SubmitStatus submitStatus;
     private LocalDateTime appliedAt;
