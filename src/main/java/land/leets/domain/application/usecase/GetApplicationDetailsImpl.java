@@ -21,7 +21,7 @@ public class GetApplicationDetailsImpl implements GetApplicationDetails{
     public ApplicationDetailsResponse execute(Long id) {
         Application application = applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
         String phone = application.getUser().getPhone();
-        return applicationMapper.mappingApplicationToDto(application, phone);
+        return applicationMapper.mappingApplicationDetailsToDto(application, phone);
     }
 
     @Override
