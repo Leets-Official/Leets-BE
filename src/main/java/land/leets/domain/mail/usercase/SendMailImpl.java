@@ -88,7 +88,7 @@ public class SendMailImpl implements SendMail {
         String time = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));
         context.setVariable("fixedInterviewDate", date + " " + time);
 
-        context.setVariable("interviewPlace", "AI공학관 000호");
+        context.setVariable("interviewPlace", application.getPlace());
     }
 
     private void setContextTheme(Context context) {
