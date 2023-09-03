@@ -12,4 +12,5 @@ public class StatusRequest {
 
     private ApplicationStatus applicationStatus;
     private LocalDateTime fixedInterviewDate;
+    private String place;
 }
