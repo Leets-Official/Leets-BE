@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum HasInterview {
     CHECK("참여"),
-    UNCHECK("불참");
+    UNCHECK("불참"),
+    PENDING("미정");
 
     private String statusKo;
 }

@@ -80,7 +80,7 @@ public class Application extends BaseTimeEntity {
     @Builder.Default
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
-    private HasInterview hasInterview = HasInterview.UNCHECK;
+    private HasInterview hasInterview = HasInterview.PENDING;
 
     @Column
     private LocalDateTime fixedInterviewDate;
