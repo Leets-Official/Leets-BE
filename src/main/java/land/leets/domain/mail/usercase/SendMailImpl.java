@@ -80,9 +80,15 @@ public class SendMailImpl implements SendMail {
 
     private void setPaperContextVariables(Context context, Application application) {
         boolean isProd = Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.equalsIgnoreCase("prod"));
-        UriComponents url = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
-                .queryParam("email", application.getUser().getEmail()).build();
-        context.setVariable("url", url);
+        UriComponents attendUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
+                .queryParam("email", application.getUser().getEmail())
+                .queryParam("attend", true).build();
+        context.setVariable("attendUrl", attendUrl);
+
+        UriComponents absentUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
+                .queryParam("email", application.getUser().getEmail())
+                .queryParam("attend", false).build();
+        context.setVariable("absentUrl", absentUrl);
 
         String date = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.KOREAN));
         String time = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));

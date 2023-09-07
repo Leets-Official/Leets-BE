@@ -21,10 +21,14 @@ public class HasInterviewImpl implements HasInterview {
 
     @Transactional
     @Override
-    public Application execute(String email) {
+    public Application execute(String email, boolean attend) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         Application application = applicationRepository.findByUser_Uid(user.getUid()).orElseThrow(ApplicationNotFoundException::new);
-        application.setHasInterview(CHECK);
+        if (attend) {
+            application.setHasInterview(CHECK);
+        } else {
+            application.setHasInterview(UNCHECK);
+        }
         return applicationRepository.save(application);
     }
 }
