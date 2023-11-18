@@ -8,9 +8,6 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  AWS_S3_BUCKET: gitactionbucket
-  AWS_CODE_DEPLOY_APPLICATION: cicd-test-cd
-  AWS_CODE_DEPLOY_GROUP: cicd-test-cd-group
   RESOURCE_PATH: ./src/main/resources/application.yml
 
 jobs:
@@ -56,15 +53,30 @@ jobs:
 
       - name: gradlew에 실행 권한 부여
         run: chmod +x ./gradlew
+
       - name: 프로젝트 빌드
         run: ./gradlew clean build -x test
-      - name: AWS credential 설정
-        uses: aws-actions/configure-aws-credentials@v1
+
+      - name: DockerHub 로그인
+        uses: docker/login-action@v1
         with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.CICD_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.CICD_SECRET_KEY }}
-      - name: S3에 업로드
-        run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://$AWS_S3_BUCKET/cicdtest/$GITHUB_SHA.zip --source .
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker image Build 및 Push
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+
       - name: EC2에 배포
-        run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=$AWS_S3_BUCKET,key=cicdtest/$GITHUB_SHA.zip,bundleType=zip
+        uses: appleboy/ssh-action@master
+        id: deploy
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          envs: GITHUB_SHA
+        script: |
+          sudo docker rm -f $(docker ps -qa)
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}-dev
+          docker image prune -f
