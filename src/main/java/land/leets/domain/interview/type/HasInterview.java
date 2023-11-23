@@ -1,4 +1,4 @@
-package land.leets.domain.application.type;
+package land.leets.domain.interview.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

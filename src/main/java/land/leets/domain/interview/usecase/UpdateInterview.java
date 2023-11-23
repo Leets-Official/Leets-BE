@@ -1,4 +1,4 @@
-package land.leets.domain.application.usecase;
+package land.leets.domain.interview.usecase;
 
 import land.leets.domain.application.domain.Application;
 
