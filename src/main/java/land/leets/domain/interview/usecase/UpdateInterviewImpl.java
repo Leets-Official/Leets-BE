@@ -1,8 +1,10 @@
 package land.leets.domain.interview.usecase;
 
-import land.leets.domain.application.domain.Application;
-import land.leets.domain.application.domain.repository.ApplicationRepository;
-import land.leets.domain.application.exception.ApplicationNotFoundException;
+import land.leets.domain.interview.domain.Interview;
+import land.leets.domain.interview.domain.repository.InterviewRepository;
+import land.leets.domain.interview.presentation.dto.req.FixedInterviewRequest;
+import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest;
+import land.leets.domain.interview.presentation.mapper.InterviewMapper;
 import land.leets.domain.user.domain.User;
 import land.leets.domain.user.domain.repository.UserRepository;
 import land.leets.domain.user.exception.UserNotFoundException;
@@ -10,25 +12,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static land.leets.domain.application.type.HasInterview.*;
-
 @Service
 @RequiredArgsConstructor
-public class HasInterviewImpl implements HasInterview {
+public class UpdateInterviewImpl implements UpdateInterview {
 
     private final UserRepository userRepository;
-    private final ApplicationRepository applicationRepository;
+    private final InterviewRepository interviewRepository;
+    private final InterviewMapper interviewMapper;
 
     @Transactional
     @Override
-    public Application execute(String email, boolean attend) {
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        Application application = applicationRepository.findByUser_Uid(user.getUid()).orElseThrow(ApplicationNotFoundException::new);
-        if (attend) {
-            application.setHasInterview(CHECK);
-        } else {
-            application.setHasInterview(UNCHECK);
-        }
-        return applicationRepository.save(application);
+    public Interview byUser(InterviewAttendanceRequest request) {
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
+        Interview interview = interviewRepository.findByApplication_User(user).orElseThrow(); //TODO 예외
+        interviewMapper.updateInterviewFromDto(interview, request);
+        return interviewRepository.save(interview);
+    }
+
+    @Override
+    public Interview byAdmin(Long id, FixedInterviewRequest request) {
+        Interview interview = interviewRepository.findById(id).orElseThrow(); //TODO 예외
+        interviewMapper.updateInterviewFromDto(interview, request);
+        return interviewRepository.save(interview);
     }
 }

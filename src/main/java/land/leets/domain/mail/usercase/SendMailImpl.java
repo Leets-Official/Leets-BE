@@ -3,6 +3,8 @@ package land.leets.domain.mail.usercase;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
+import land.leets.domain.interview.domain.Interview;
+import land.leets.domain.interview.domain.repository.InterviewRepository;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class SendMailImpl implements SendMail {
     private final Environment environment;
     private final MailProvider mailProvider;
     private final ApplicationRepository applicationRepository;
+    private final InterviewRepository interviewRepository;
     private final TemplateEngine templateEngine;
     private static final String PASS_PAPER_TEMPLATE = "PassPaper.html";
     private static final String FAIL_PAPER_TEMPLATE = "FailPaper.html";
@@ -90,11 +93,13 @@ public class SendMailImpl implements SendMail {
                 .queryParam("attend", false).build();
         context.setVariable("absentUrl", absentUrl);
 
-        String date = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.KOREAN));
-        String time = application.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));
+        Interview interview = interviewRepository.findByApplication(application).orElseThrow();//TODO 예외
+
+        String date = interview.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.KOREAN));
+        String time = interview.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));
         context.setVariable("fixedInterviewDate", date + " " + time);
 
-        context.setVariable("interviewPlace", application.getPlace());
+        context.setVariable("interviewPlace", interview.getPlace());
     }
 
     private void setContextTheme(Context context) {
