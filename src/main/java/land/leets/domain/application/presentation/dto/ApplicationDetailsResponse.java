@@ -1,9 +1,9 @@
 package land.leets.domain.application.presentation.dto;
 
 import land.leets.domain.application.type.ApplicationStatus;
-import land.leets.domain.application.type.HasInterview;
 import land.leets.domain.application.type.Position;
 import land.leets.domain.application.type.SubmitStatus;
+import land.leets.domain.interview.presentation.dto.res.InterviewDetailsResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -31,11 +31,9 @@ public class ApplicationDetailsResponse {
     private String pros;
     private String goal;
     private String completion;
-    private HasInterview hasInterview;
-    private LocalDateTime fixedInterviewDate;
-    private String place;
     private ApplicationStatus applicationStatus;
     private SubmitStatus submitStatus;
     private LocalDateTime appliedAt;
     private LocalDateTime updatedAt;
+    private InterviewDetailsResponse interview;
 }
