@@ -5,6 +5,7 @@ import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.domain.repository.InterviewRepository;
+import land.leets.domain.interview.exception.InterviewNotFoundException;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
@@ -93,7 +94,7 @@ public class SendMailImpl implements SendMail {
                 .queryParam("attend", false).build();
         context.setVariable("absentUrl", absentUrl);
 
-        Interview interview = interviewRepository.findByApplication(application).orElseThrow();//TODO 예외
+        Interview interview = interviewRepository.findByApplication(application).orElseThrow(InterviewNotFoundException::new);
 
         String date = interview.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.KOREAN));
         String time = interview.getFixedInterviewDate().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));

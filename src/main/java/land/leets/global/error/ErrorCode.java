@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-
+    INTERVIEW_NOT_FOUND(404, "INTERVIEW_NOT_FOUND", "면접 정보를 찾을 수 없습니다."),
     APPLICATION_ALREADY_EXISTS(409, "APPLICATION_ALREADY_EXISTS", "이미 지원한 지원자입니다."),
     PERMISSION_DENIED(403, "PERMISSION_DENIED", "권한이 없습니다."),
     APPLICATION_NOT_FOUND(404, "APPLICATION_NOT_FOUND", "신청서를 찾을 수 없습니다."),
