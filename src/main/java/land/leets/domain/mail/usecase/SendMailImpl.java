@@ -47,7 +47,7 @@ public class SendMailImpl implements SendMail {
     private String SERVER_TARGET_URL;
 
     @Override
-    public void execute(String paperOrFinal) {
+    public boolean execute(String paperOrFinal) {
         if ("paper".equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PASS_PAPER, PASS_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
             processApplications(ApplicationStatus.FAIL_PAPER, FAIL_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
@@ -59,6 +59,7 @@ public class SendMailImpl implements SendMail {
         if ("plus".equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PENDING, PLUS_TEMPLATE, "[Leets 추가 안내]");
         }
+        return true;
     }
 
     private void processApplications(ApplicationStatus status, String templateName, String mailTitle) {
