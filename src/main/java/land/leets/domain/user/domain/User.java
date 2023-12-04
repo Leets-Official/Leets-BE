@@ -35,4 +35,9 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String sub;
+
+    public void updateUserInfo(String sid, String phone) {
+        this.sid = sid;
+        this.phone = phone;
+    }
 }

@@ -28,8 +28,7 @@ public class CreateApplicationImpl implements CreateApplication {
             throw new ApplicationAlreadyExistsException();
         }
 
-        user.setSid(request.getSid());
-        user.setPhone(request.getPhone());
+        user.updateUserInfo(request.getSid(), request.getPhone());
         userRepository.save(user);
 
         LocalDateTime appliedAt = null;
