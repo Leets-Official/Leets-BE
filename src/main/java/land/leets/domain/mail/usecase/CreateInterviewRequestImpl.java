@@ -2,6 +2,7 @@ package land.leets.domain.mail.usecase;
 
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest;
 import land.leets.domain.interview.type.HasInterview;
+import land.leets.domain.mail.exception.PatchRequestFailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -42,7 +43,7 @@ public class CreateInterviewRequestImpl implements CreateInterviewRequest {
                     .bodyToMono(String.class)
                     .block();
         } catch (WebClientResponseException ex) {
-            throw new IllegalArgumentException();
+            throw new PatchRequestFailException();
         }
     }
 }
