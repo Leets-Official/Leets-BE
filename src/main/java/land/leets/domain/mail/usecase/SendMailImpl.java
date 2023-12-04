@@ -29,6 +29,10 @@ import java.util.*;
 @Transactional
 public class SendMailImpl implements SendMail {
 
+    public static final String PAPER = "paper";
+    public static final String FINAL = "final";
+    public static final String PLUS = "plus";
+    public static final String NAME = "name";
     private final Environment environment;
     private final MailProvider mailProvider;
     private final ApplicationRepository applicationRepository;
@@ -48,15 +52,15 @@ public class SendMailImpl implements SendMail {
 
     @Override
     public boolean execute(String paperOrFinal) {
-        if ("paper".equals(paperOrFinal)) {
+        if (PAPER.equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PASS_PAPER, PASS_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
             processApplications(ApplicationStatus.FAIL_PAPER, FAIL_PAPER_TEMPLATE, "[Leets] 서류 결과 안내 메일입니다.");
         }
-        if ("final".equals(paperOrFinal)) {
+        if (FINAL.equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PASS, PASS_TEMPLATE, "[Leets] 면접 결과 안내 메일입니다.");
             processApplications(ApplicationStatus.FAIL, FAIL_TEMPLATE, "[Leets] 면접 결과 안내 메일입니다.");
         }
-        if ("plus".equals(paperOrFinal)) {
+        if (PLUS.equals(paperOrFinal)) {
             processApplications(ApplicationStatus.PENDING, PLUS_TEMPLATE, "[Leets 추가 안내]");
         }
         return true;
@@ -77,7 +81,7 @@ public class SendMailImpl implements SendMail {
 
     private Context getContext(String name) {
         Context context = new Context();
-        context.setVariable("name", name);
+        context.setVariable(NAME, name);
         return context;
     }
 
