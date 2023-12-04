@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static land.leets.domain.application.type.SubmitStatus.SUBMIT;
+
 @Service
 @RequiredArgsConstructor
 public class UpdateApplicationImpl implements UpdateApplication {
@@ -31,12 +33,8 @@ public class UpdateApplicationImpl implements UpdateApplication {
         Application application = applicationRepository.findByUser_Uid(uid).orElseThrow(ApplicationNotFoundException::new);
         applicationMapper.updateApplicationFromDto(application, request);
 
-        LocalDateTime appliedAt = null;
-        if (request.getSubmitStatus() == SubmitStatus.SUBMIT) {
-            appliedAt = LocalDateTime.now();
-        }
-        application.setAppliedAt(appliedAt);
-
+        LocalDateTime appliedAt = request.getSubmitStatus() == SUBMIT ? LocalDateTime.now() : null;
+        application.updateInfo(appliedAt);
         return applicationRepository.save(application);
     }
 }

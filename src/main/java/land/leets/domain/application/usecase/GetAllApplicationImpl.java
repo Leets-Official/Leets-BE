@@ -27,7 +27,7 @@ public class GetAllApplicationImpl implements GetAllApplication {
                     String phone = application.getUser().getPhone();
                     return applicationMapper.mappingToDto(application, interview, phone);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class GetAllApplicationImpl implements GetAllApplication {
                         String phone = application.getUser().getPhone();
                         return applicationMapper.mappingToDto(application, interview, phone);
                     })
-                    .collect(Collectors.toList());
+                    .toList();
         }
 
         SubmitStatus filter = SubmitStatus.valueOf(status.toUpperCase());
@@ -51,7 +51,6 @@ public class GetAllApplicationImpl implements GetAllApplication {
                     String phone = application.getUser().getPhone();
                     return applicationMapper.mappingToDto(application, interview, phone);
                 })
-                .collect(Collectors.toList());
-
+                .toList();
     }
 }
