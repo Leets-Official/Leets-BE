@@ -24,7 +24,7 @@ public class UpdateInterviewImpl implements UpdateInterview {
     @Transactional
     @Override
     public Interview byUser(InterviewAttendanceRequest request) {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(request.getUid()).orElseThrow(UserNotFoundException::new);
         Interview interview = interviewRepository.findByApplication_User(user).orElseThrow(InterviewNotFoundException::new);
         interviewMapper.updateInterviewFromDto(interview, request);
         return interviewRepository.save(interview);

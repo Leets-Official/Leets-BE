@@ -1,9 +1,8 @@
 package land.leets.global.cron;
 
-import land.leets.domain.mail.usercase.SendMail;
+import land.leets.domain.mail.usecase.SendMail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Slf4j

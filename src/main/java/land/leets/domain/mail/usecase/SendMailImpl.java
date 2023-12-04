@@ -1,4 +1,4 @@
-package land.leets.domain.mail.usercase;
+package land.leets.domain.mail.usecase;
 
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
@@ -6,6 +6,7 @@ import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.domain.repository.InterviewRepository;
 import land.leets.domain.interview.exception.InterviewNotFoundException;
+import land.leets.domain.interview.type.HasInterview;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,7 @@ import org.thymeleaf.context.Context;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 
 @RequiredArgsConstructor
@@ -83,15 +81,17 @@ public class SendMailImpl implements SendMail {
     }
 
     private void setPaperContextVariables(Context context, Application application) {
+        UUID uid = application.getUser().getUid();
+
         boolean isProd = Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.equalsIgnoreCase("prod"));
         UriComponents attendUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
-                .queryParam("email", application.getUser().getEmail())
-                .queryParam("attend", true).build();
+                .queryParam("uid", uid)
+                .queryParam("hasInterview", HasInterview.CHECK).build();
         context.setVariable("attendUrl", attendUrl);
 
         UriComponents absentUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
-                .queryParam("email", application.getUser().getEmail())
-                .queryParam("attend", false).build();
+                .queryParam("uid", uid)
+                .queryParam("hasInterview", HasInterview.UNCHECK).build();
         context.setVariable("absentUrl", absentUrl);
 
         Interview interview = interviewRepository.findByApplication(application).orElseThrow(InterviewNotFoundException::new);
