@@ -5,7 +5,6 @@ import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.exception.ApplicationNotFoundException;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
 import land.leets.domain.application.presentation.mapper.ApplicationMapper;
-import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.user.usecase.UpdateUser;
 import lombok.RequiredArgsConstructor;

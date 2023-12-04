@@ -35,7 +35,7 @@ public class InterviewController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping()
+    @PatchMapping
     public Interview update(@RequestBody InterviewAttendanceRequest request) {
         return updateInterview.byUser(request);
     }
