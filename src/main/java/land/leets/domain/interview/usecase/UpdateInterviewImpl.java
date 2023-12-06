@@ -2,6 +2,7 @@ package land.leets.domain.interview.usecase;
 
 import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.domain.repository.InterviewRepository;
+import land.leets.domain.interview.exception.InterviewNotFoundException;
 import land.leets.domain.interview.presentation.dto.req.FixedInterviewRequest;
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest;
 import land.leets.domain.interview.presentation.mapper.InterviewMapper;
@@ -23,15 +24,15 @@ public class UpdateInterviewImpl implements UpdateInterview {
     @Transactional
     @Override
     public Interview byUser(InterviewAttendanceRequest request) {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
-        Interview interview = interviewRepository.findByApplication_User(user).orElseThrow(); //TODO 예외
+        User user = userRepository.findById(request.getUid()).orElseThrow(UserNotFoundException::new);
+        Interview interview = interviewRepository.findByApplication_User(user).orElseThrow(InterviewNotFoundException::new);
         interviewMapper.updateInterviewFromDto(interview, request);
         return interviewRepository.save(interview);
     }
 
     @Override
     public Interview byAdmin(Long id, FixedInterviewRequest request) {
-        Interview interview = interviewRepository.findById(id).orElseThrow(); //TODO 예외
+        Interview interview = interviewRepository.findById(id).orElseThrow(InterviewNotFoundException::new);
         interviewMapper.updateInterviewFromDto(interview, request);
         return interviewRepository.save(interview);
     }

@@ -87,4 +87,8 @@ public class Application extends BaseTimeEntity {
     @Column(columnDefinition = "char(10)")
     @Enumerated(EnumType.STRING)
     private SubmitStatus submitStatus;
+
+    public void updateInfo(LocalDateTime appliedAt) {
+        this.appliedAt = appliedAt;
+    }
 }
