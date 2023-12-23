@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class GetAllApplicationImpl implements GetAllApplication {
                     String phone = application.getUser().getPhone();
                     return applicationMapper.mappingToDto(application, interview, phone);
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class GetAllApplicationImpl implements GetAllApplication {
                         String phone = application.getUser().getPhone();
                         return applicationMapper.mappingToDto(application, interview, phone);
                     })
-                    .collect(Collectors.toList());
+                    .toList();
         }
 
         SubmitStatus filter = SubmitStatus.valueOf(status.toUpperCase());
@@ -52,7 +51,6 @@ public class GetAllApplicationImpl implements GetAllApplication {
                     String phone = application.getUser().getPhone();
                     return applicationMapper.mappingToDto(application, interview, phone);
                 })
-                .collect(Collectors.toList());
-
+                .toList();
     }
 }

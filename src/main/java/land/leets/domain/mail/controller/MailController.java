@@ -5,10 +5,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import land.leets.domain.mail.usercase.SendMail;
+import land.leets.domain.mail.usecase.SendMail;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +28,8 @@ public class MailController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PostMapping()
-    public boolean sendMail(@RequestParam(name = "paper-or-final") String paperOrFinal) {
-        sendMail.execute(paperOrFinal);
-        return true;
+    @PostMapping
+    public boolean sendMail(@RequestParam String paperOrFinal) {
+        return sendMail.execute(paperOrFinal);
     }
 }
