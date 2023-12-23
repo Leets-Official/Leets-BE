@@ -57,6 +57,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           script: |
             cd server
-            docker-compose leets-be down
-            docker-compose leets-be pull
-            docker-compose leets-be up -d
+            docker-compose docker-compose.yml down
+            docker-compose docker-compose.yml pull
+            docker-compose docker-compose.yml up -d
