@@ -12,15 +12,17 @@ import land.leets.global.error.ErrorResponse;
 import land.leets.global.jwt.JwtProvider;
 import land.leets.global.jwt.dto.JwtResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class AuthController {
     private final AuthService authService;
     private final JwtProvider jwtProvider;
@@ -39,5 +41,10 @@ public class AuthController {
         String refreshToken = this.jwtProvider.generateToken(user.getUid(), user.getEmail(), AuthRole.ROLE_USER, true);
 
         return new JwtResponse(accessToken, refreshToken);
+    }
+
+    @GetMapping("/health-check")
+    public ResponseEntity<Void> checkHealthStatus() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

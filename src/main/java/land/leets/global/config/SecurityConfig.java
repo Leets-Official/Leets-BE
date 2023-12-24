@@ -51,6 +51,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 .requestMatchers(CorsUtils::isCorsRequest).permitAll()
+
+                .requestMatchers(HttpMethod.GET,"/health-check").permitAll()
+
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
 
                 .requestMatchers("/oauth2/**", "/auth/**").permitAll()
@@ -70,6 +73,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/application/me").hasAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers(HttpMethod.GET,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.PATCH,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+
+                .requestMatchers(HttpMethod.GET,"/interview").permitAll()
+                .requestMatchers(HttpMethod.PATCH,"/interview/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
                 .requestMatchers(HttpMethod.POST,"/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
