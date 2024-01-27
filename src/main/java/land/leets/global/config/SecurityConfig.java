@@ -3,7 +3,8 @@ package land.leets.global.config;
 import land.leets.domain.auth.exception.PermissionDeniedException;
 import land.leets.domain.shared.AuthRole;
 import land.leets.global.filter.ExceptionHandleFilter;
-import land.leets.global.jwt.*;
+import land.leets.global.jwt.JwtFilter;
+import land.leets.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(CorsUtils::isCorsRequest).permitAll()
 
-                .requestMatchers(HttpMethod.GET,"/health-check").permitAll()
+                .requestMatchers(HttpMethod.GET, "/health-check").permitAll()
 
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
 
@@ -61,23 +62,25 @@ public class SecurityConfig {
                 .requestMatchers("/oauth2/authorization/*").permitAll()
 
                 .requestMatchers("/user/login", "/admin/login").permitAll()
-                .requestMatchers("/user/refresh","/admin/refresh").permitAll()
+                .requestMatchers("/user/refresh", "/admin/refresh").permitAll()
 
                 .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers("/admin/me").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
                 .requestMatchers("/interview").permitAll()
-                .requestMatchers(HttpMethod.GET,"/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
-                .requestMatchers(HttpMethod.POST,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.PATCH,"/application").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.GET,"/application/me").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.GET,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
-                .requestMatchers(HttpMethod.PATCH,"/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.GET, "/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.POST, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers(HttpMethod.PATCH, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers(HttpMethod.GET, "/application/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+                .requestMatchers(HttpMethod.GET, "/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.PATCH, "/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers(HttpMethod.GET,"/interview").permitAll()
-                .requestMatchers(HttpMethod.PATCH,"/interview/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.GET, "/interview").permitAll()
+                .requestMatchers(HttpMethod.PATCH, "/interview/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers(HttpMethod.POST,"/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                .requestMatchers("/comments/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+
+                .requestMatchers(HttpMethod.POST, "/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
                 .anyRequest().authenticated();
 
