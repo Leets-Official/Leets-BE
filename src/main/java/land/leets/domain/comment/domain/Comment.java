@@ -1,12 +1,16 @@
-package land.leets.domain.comment;
+package land.leets.domain.comment.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import land.leets.domain.admin.domain.Admin;
 import land.leets.domain.shared.BaseTimeEntity;
+import lombok.*;
 
+@Entity(name = "comments")
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Comment extends BaseTimeEntity {
 
     @Id
@@ -14,8 +18,11 @@ public class Comment extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String content;
+    private Long applicationId;
 
     @Column(nullable = false)
+    private String content;
+
+    @OneToOne
     private Admin admin;
 }
