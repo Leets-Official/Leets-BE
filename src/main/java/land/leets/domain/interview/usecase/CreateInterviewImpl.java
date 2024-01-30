@@ -1,6 +1,11 @@
-package land.leets.domain.mail.usecase;
+package land.leets.domain.interview.usecase;
 
+import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.domain.repository.ApplicationRepository;
+import land.leets.domain.application.exception.ApplicationNotFoundException;
+import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest;
+import land.leets.domain.interview.presentation.dto.req.InterviewRequest;
 import land.leets.domain.interview.type.HasInterview;
 import land.leets.domain.mail.exception.PatchRequestFailException;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +24,9 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CreateInterviewRequestImpl implements CreateInterviewRequest {
+public class CreateInterviewImpl implements CreateInterview {
     private final Environment environment;
+    private final ApplicationRepository applicationRepository;
 
     @Value("${target.url.dev}")
     private String TARGET_URI_DEV;
@@ -45,6 +51,17 @@ public class CreateInterviewRequestImpl implements CreateInterviewRequest {
         } catch (WebClientResponseException ex) {
             throw new PatchRequestFailException();
         }
+    }
+
+    @Override
+    public Interview execute(InterviewRequest request) {
+        Application application = applicationRepository.findById(request.getApplicationId())
+                .orElseThrow(ApplicationNotFoundException::new);
+        return Interview.builder()
+                .application(application)
+                .fixedInterviewDate(request.getFixedInterviewDate())
+                .place(request.getPlace())
+                .build();
     }
 }
 
