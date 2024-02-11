@@ -52,7 +52,7 @@ public class ApplicationController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PatchMapping()
+    @PatchMapping
     public Application update(@AuthenticationPrincipal AuthDetails authDetails, @RequestBody ApplicationRequest request) {
         return updateApplication.execute(authDetails, request);
     }
@@ -65,7 +65,7 @@ public class ApplicationController {
             @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping()
+    @GetMapping
     public List<ApplicationResponse> get(@RequestParam(required = false) String position,
                                          @RequestParam(required = false) String status) {
         if (position == null && status == null) return getApplication.execute();
