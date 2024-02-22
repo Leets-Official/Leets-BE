@@ -36,7 +36,7 @@ public class PortfolioController {
         return createPortfolio.execute(request);
     }
 
-    @Operation(summary = "(관리자) 포트폴리오 조회", description = "포트폴리오를 조회합니다.")
+    @Operation(summary = "(비로그인) 포트폴리오 조회", description = "포트폴리오를 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
