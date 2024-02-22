@@ -58,6 +58,6 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd server
-            docker-compose -f docker-compose.yml down leets-be
-            docker-compose -f docker-compose.yml pull leets-be
-            docker-compose -f docker-compose.yml up -d leets-be
+            docker compose -f docker-compose.yml down leets-be
+            docker compose -f docker-compose.yml pull leets-be
+            docker compose -f docker-compose.yml up -d leets-be
