@@ -71,3 +71,6 @@ target:
   url:
     dev: ${TARGET_URL_DEV}
     prod: ${TARGET_URL_PROD}
+
+image:
+  path: ${IMAGE_PATH}
