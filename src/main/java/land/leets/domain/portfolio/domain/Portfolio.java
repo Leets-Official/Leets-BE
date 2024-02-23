@@ -39,6 +39,9 @@ public class Portfolio extends BaseTimeEntity {
     private ProjectType type;
 
     @Column(nullable = false)
+    private ProjectScope scope;
+
+    @Column(nullable = false)
     private LocalDate startDate;
 
     @Column(nullable = false)

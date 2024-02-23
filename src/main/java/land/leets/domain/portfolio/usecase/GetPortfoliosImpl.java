@@ -1,12 +1,14 @@
 package land.leets.domain.portfolio.usecase;
 
 import land.leets.domain.portfolio.domain.Portfolio;
+import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.domain.repository.PortfolioRepository;
 import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import land.leets.domain.portfolio.presentation.mapper.PortfolioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -15,16 +17,28 @@ public class GetPortfoliosImpl implements GetPortfolios {
     private final PortfolioMapper portfolioMapper;
 
     @Override
-    public List<PortfolioResponse> execute(String generation) {
-        if (generation == null){
-            List<Portfolio> portfolios = portfolioRepository.findAllBy();
-            return portfolios.stream()
-                    .map(portfolioMapper::mappingPortfolioToDto)
-                    .toList();
+    public List<List<PortfolioResponse>> execute(String generation) {
+        List<List<PortfolioResponse>> response = new ArrayList<>();
+        if (generation == null) {
+            response.add(getPortfoliosByScope(ProjectScope.FINAL));
+            response.add(getPortfoliosByScope(ProjectScope.TOY));
+            return response;
         }
-        List<Portfolio> portfolios = portfolioRepository.findAllByGeneration(Long.parseLong(generation));
-        return portfolios.stream()
+        response.add(getPortfoliosByGenerationAndScope(Long.parseLong(generation), ProjectScope.FINAL));
+        response.add(getPortfoliosByGenerationAndScope(Long.parseLong(generation), ProjectScope.TOY));
+        return response;
+    }
+
+    private List<PortfolioResponse> getPortfoliosByScope(ProjectScope scope) {
+        return portfolioRepository.findAllByScope(scope).stream()
                 .map(portfolioMapper::mappingPortfolioToDto)
                 .toList();
     }
+
+    private List<PortfolioResponse> getPortfoliosByGenerationAndScope(Long generation, ProjectScope scope) {
+        return portfolioRepository.findAllByGenerationAndScope(generation, scope).stream()
+                .map(portfolioMapper::mappingPortfolioToDto)
+                .toList();
+    }
+
 }

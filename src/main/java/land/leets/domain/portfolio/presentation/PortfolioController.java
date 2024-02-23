@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.presentation.dto.PortfolioRequest;
 import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import land.leets.domain.portfolio.usecase.CreatePortfolio;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,7 +51,7 @@ public class PortfolioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
-    public List<PortfolioResponse> get(@RequestParam(required = false) String generation) {
+    public List<List<PortfolioResponse>>  get(@RequestParam(required = false) String generation) {
         return getPortfolios.execute(generation);
     }
 }

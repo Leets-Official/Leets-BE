@@ -31,6 +31,7 @@ public class CreatePortfolioImpl implements CreatePortfolio {
                 .summary(request.getSummary())
                 .description(request.getDescription())
                 .type(request.getType())
+                .scope(request.getScope())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .contributors(request.getContributors())

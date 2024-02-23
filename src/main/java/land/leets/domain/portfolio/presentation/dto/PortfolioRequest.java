@@ -2,6 +2,7 @@ package land.leets.domain.portfolio.presentation.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import land.leets.domain.contributor.domain.Contributor;
+import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.domain.ProjectType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,9 @@ public class PortfolioRequest {
 
     @NotBlank
     private ProjectType type;
+
+    @NotBlank
+    private ProjectScope scope;
 
     @NotBlank
     private LocalDate startDate;

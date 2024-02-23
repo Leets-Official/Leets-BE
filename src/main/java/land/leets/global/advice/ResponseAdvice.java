@@ -1,5 +1,6 @@
 package land.leets.global.advice;
 
+import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -26,7 +28,9 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest req, ServerHttpResponse res) {
         if (req.getURI().getPath().contains(API_DOCS_PATH)) return body;
         if (req.getURI().getPath().contains(IMAGE_PATH)) return body;
+
         Map<String, Object> updatedResponse = new HashMap<>();
+
         updatedResponse.put("result", body);
         return updatedResponse;
     }
