@@ -69,7 +69,8 @@ public class SecurityConfig {
 
                 .requestMatchers("/interview").permitAll()
 
-                .requestMatchers("/portfolios").permitAll()
+                .requestMatchers("/portfolios/**").permitAll()
+                .requestMatchers("/images/**").permitAll()
 
                 .requestMatchers(HttpMethod.GET, "/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.POST, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())

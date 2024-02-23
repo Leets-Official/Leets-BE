@@ -53,6 +53,8 @@ dependencies {
 
 	// 개발용
 	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	implementation 'commons-io:commons-io:2.15.1'
 }
 
 tasks.named('test') {

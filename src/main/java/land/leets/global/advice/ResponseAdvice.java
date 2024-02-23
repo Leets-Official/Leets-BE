@@ -14,6 +14,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     private static final String API_DOCS_PATH = "/v3/api-docs";
+    private static final String IMAGE_PATH = "/images";
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -24,6 +25,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest req, ServerHttpResponse res) {
         if (req.getURI().getPath().contains(API_DOCS_PATH)) return body;
+        if (req.getURI().getPath().contains(IMAGE_PATH)) return body;
         Map<String, Object> updatedResponse = new HashMap<>();
         updatedResponse.put("result", body);
         return updatedResponse;
