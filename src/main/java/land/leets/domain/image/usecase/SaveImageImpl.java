@@ -1,6 +1,7 @@
 package land.leets.domain.image.usecase;
 
 
+import land.leets.domain.image.exception.ImageSaveFailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,7 @@ public class SaveImageImpl implements SaveImage{
             Files.write(imagePath, pic.getBytes());
             return imageFileName;
         } catch (IOException e) {
-            // 파일 저장 중 예외 발생 시 처리할 내용
-            e.printStackTrace(); // 예외 메시지를 출력하거나 로깅하는 등의 작업을 수행합니다.
-            return "error_occurred"; // 오류 발생 시 반환할 값을 설정합니다.
+            throw new ImageSaveFailException();
         }
     }
 }
