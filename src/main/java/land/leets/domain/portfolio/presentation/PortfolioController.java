@@ -51,7 +51,12 @@ public class PortfolioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
-    public List<List<PortfolioResponse>>  get(@RequestParam(required = false) String generation) {
-        return getPortfolios.execute(generation);
+    public List<List<PortfolioResponse>>  getAll(@RequestParam(required = false) String generation) {
+        return getPortfolios.all(generation);
+    }
+
+    @GetMapping("/{portfolioId}")
+    public PortfolioResponse  get(@PathVariable Long portfolioId) {
+        return getPortfolios.one(portfolioId);
     }
 }

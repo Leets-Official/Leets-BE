@@ -7,5 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface GetPortfolios {
-    List<List<PortfolioResponse>>  execute(String generation);
+    List<List<PortfolioResponse>>  all(String generation);
+
+    PortfolioResponse  one(Long portfolioId);
 }

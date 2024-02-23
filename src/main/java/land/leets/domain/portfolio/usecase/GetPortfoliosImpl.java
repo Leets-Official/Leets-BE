@@ -3,6 +3,7 @@ package land.leets.domain.portfolio.usecase;
 import land.leets.domain.portfolio.domain.Portfolio;
 import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.domain.repository.PortfolioRepository;
+import land.leets.domain.portfolio.exception.PortfolioNotFoundException;
 import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import land.leets.domain.portfolio.presentation.mapper.PortfolioMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class GetPortfoliosImpl implements GetPortfolios {
     private final PortfolioMapper portfolioMapper;
 
     @Override
-    public List<List<PortfolioResponse>> execute(String generation) {
+    public List<List<PortfolioResponse>> all(String generation) {
         List<List<PortfolioResponse>> response = new ArrayList<>();
         if (generation == null) {
             response.add(getPortfoliosByScope(ProjectScope.FINAL));
@@ -27,6 +28,15 @@ public class GetPortfoliosImpl implements GetPortfolios {
         response.add(getPortfoliosByGenerationAndScope(Long.parseLong(generation), ProjectScope.FINAL));
         response.add(getPortfoliosByGenerationAndScope(Long.parseLong(generation), ProjectScope.TOY));
         return response;
+    }
+
+    @Override
+    public PortfolioResponse one(Long portfolioId) {
+        if (!portfolioRepository.existsById(portfolioId)){
+            throw new PortfolioNotFoundException();
+        }
+        Portfolio portfolio = portfolioRepository.findByPortfolioId(portfolioId);
+        return portfolioMapper.mappingPortfolioToDto(portfolio);
     }
 
     private List<PortfolioResponse> getPortfoliosByScope(ProjectScope scope) {
