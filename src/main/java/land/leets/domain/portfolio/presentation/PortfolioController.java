@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.presentation.dto.PortfolioRequest;
 import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
+import land.leets.domain.portfolio.presentation.dto.PortfoliosResponse;
 import land.leets.domain.portfolio.usecase.CreatePortfolio;
 import land.leets.domain.portfolio.usecase.GetPortfolios;
 import land.leets.global.error.ErrorResponse;
@@ -51,7 +52,7 @@ public class PortfolioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
-    public List<List<PortfolioResponse>>  getAll(@RequestParam(required = false) String generation) {
+    public List<List<PortfoliosResponse>>  getAll(@RequestParam(required = false) String generation) {
         return getPortfolios.all(generation);
     }
 

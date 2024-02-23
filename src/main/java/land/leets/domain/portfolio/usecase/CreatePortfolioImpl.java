@@ -41,6 +41,6 @@ public class CreatePortfolioImpl implements CreatePortfolio {
                 .build();
         Portfolio save = portfolioRepository.save(portfolio);
         createContributor.execute(request.getContributors(), save);
-        return portfolioMapper.mappingPortfolioToDto(save);
+        return portfolioMapper.mappingPortfolioToPortfolioResponse(save);
     }
 }
