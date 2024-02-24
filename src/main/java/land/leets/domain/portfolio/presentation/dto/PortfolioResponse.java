@@ -42,6 +42,9 @@ public class PortfolioResponse {
     private LocalDate endDate;
 
     @NotBlank
+    private String serviceUrl;
+
+    @NotBlank
     private String logoImgUrl;
 
     @NotBlank

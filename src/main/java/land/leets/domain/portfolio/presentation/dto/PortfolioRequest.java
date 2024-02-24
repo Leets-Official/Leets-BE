@@ -33,6 +33,9 @@ public class PortfolioRequest {
     private ProjectScope scope;
 
     @NotBlank
+    private String serviceUrl;
+
+    @NotBlank
     private LocalDate startDate;
 
     @NotBlank

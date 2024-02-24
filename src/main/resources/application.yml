@@ -73,4 +73,5 @@ target:
     prod: ${TARGET_URL_PROD}
 
 image:
-  path: ${IMAGE_PATH}
+  path: ${IMAGE_PATH:/home/}
+
