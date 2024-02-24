@@ -34,6 +34,7 @@ public class SaveImageImpl implements SaveImage{
             Files.write(imagePath, pic.getBytes());
             return imageFileName;
         } catch (IOException e) {
+            e.printStackTrace();
             throw new ImageSaveFailException();
         }
     }
