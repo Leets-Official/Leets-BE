@@ -74,4 +74,3 @@ target:
 
 image:
   path: ${IMAGE_PATH:/home/}
-
