@@ -52,6 +52,9 @@ public class Portfolio extends BaseTimeEntity {
     private List<Contributor> contributors = new ArrayList<>();
 
     @Column
+    private String serviceUrl;
+
+    @Column
     private String logoImgUrl;
 
     @Column
