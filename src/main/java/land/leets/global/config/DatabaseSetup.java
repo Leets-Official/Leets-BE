@@ -16,8 +16,5 @@ public class DatabaseSetup implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         jdbcTemplate.execute("ALTER DATABASE leets CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci");
         jdbcTemplate.execute("ALTER TABLE portfolios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-
-        jdbcTemplate.execute("DROP TABLE contributors");
-        jdbcTemplate.execute("DROP TABLE portfolios");
     }
 }
