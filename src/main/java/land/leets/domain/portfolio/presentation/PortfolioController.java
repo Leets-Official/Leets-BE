@@ -10,6 +10,7 @@ import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import land.leets.domain.portfolio.presentation.dto.PortfoliosResponse;
 import land.leets.domain.portfolio.usecase.CreatePortfolio;
 import land.leets.domain.portfolio.usecase.GetPortfolios;
+import land.leets.domain.portfolio.usecase.UpdatePortfolios;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class PortfolioController {
 
     private final CreatePortfolio createPortfolio;
     private final GetPortfolios getPortfolios;
+    private final UpdatePortfolios updatePortfolios;
 
     @Operation(summary = "(관리자) 포트폴리오 추가", description = "포트폴리오를 추가합니다.")
     @ApiResponses({
@@ -53,5 +55,10 @@ public class PortfolioController {
     @GetMapping("/{portfolioId}")
     public PortfolioResponse get(@PathVariable Long portfolioId) {
         return getPortfolios.one(portfolioId);
+    }
+
+    @DeleteMapping("/{portfolioId}")
+    public void delete(@PathVariable Long portfolioId) {
+        updatePortfolios.delete(portfolioId);
     }
 }
