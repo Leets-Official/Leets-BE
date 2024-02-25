@@ -1,7 +1,6 @@
 package land.leets.domain.portfolio.usecase;
 
 import land.leets.domain.contributor.usecase.CreateContributor;
-import land.leets.domain.image.usecase.SaveImage;
 import land.leets.domain.portfolio.domain.Portfolio;
 import land.leets.domain.portfolio.domain.repository.PortfolioRepository;
 import land.leets.domain.portfolio.presentation.dto.PortfolioRequest;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class CreatePortfolioImpl implements CreatePortfolio {
     private final PortfolioRepository portfolioRepository;
     private final PortfolioMapper portfolioMapper;
-    private final SaveImage saveImage;
     private final CreateContributor createContributor;
 
     @Override
