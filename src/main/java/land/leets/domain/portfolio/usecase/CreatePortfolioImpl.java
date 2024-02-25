@@ -9,7 +9,6 @@ import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import land.leets.domain.portfolio.presentation.mapper.PortfolioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +19,7 @@ public class CreatePortfolioImpl implements CreatePortfolio {
     private final CreateContributor createContributor;
 
     @Override
-    public PortfolioResponse execute(PortfolioRequest request, MultipartFile logoImg, MultipartFile coverImg, MultipartFile mainImg)  {
-        String logoImgUrl = saveImage.save(logoImg);
-        String coverImgUrl = saveImage.save(coverImg);
-        String mainImgUrl = saveImage.save(mainImg);
+    public PortfolioResponse execute(PortfolioRequest request) {
 
         Portfolio portfolio = Portfolio.builder()
                 .generation(request.getGeneration())
@@ -35,9 +31,8 @@ public class CreatePortfolioImpl implements CreatePortfolio {
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .contributors(request.getContributors())
-                .logoImgUrl(logoImgUrl)
-                .coverImgUrl(coverImgUrl)
-                .mainImgUrl(mainImgUrl)
+                .logoImgName(request.getLogoImgName())
+                .mainImgName(request.getMainImgName())
                 .build();
         Portfolio save = portfolioRepository.save(portfolio);
         createContributor.execute(request.getContributors(), save);

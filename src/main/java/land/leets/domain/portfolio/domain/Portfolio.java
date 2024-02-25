@@ -2,7 +2,6 @@ package land.leets.domain.portfolio.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import land.leets.domain.admin.domain.Admin;
 import land.leets.domain.contributor.domain.Contributor;
 import land.leets.domain.shared.BaseTimeEntity;
 import lombok.*;
@@ -55,13 +54,10 @@ public class Portfolio extends BaseTimeEntity {
     private String serviceUrl;
 
     @Column
-    private String logoImgUrl;
+    private String logoImgName;
 
     @Column
-    private String coverImgUrl;
-
-    @Column
-    private String mainImgUrl;
+    private String mainImgName;
 
 }
 
