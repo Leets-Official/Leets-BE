@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class ImageController {
     private String imageStoragePath;
     @GetMapping("/{imageName}")
     public ResponseEntity<?> getImage(@PathVariable String imageName) {
-        Resource resource = new FileSystemResource(imageStoragePath + imageName);
+        Resource resource = new ClassPathResource(imageStoragePath + imageName);
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 }
