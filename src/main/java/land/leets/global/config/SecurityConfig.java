@@ -69,9 +69,6 @@ public class SecurityConfig {
 
                 .requestMatchers("/interview").permitAll()
 
-                .requestMatchers("/portfolios/**").permitAll()
-                .requestMatchers("/images/**").permitAll()
-
                 .requestMatchers(HttpMethod.GET, "/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.POST, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
                 .requestMatchers(HttpMethod.PATCH, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
@@ -86,6 +83,9 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.POST, "/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
+                .requestMatchers("/portfolios/**").permitAll()
+                .requestMatchers("/images/**").permitAll()
+            
                 .anyRequest().authenticated();
 
         //oauth2Login
