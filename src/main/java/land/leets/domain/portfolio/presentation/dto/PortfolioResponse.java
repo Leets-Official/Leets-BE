@@ -45,13 +45,10 @@ public class PortfolioResponse {
     private String serviceUrl;
 
     @NotBlank
-    private String logoImgUrl;
+    private String logoImgName;
 
     @NotBlank
-    private String coverImgUrl;
-
-    @NotBlank
-    private String mainImgUrl;
+    private String mainImgName;
 
     @NotBlank
     private List<Contributor> contributors;

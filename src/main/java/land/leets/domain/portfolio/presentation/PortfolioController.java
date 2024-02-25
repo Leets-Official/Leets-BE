@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.presentation.dto.PortfolioRequest;
 import land.leets.domain.portfolio.presentation.dto.PortfolioResponse;
 import land.leets.domain.portfolio.presentation.dto.PortfoliosResponse;
@@ -14,10 +13,8 @@ import land.leets.domain.portfolio.usecase.GetPortfolios;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,11 +33,8 @@ public class PortfolioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping
-    public PortfolioResponse create(@RequestPart PortfolioRequest request,
-                                    @RequestPart(required = false) MultipartFile logoImg,
-                                    @RequestPart(required = false) MultipartFile coverImg,
-                                    @RequestPart(required = false) MultipartFile mainImg) {
-        return createPortfolio.execute(request, logoImg, coverImg, mainImg);
+    public PortfolioResponse create(@RequestBody PortfolioRequest request) {
+        return createPortfolio.execute(request);
     }
 
     @Operation(summary = "(비로그인) 포트폴리오 조회", description = "포트폴리오를 조회합니다.")
@@ -52,12 +46,12 @@ public class PortfolioController {
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
-    public List<List<PortfoliosResponse>>  getAll(@RequestParam(required = false) String generation) {
+    public List<List<PortfoliosResponse>> getAll(@RequestParam(required = false) String generation) {
         return getPortfolios.all(generation);
     }
 
     @GetMapping("/{portfolioId}")
-    public PortfolioResponse  get(@PathVariable Long portfolioId) {
+    public PortfolioResponse get(@PathVariable Long portfolioId) {
         return getPortfolios.one(portfolioId);
     }
 }

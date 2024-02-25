@@ -43,4 +43,10 @@ public class PortfolioRequest {
 
     @NotBlank
     private List<Contributor> contributors;
+
+    @NotBlank
+    private String logoImgName;
+
+    @NotBlank
+    private String mainImgName;
 }
