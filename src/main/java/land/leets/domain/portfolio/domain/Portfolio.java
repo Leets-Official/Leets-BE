@@ -31,7 +31,7 @@ public class Portfolio extends BaseTimeEntity {
     @Column(nullable = false)
     private String summary;
 
-    @Column(nullable = false, columnDefinition = "varchar(5000)")
+    @Column(nullable = false, length = 2000)
     private String description;
 
     @Column(nullable = false)
