@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+<<<<<<< HEAD
+=======
+import org.springframework.core.io.ClassPathResource;
+>>>>>>> 84f8534837ca4de3e44a4f28420c43b470bd7645
 
 @RestController
 @RequiredArgsConstructor
