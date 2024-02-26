@@ -46,17 +46,17 @@ public class Portfolio extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDate endDate;
 
+    @Column(nullable = false)
+    private String serviceUrl;
+
     @OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<Contributor> contributors = new ArrayList<>();
 
-    @Column
-    private String serviceUrl;
-
-    @Column
+    @Column(nullable = false)
     private String logoImgName;
 
-    @Column
+    @Column(nullable = false)
     private String mainImgName;
 
 }

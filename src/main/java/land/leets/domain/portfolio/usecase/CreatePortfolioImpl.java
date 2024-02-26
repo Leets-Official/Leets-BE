@@ -28,6 +28,7 @@ public class CreatePortfolioImpl implements CreatePortfolio {
                 .scope(request.getScope())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
+                .serviceUrl(request.getServiceUrl())
                 .contributors(request.getContributors())
                 .logoImgName(request.getLogoImgName())
                 .mainImgName(request.getMainImgName())
