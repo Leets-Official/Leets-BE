@@ -2,7 +2,6 @@ package land.leets.domain.portfolio.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import land.leets.domain.admin.domain.Admin;
 import land.leets.domain.contributor.domain.Contributor;
 import land.leets.domain.shared.BaseTimeEntity;
 import lombok.*;
@@ -32,7 +31,7 @@ public class Portfolio extends BaseTimeEntity {
     @Column(nullable = false)
     private String summary;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String description;
 
     @Column(nullable = false)
@@ -47,21 +46,18 @@ public class Portfolio extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDate endDate;
 
-    @OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    private String serviceUrl;
+
+    @OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<Contributor> contributors = new ArrayList<>();
 
-    @Column
-    private String serviceUrl;
+    @Column(nullable = false)
+    private String logoImgName;
 
-    @Column
-    private String logoImgUrl;
-
-    @Column
-    private String coverImgUrl;
-
-    @Column
-    private String mainImgUrl;
+    @Column(nullable = false)
+    private String mainImgName;
 
 }
 

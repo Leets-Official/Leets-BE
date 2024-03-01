@@ -3,11 +3,7 @@ package land.leets.domain.contributor.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import land.leets.domain.portfolio.domain.Portfolio;
-import land.leets.domain.portfolio.domain.ProjectType;
-import land.leets.domain.shared.BaseTimeEntity;
 import lombok.*;
-
-import java.time.LocalDate;
 
 @Entity(name = "contributors")
 @Builder
