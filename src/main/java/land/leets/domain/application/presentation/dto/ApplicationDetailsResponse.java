@@ -16,7 +16,6 @@ public class ApplicationDetailsResponse {
     private Long id;
     private String phone;
     private String name;
-    private String gpa;
     private String major;
     private String grade;
     private String project;
