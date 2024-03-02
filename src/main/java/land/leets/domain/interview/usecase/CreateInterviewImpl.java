@@ -4,6 +4,7 @@ import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.exception.ApplicationNotFoundException;
 import land.leets.domain.interview.domain.Interview;
+import land.leets.domain.interview.domain.repository.InterviewRepository;
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest;
 import land.leets.domain.interview.presentation.dto.req.InterviewRequest;
 import land.leets.domain.interview.type.HasInterview;
@@ -27,6 +28,7 @@ import java.util.UUID;
 public class CreateInterviewImpl implements CreateInterview {
     private final Environment environment;
     private final ApplicationRepository applicationRepository;
+    private final InterviewRepository interviewRepository;
 
     @Value("${target.url.dev}")
     private String TARGET_URI_DEV;
@@ -57,12 +59,11 @@ public class CreateInterviewImpl implements CreateInterview {
     public Interview execute(InterviewRequest request) {
         Application application = applicationRepository.findById(request.getApplicationId())
                 .orElseThrow(ApplicationNotFoundException::new);
-        return Interview.builder()
+        Interview interview = Interview.builder()
                 .application(application)
                 .fixedInterviewDate(request.getFixedInterviewDate())
                 .place(request.getPlace())
                 .build();
+        return interviewRepository.save(interview);
     }
 }
-
-
