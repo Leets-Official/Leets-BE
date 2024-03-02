@@ -11,7 +11,6 @@ public class ApplicationRequest {
     private String name;
     private String sid;
     private String phone;
-    private String gpa;
     private String major;
     private String grade;
     private String project;
@@ -21,10 +20,10 @@ public class ApplicationRequest {
     private String career;
     private String interviewDay;
     private String interviewTime;
-    private String enhancement;
-    private String level;
-    private String pros;
-    private String goal;
-    private String completion;
+    private String motive;
+    private String schedule;
+    private String capability;
+    private String conflict;
+    private String passion;
     private SubmitStatus submitStatus;
 }
