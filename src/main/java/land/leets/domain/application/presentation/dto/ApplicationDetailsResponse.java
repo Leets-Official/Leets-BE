@@ -16,7 +16,6 @@ public class ApplicationDetailsResponse {
     private Long id;
     private String phone;
     private String name;
-    private String gpa;
     private String major;
     private String grade;
     private String project;
@@ -26,11 +25,11 @@ public class ApplicationDetailsResponse {
     private String career;
     private String interviewDay;
     private String interviewTime;
-    private String enhancement;
-    private String level;
-    private String pros;
-    private String goal;
-    private String completion;
+    private String motive;
+    private String schedule;
+    private String capability;
+    private String conflict;
+    private String passion;
     private ApplicationStatus applicationStatus;
     private SubmitStatus submitStatus;
     private LocalDateTime appliedAt;

@@ -31,9 +31,6 @@ public class Application extends BaseTimeEntity {
     private String name;
 
     @Column(nullable = false)
-    private String gpa;
-
-    @Column(nullable = false)
     private String major;
 
     @Column(nullable = false)
@@ -61,20 +58,20 @@ public class Application extends BaseTimeEntity {
     @Column(nullable = false)
     private String interviewTime;
 
-    @Column(nullable = false, columnDefinition = "text(700)")
-    private String enhancement;
+    @Column(nullable = false, columnDefinition = "text(600)")
+    private String motive;
 
-    @Column(nullable = false, columnDefinition = "text(500)")
-    private String level;
+    @Column(nullable = false, columnDefinition = "text(600)")
+    private String schedule;
 
-    @Column(nullable = false, columnDefinition = "text(500)")
-    private String pros;
+    @Column(nullable = false, columnDefinition = "text(600)")
+    private String capability;
 
-    @Column(nullable = false, columnDefinition = "text(700)")
-    private String goal;
+    @Column(nullable = false, columnDefinition = "text(600)")
+    private String conflict;
 
-    @Column(nullable = false, columnDefinition = "text(500)")
-    private String completion;
+    @Column(nullable = false, columnDefinition = "text(600)")
+    private String passion;
 
     @Column
     private LocalDateTime appliedAt;
