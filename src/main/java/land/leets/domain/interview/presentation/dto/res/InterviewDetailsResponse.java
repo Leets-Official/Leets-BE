@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 public class InterviewDetailsResponse {
+    private Long id;
     private HasInterview hasInterview;
     private LocalDateTime fixedInterviewDate;
     private String place;

@@ -18,14 +18,7 @@ public class SendMailCron {
 
         log.info("Send paper result mail successfully.");
     }
-
-    @Scheduled(cron = "0 34 1 18 3 ?")
-    public void sendPaperMailTest() {
-        sendMail.execute("paper");
-
-        log.info("Send test paper result mail successfully.");
-    }
-
+    
     @Scheduled(cron = "0 0 18 27 3 ?")
     public void sendFinalMail() {
         sendMail.execute("final");

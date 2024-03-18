@@ -21,5 +21,6 @@ public interface ApplicationMapper {
     ApplicationResponse mappingToDto(Application application, InterviewResponse interview, String phone);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", source = "application.id")
     ApplicationDetailsResponse mappingDetailsToDto(Application application, InterviewDetailsResponse interview, String phone);
 }
