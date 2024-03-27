@@ -19,7 +19,7 @@ public class SendMailCron {
         log.info("Send paper result mail successfully.");
     }
 
-    @Scheduled(cron = "0 0 14 27 3 ?")
+    @Scheduled(cron = "0 20 14 27 3 ?")
     public void sendFinalMail() {
         sendMail.execute("final");
 
