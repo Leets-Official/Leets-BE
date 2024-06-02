@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/images")
 public class ImageController {
+    
     @Value("${image.path}")
     private String imageStoragePath;
 

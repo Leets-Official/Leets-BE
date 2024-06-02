@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class CommentResponse {
+
     @NotBlank
     private String content;
 

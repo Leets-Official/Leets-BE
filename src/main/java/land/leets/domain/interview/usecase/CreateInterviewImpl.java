@@ -26,17 +26,17 @@ import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
 public class CreateInterviewImpl implements CreateInterview {
+
     private final Environment environment;
     private final ApplicationRepository applicationRepository;
     private final InterviewRepository interviewRepository;
+    private final WebClient webClient;
 
     @Value("${target.url.dev}")
     private String TARGET_URI_DEV;
 
     @Value("${target.url.prod}")
     private String TARGET_URI_PROD;
-
-    private final WebClient webClient;
 
     @Override
     public void execute(UUID uid, HasInterview hasInterview) {

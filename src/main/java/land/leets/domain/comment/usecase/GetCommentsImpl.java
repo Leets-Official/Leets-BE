@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GetCommentsImpl implements GetComments {
+
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
 

@@ -21,7 +21,11 @@ import org.thymeleaf.context.Context;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.UUID;
 
 
 @RequiredArgsConstructor
@@ -29,20 +33,21 @@ import java.util.*;
 @Transactional
 public class SendMailImpl implements SendMail {
 
-    public static final String PAPER = "paper";
-    public static final String FINAL = "final";
-    public static final String PLUS = "plus";
-    public static final String NAME = "name";
-    private final Environment environment;
-    private final MailProvider mailProvider;
-    private final ApplicationRepository applicationRepository;
-    private final InterviewRepository interviewRepository;
-    private final TemplateEngine templateEngine;
+    private static final String PAPER = "paper";
+    private static final String FINAL = "final";
+    private static final String PLUS = "plus";
+    private static final String NAME = "name";
     private static final String PASS_PAPER_TEMPLATE = "PassPaper.html";
     private static final String FAIL_PAPER_TEMPLATE = "FailPaper.html";
     private static final String PASS_TEMPLATE = "Pass.html";
     private static final String FAIL_TEMPLATE = "Fail.html";
     private static final String PLUS_TEMPLATE = "Plus.html";
+
+    private final Environment environment;
+    private final MailProvider mailProvider;
+    private final ApplicationRepository applicationRepository;
+    private final InterviewRepository interviewRepository;
+    private final TemplateEngine templateEngine;
 
     @Value("${target.url.dev}")
     private String LOCAL_TARGET_URL;

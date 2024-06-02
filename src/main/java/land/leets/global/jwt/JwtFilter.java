@@ -15,6 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer";
     private static final List<String> IGNORE_JWT_FILTER_API = List.of(
@@ -23,6 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
             "/admin/login",
             "/admin/refresh"
     );
+    
     private final JwtProvider jwtProvider;
 
     @Override

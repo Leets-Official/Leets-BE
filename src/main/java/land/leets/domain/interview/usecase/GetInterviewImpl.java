@@ -13,6 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class GetInterviewImpl implements GetInterview {
+
     private final InterviewRepository interviewRepository;
     private final InterviewMapper interviewMapper;
 

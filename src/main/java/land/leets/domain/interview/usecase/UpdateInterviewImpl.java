@@ -30,6 +30,7 @@ public class UpdateInterviewImpl implements UpdateInterview {
         return interviewRepository.save(interview);
     }
 
+    @Transactional
     @Override
     public Interview byAdmin(Long id, FixedInterviewRequest request) {
         Interview interview = interviewRepository.findById(id).orElseThrow(InterviewNotFoundException::new);

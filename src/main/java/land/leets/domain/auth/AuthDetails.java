@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 public class AuthDetails implements UserDetails {
+
     private final UUID uid;
     private final String email;
     private final AuthRole role;

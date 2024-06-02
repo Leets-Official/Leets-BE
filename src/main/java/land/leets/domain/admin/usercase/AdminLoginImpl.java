@@ -11,9 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class AdminLoginImpl implements AdminLogin {
+    
     private final JwtProvider jwtProvider;
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;

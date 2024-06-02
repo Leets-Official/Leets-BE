@@ -3,23 +3,23 @@ package land.leets.global.cron;
 import land.leets.domain.mail.usecase.SendMail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class SendMailCron {
+
     private final SendMail sendMail;
 
-    @Scheduled(cron = "0 0 10 19 3 ?")
+    //    @Scheduled(cron = "0 0 10 19 3 ?")
     public void sendPaperMail() {
         sendMail.execute("paper");
 
         log.info("Send paper result mail successfully.");
     }
 
-    @Scheduled(cron = "0 40 14 27 3 ?")
+    //    @Scheduled(cron = "0 40 14 27 3 ?")
     public void sendFinalMail() {
         sendMail.execute("final");
 
