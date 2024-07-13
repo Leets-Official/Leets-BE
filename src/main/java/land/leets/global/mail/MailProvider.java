@@ -31,7 +31,7 @@ public class MailProvider {
 
 		executor.shutdown();
 		try {
-			if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+			if (!executor.awaitTermination(120, TimeUnit.SECONDS)) {
 				executor.shutdownNow();
 			}
 		} catch (InterruptedException e) {
