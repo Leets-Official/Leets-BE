@@ -61,7 +61,7 @@ public class SendPaperMailImpl implements SendMail {
 				setPaperContextVariables(context, application);
 			}
 			String message = templateEngine.process(templates.get(status), context);
-			MailDto mailDto = sendMail(application.getUser().getEmail(), message);
+			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getEmail()}, message);
 			mailDtos.add(mailDto);
 		}
 		mailProvider.sendEmails(mailDtos);
@@ -102,13 +102,5 @@ public class SendPaperMailImpl implements SendMail {
 		context.setVariable("fixedInterviewDate", date + " " + time);
 
 		context.setVariable("interviewPlace", interview.getPlace());
-	}
-
-	private MailDto sendMail(String toEmail, String message) {
-		return MailDto.builder()
-			.to(new String[] {toEmail})
-			.title(MAIL_TITLE)
-			.body(message)
-			.build();
 	}
 }

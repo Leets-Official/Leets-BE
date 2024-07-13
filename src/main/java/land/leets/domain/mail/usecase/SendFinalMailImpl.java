@@ -37,7 +37,7 @@ public class SendFinalMailImpl implements SendMail {
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());
 			String message = templateEngine.process(templates.get(status), context);
-			MailDto mailDto = sendMail(application.getUser().getEmail(), message);
+			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getEmail()}, message);
 			mailDtos.add(mailDto);
 		}
 		mailProvider.sendEmails(mailDtos);
@@ -49,13 +49,5 @@ public class SendFinalMailImpl implements SendMail {
 		int themeNumber = RANDOM.nextInt(3) + 1;
 		context.setVariable("theme", themeNumber);
 		return context;
-	}
-
-	private MailDto sendMail(String toEmail, String message) {
-		return MailDto.builder()
-			.to(new String[] {toEmail})
-			.title(MAIL_TITLE)
-			.body(message)
-			.build();
 	}
 }
