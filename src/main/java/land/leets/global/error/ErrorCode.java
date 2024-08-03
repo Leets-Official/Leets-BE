@@ -20,6 +20,7 @@ public enum ErrorCode {
     COOKIE_NOT_FOUND(400, "COOKIE_NOT_FOUND", "쿠키를 찾을 수 없습니다."),
     IMAGE_SAVE_FAIL(500, "IMAGE_SAVE_FAIL", "이미지 저장에 실패했습니다."),
     PORTFOLIO_NOT_FOUND(404, "PORTFOLIO_NOT_FOUND", "포트폴리오를 찾을 수 없습니다."),
+    MAIL_SEND_FAIL(500, "MAIL_SEND_FAIL", "메일 전송에 실패했습니다"),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다.");
 
     private final int httpStatus;
