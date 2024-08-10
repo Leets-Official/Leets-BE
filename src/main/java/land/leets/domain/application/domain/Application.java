@@ -62,7 +62,7 @@ public class Application extends BaseTimeEntity {
     private String motive;
 
     @Column(nullable = false, columnDefinition = "text(600)")
-    private String schedule;
+    private String expectation;
 
     @Column(nullable = false, columnDefinition = "text(600)")
     private String capability;
