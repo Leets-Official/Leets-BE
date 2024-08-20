@@ -29,7 +29,13 @@ public class Contributor {
     @Column(nullable = false)
     private Position position;
 
-    @Column(nullable = false)
+    @Column
     private String githubUrl;
+
+    @Column
+    private String profileUrl;
+
+    @Column
+    private String profile;
 }
 
