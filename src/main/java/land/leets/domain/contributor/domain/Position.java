@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum Position {
     BACK_END("BackEnd"),
     FRONT_END("FrontEnd"),
-    DESIGN("Design");
+    BX_BI("BX/BI"),
+    UX_UI("UX/UI");
 
     private final String position;
 }
