@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class SendMailCron {
     private final SendMail sendMail;
 
-    @Scheduled(cron = "0 0 23 8 9 ?")
+    @Scheduled(cron = "0 57 19 7 9 ?")
     public void sendPaperMail() {
         sendMail.execute("paper");
 
