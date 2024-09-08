@@ -23,7 +23,6 @@ public class ExceptionHandleFilter extends OncePerRequestFilter {
         } catch (ServiceException e) {
             sendErrorResponse(response, e.getErrorCode());
         } catch (Exception e) {
-            e.printStackTrace();
             sendErrorResponse(response, ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }

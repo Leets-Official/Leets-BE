@@ -1,35 +1,43 @@
 package land.leets.global.cron;
 
-import land.leets.domain.mail.usecase.SendMail;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import land.leets.domain.application.type.ApplicationStatus;
+import land.leets.domain.mail.usecase.SendFinalMailImpl;
+import land.leets.domain.mail.usecase.SendPaperMailImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class SendMailCron {
-    private final SendMail sendMail;
 
-    @Scheduled(cron = "0 5 20 7 9 ?")
-    public void sendPaperMail() {
-        sendMail.execute("paper");
+	private final SendFinalMailImpl sendFinalMailImpl;
+	private final SendPaperMailImpl sendPaperMailImpl;
 
-        log.info("Send paper result mail successfully.");
-    }
+	@Scheduled(cron = "0 0 23 8 9 ?")
+	public void sendPaperMail() {
+		for (ApplicationStatus status : ApplicationStatus.papers()) {
+			sendPaperMailImpl.execute(status);
+		}
 
-    @Scheduled(cron = "0 0 10 12 9 ?")
-    public void sendFinalMail() {
-        sendMail.execute("final");
+		log.info("Send paper result mail successfully.");
+	}
 
-        log.info("Send final result mail successfully.");
-    }
+	@Scheduled(cron = "0 0 10 12 9 ?")
+	public void sendFinalMail() {
+		for (ApplicationStatus status : ApplicationStatus.finals()) {
+			sendFinalMailImpl.execute(status);
+		}
 
-    //     @Scheduled(cron = "0 28 23 1 9 ?")
-    public void sendPlusMail() {
-        sendMail.execute("plus");
+		log.info("Send final result mail successfully.");
+	}
 
-        log.info("Send final result mail successfully.");
-    }
+	//     @Scheduled(cron = "0 28 23 1 9 ?")
+	public void sendPlusMail() {
+		log.info("Send final result mail successfully.");
+	}
 }
+

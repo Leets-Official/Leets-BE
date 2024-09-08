@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GetAllApplicationImpl implements GetAllApplication {
+
     private final ApplicationRepository applicationRepository;
     private final ApplicationMapper applicationMapper;
     private final GetInterview getInterview;

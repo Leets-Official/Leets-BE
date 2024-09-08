@@ -6,5 +6,6 @@ import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceReque
 
 public interface UpdateInterview {
     Interview byUser(InterviewAttendanceRequest request);
+
     Interview byAdmin(Long id, FixedInterviewRequest request);
 }

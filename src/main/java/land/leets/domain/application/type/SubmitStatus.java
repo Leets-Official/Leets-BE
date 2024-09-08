@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum SubmitStatus {
     NONE("미제출"),
     SAVE("임시저장"),
-    SUBMIT("제출")
-    ;
+    SUBMIT("제출");
 
     private String statusKo;
 }

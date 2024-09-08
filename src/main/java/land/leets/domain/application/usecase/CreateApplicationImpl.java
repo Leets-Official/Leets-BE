@@ -18,6 +18,7 @@ import static land.leets.domain.application.type.SubmitStatus.SUBMIT;
 @Service
 @RequiredArgsConstructor
 public class CreateApplicationImpl implements CreateApplication {
+
     private final ApplicationRepository applicationRepository;
     private final UserRepository userRepository;
 

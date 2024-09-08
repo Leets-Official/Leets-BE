@@ -1,5 +1,7 @@
 package land.leets.domain.mail.usecase;
 
+import land.leets.domain.application.type.ApplicationStatus;
+
 public interface SendMail {
-    boolean execute(String paperOrFinal);
+    void execute(ApplicationStatus status);
 }

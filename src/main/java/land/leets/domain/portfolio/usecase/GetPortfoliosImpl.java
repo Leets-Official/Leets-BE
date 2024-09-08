@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GetPortfoliosImpl implements GetPortfolios {
@@ -33,7 +34,7 @@ public class GetPortfoliosImpl implements GetPortfolios {
 
     @Override
     public PortfolioResponse one(Long portfolioId) {
-        if (!portfolioRepository.existsById(portfolioId)){
+        if (!portfolioRepository.existsById(portfolioId)) {
             throw new PortfolioNotFoundException();
         }
         Portfolio portfolio = portfolioRepository.findByPortfolioId(portfolioId);

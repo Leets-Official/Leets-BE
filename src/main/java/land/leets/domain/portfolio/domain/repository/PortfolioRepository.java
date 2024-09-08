@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
     List<Portfolio> findAllByGenerationAndScope(Long generation, ProjectScope scope);
+
     List<Portfolio> findAllByScopeOrderByGenerationDesc(ProjectScope scope);
+
     Portfolio findByPortfolioId(Long portfolioId);
 }

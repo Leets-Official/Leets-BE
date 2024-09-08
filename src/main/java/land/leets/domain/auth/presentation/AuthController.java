@@ -24,6 +24,7 @@ import java.security.GeneralSecurityException;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
+    
     private final AuthService authService;
     private final JwtProvider jwtProvider;
 

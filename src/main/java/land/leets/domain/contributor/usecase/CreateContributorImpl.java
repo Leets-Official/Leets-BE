@@ -10,8 +10,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CreateContributorImpl implements CreateContributor{
+public class CreateContributorImpl implements CreateContributor {
+
     private final ContributorRepository contributorRepository;
+
     @Override
     public void execute(List<Contributor> request, Portfolio portfolio) {
         for (Contributor contributor : request) {

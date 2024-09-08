@@ -19,10 +19,14 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AuthService {
+    
     private final String googleAuthUrl;
     private final String googleRedirectUrl;
     private final String googleClientId;

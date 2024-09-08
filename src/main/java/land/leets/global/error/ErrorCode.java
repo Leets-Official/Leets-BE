@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+
     PATCH_REQUEST_FAIL(404, "PATCH_REQUEST_FAIL", "PATCH 요청에 실패했습니다."),
     INTERVIEW_NOT_FOUND(404, "INTERVIEW_NOT_FOUND", "면접 정보를 찾을 수 없습니다."),
     APPLICATION_ALREADY_EXISTS(409, "APPLICATION_ALREADY_EXISTS", "이미 지원한 지원자입니다."),
@@ -19,6 +20,7 @@ public enum ErrorCode {
     COOKIE_NOT_FOUND(400, "COOKIE_NOT_FOUND", "쿠키를 찾을 수 없습니다."),
     IMAGE_SAVE_FAIL(500, "IMAGE_SAVE_FAIL", "이미지 저장에 실패했습니다."),
     PORTFOLIO_NOT_FOUND(404, "PORTFOLIO_NOT_FOUND", "포트폴리오를 찾을 수 없습니다."),
+    MAIL_SEND_FAIL(500, "MAIL_SEND_FAIL", "메일 전송에 실패했습니다"),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다.");
 
     private final int httpStatus;

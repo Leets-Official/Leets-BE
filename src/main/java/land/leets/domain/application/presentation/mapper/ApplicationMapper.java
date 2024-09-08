@@ -7,7 +7,12 @@ import land.leets.domain.application.presentation.dto.ApplicationResponse;
 import land.leets.domain.application.presentation.dto.StatusRequest;
 import land.leets.domain.interview.presentation.dto.res.InterviewDetailsResponse;
 import land.leets.domain.interview.presentation.dto.res.InterviewResponse;
-import org.mapstruct.*;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ApplicationMapper {
