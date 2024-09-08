@@ -25,12 +25,14 @@ public class MailProvider {
     public void sendEmails(List<MailDto> mailDtos) {
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
-        mailDtos.forEach(mail -> executor.submit(() -> sendEmail(mail)));
+        mailDtos.forEach(mail ->
+                executor.submit(() -> sendEmail(mail))
+        );
 
         executor.shutdown();
 
         try {
-            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+            if (!executor.awaitTermination(180, TimeUnit.SECONDS)) {
                 executor.shutdownNow();
             }
         } catch (InterruptedException e) {
