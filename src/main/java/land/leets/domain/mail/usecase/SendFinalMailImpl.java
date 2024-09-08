@@ -11,6 +11,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
@@ -28,11 +29,14 @@ public class SendFinalMailImpl implements SendMail {
 	);
 
 	private final Random RANDOM = new Random();
+	private final ApplicationRepository applicationRepository;
 	private final MailProvider mailProvider;
 	private final TemplateEngine templateEngine;
 
 	@Override
-	public void execute(ApplicationStatus status, List<Application> applications) {
+	public void execute(ApplicationStatus status) {
+		List<Application> applications = applicationRepository.findAllByApplicationStatus(status);
+
 		List<MailDto> mailDtos = new ArrayList<>();
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());

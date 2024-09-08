@@ -20,6 +20,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import land.leets.domain.application.domain.Application;
+import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.domain.repository.InterviewRepository;
@@ -28,10 +29,12 @@ import land.leets.domain.interview.type.HasInterview;
 import land.leets.global.mail.MailProvider;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
+@Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class SendPaperMailImpl implements SendMail {
 
 	private static final String MAIL_TITLE = "[Leets] 서류 결과 안내 메일입니다.";
@@ -43,6 +46,7 @@ public class SendPaperMailImpl implements SendMail {
 	private final Random RANDOM = new Random();
 	private final Environment environment;
 	private final InterviewRepository interviewRepository;
+	private final ApplicationRepository applicationRepository;
 	private final TemplateEngine templateEngine;
 	private final MailProvider mailProvider;
 
@@ -53,12 +57,14 @@ public class SendPaperMailImpl implements SendMail {
 	private String SERVER_TARGET_URL;
 
 	@Override
-	public void execute(ApplicationStatus status, List<Application> applications) {
+	public void execute(ApplicationStatus status) {
+		List<Application> applications = applicationRepository.findAllByApplicationStatus(status);
+
 		List<MailDto> mailDtos = new ArrayList<>();
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());
 			if (status == ApplicationStatus.PASS_PAPER) {
-				setPaperContextVariables(context, application);
+				setInterviewContext(context, application);
 			}
 			String message = templateEngine.process(templates.get(status), context);
 			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
@@ -75,7 +81,7 @@ public class SendPaperMailImpl implements SendMail {
 		return context;
 	}
 
-	private void setPaperContextVariables(Context context, Application application) {
+	private void setInterviewContext(Context context, Application application) {
 		boolean isProd = Arrays.stream(environment.getActiveProfiles())
 			.anyMatch(env -> env.equalsIgnoreCase("prod"));
 
@@ -100,7 +106,6 @@ public class SendPaperMailImpl implements SendMail {
 		String time = interview.getFixedInterviewDate()
 			.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));
 		context.setVariable("fixedInterviewDate", date + " " + time);
-
 		context.setVariable("interviewPlace", interview.getPlace());
 	}
 }
