@@ -7,7 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Position {
     DEV("개발"),
-    DESIGN("디자인");
+    DESIGN("디자인"),
+    BX_BI("BX/BI"),
+    UX_UI("UX/UI");
 
-    private String statusKo;
+    private final String statusKo;
 }

@@ -61,7 +61,7 @@ public class SendPaperMailImpl implements SendMail {
 				setPaperContextVariables(context, application);
 			}
 			String message = templateEngine.process(templates.get(status), context);
-			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getEmail()}, message);
+			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
 			mailDtos.add(mailDto);
 		}
 		mailProvider.sendEmails(mailDtos);

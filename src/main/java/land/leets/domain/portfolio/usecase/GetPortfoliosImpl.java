@@ -42,7 +42,7 @@ public class GetPortfoliosImpl implements GetPortfolios {
     }
 
     private List<PortfoliosResponse> getPortfoliosByScope(ProjectScope scope) {
-        return portfolioRepository.findAllByScope(scope).stream()
+        return portfolioRepository.findAllByScopeOrderByGenerationDesc(scope).stream()
                 .map(portfolioMapper::mappingPortfolioToPortfoliosResponse)
                 .toList();
     }

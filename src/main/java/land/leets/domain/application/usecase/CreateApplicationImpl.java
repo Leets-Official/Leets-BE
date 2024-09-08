@@ -46,7 +46,7 @@ public class CreateApplicationImpl implements CreateApplication {
                 .interviewDay(request.getInterviewDay())
                 .interviewTime(request.getInterviewTime())
                 .motive(request.getMotive())
-                .schedule(request.getSchedule())
+                .expectation(request.getExpectation())
                 .capability(request.getCapability())
                 .conflict(request.getConflict())
                 .passion(request.getPassion())

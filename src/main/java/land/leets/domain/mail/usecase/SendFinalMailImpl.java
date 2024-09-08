@@ -37,7 +37,7 @@ public class SendFinalMailImpl implements SendMail {
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());
 			String message = templateEngine.process(templates.get(status), context);
-			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getEmail()}, message);
+			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
 			mailDtos.add(mailDto);
 		}
 		mailProvider.sendEmails(mailDtos);

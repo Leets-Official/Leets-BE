@@ -21,7 +21,7 @@ public class ApplicationRequest {
     private String interviewDay;
     private String interviewTime;
     private String motive;
-    private String schedule;
+    private String expectation;
     private String capability;
     private String conflict;
     private String passion;
