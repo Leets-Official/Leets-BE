@@ -33,7 +33,7 @@ public class SendMailCron {
 		log.info("Send paper result mail successfully.");
 	}
 
-	@Scheduled(cron = "0 0 10 12 9 ?")
+	@Scheduled(cron = "0 0 20 11 9 ?")
 	public void sendFinalMail() {
 		for (ApplicationStatus status : ApplicationStatus.finals()) {
 			sendFinalMailImpl.execute(status);
