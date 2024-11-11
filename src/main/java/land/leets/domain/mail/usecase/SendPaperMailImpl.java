@@ -26,7 +26,7 @@ import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.domain.repository.InterviewRepository;
 import land.leets.domain.interview.exception.InterviewNotFoundException;
 import land.leets.domain.interview.type.HasInterview;
-import land.leets.global.mail.MailProvider;
+import land.leets.global.mail.MailManager;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class SendPaperMailImpl implements SendMail {
 	private final InterviewRepository interviewRepository;
 	private final ApplicationRepository applicationRepository;
 	private final TemplateEngine templateEngine;
-	private final MailProvider mailProvider;
+	private final MailManager mailManager;
 
 	@Value("${target.url.dev}")
 	private String LOCAL_TARGET_URL;
@@ -70,7 +70,7 @@ public class SendPaperMailImpl implements SendMail {
 			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
 			mailDtos.add(mailDto);
 		}
-		mailProvider.sendEmails(mailDtos);
+		mailManager.sendEmails(mailDtos);
 	}
 
 	private Context makeContext(String name) {

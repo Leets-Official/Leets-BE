@@ -13,7 +13,7 @@ import org.thymeleaf.context.Context;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
-import land.leets.global.mail.MailProvider;
+import land.leets.global.mail.MailManager;
 import land.leets.global.mail.dto.MailDto;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +30,7 @@ public class SendFinalMailImpl implements SendMail {
 
 	private final Random RANDOM = new Random();
 	private final ApplicationRepository applicationRepository;
-	private final MailProvider mailProvider;
+	private final MailManager mailManager;
 	private final TemplateEngine templateEngine;
 
 	@Override
@@ -44,7 +44,7 @@ public class SendFinalMailImpl implements SendMail {
 			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
 			mailDtos.add(mailDto);
 		}
-		mailProvider.sendEmails(mailDtos);
+		mailManager.sendEmails(mailDtos);
 	}
 
 	private Context makeContext(String name) {
