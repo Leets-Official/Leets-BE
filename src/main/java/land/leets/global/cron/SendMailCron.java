@@ -1,6 +1,5 @@
 package land.leets.global.cron;
 
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import land.leets.domain.application.type.ApplicationStatus;
@@ -17,7 +16,7 @@ public class SendMailCron {
 	private final SendFinalMailImpl sendFinalMailImpl;
 	private final SendPaperMailImpl sendPaperMailImpl;
 
-	@Scheduled(cron = "0 0 23 8 9 ?")
+	// @Scheduled(cron = "0 0 23 8 9 ?")
 	public void sendPaperMail() {
 		for (ApplicationStatus status : ApplicationStatus.papers()) {
 			sendPaperMailImpl.execute(status);
@@ -26,14 +25,14 @@ public class SendMailCron {
 		log.info("Send paper result mail successfully.");
 	}
 
-	@Scheduled(cron = "0 30 23 8 9 ?")
+	// @Scheduled(cron = "0 30 23 8 9 ?")
 	public void sendPassPaperMail() {
 		sendPaperMailImpl.execute(ApplicationStatus.PASS_PAPER);
 
 		log.info("Send paper result mail successfully.");
 	}
 
-	@Scheduled(cron = "0 0 10 12 9 ?")
+	// @Scheduled(cron = "0 0 20 11 9 ?")
 	public void sendFinalMail() {
 		for (ApplicationStatus status : ApplicationStatus.finals()) {
 			sendFinalMailImpl.execute(status);
