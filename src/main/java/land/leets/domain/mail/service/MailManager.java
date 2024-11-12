@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MailManager {
 
-	private static final int BATCH_SIZE = 40;
+	private static final int BATCH_SIZE = 30;
 
 	private final MailFactory mailFactory;
 
