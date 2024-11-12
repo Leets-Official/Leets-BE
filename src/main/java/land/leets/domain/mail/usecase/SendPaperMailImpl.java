@@ -36,6 +36,16 @@ import lombok.RequiredArgsConstructor;
 public class SendPaperMailImpl implements SendMail {
 
 	private static final String MAIL_TITLE = "[Leets] 서류 결과 안내 메일입니다.";
+	private static final String NAME_FIELD = "name";
+	private static final String THEME_FIELD = "theme";
+	private static final int THEME_COUNT = 3;
+	private static final String ENV_PROD = "prod";
+	private static final String UID_FIELD = "uid";
+	private static final String HAS_INTERVIEW_FIELD = "hasInterview";
+	private static final String ATTEND_URL_FIELD = "attendUrl";
+	private static final String ABSENT_URL_FIELD = "absentUrl";
+	private static final String FIXED_INTERVIEW_DATE_FIELD = "fixedInterviewDate";
+	private static final String INTERVIEW_PLACE_FIELD = "interviewPlace";
 	private static final Map<ApplicationStatus, String> templates = Map.of(
 		ApplicationStatus.PASS_PAPER, "PassPaper.html",
 		ApplicationStatus.FAIL_PAPER, "FailPaper.html"
@@ -65,7 +75,7 @@ public class SendPaperMailImpl implements SendMail {
 				setInterviewContext(context, application);
 			}
 			String message = templateEngine.process(templates.get(status), context);
-			Mail mail = new Mail(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
+			Mail mail = new Mail(MAIL_TITLE, application.getUser().getEmail(), message);
 			mails.add(mail);
 		}
 		mailManager.sendEmails(mails);
@@ -73,28 +83,28 @@ public class SendPaperMailImpl implements SendMail {
 
 	private Context makeContext(String name) {
 		Context context = new Context();
-		context.setVariable("name", name);
-		int themeNumber = RANDOM.nextInt(3) + 1;
-		context.setVariable("theme", themeNumber);
+		context.setVariable(NAME_FIELD, name);
+		int themeNumber = RANDOM.nextInt(THEME_COUNT) + 1;
+		context.setVariable(THEME_FIELD, themeNumber);
 		return context;
 	}
 
 	private void setInterviewContext(Context context, Application application) {
 		boolean isProd = Arrays.stream(environment.getActiveProfiles())
-			.anyMatch(env -> env.equalsIgnoreCase("prod"));
+			.anyMatch(env -> env.equalsIgnoreCase(ENV_PROD));
 
 		UUID uid = application.getUser().getUid();
 		UriComponents attendUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
-			.queryParam("uid", uid)
-			.queryParam("hasInterview", HasInterview.CHECK)
+			.queryParam(UID_FIELD, uid)
+			.queryParam(HAS_INTERVIEW_FIELD, HasInterview.CHECK)
 			.build();
-		context.setVariable("attendUrl", attendUrl);
+		context.setVariable(ATTEND_URL_FIELD, attendUrl);
 
 		UriComponents absentUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
-			.queryParam("uid", uid)
-			.queryParam("hasInterview", HasInterview.UNCHECK)
+			.queryParam(UID_FIELD, uid)
+			.queryParam(HAS_INTERVIEW_FIELD, HasInterview.UNCHECK)
 			.build();
-		context.setVariable("absentUrl", absentUrl);
+		context.setVariable(ABSENT_URL_FIELD, absentUrl);
 
 		Interview interview = interviewRepository.findByApplication(application)
 			.orElseThrow(InterviewNotFoundException::new);
@@ -103,7 +113,7 @@ public class SendPaperMailImpl implements SendMail {
 			.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.KOREAN));
 		String time = interview.getFixedInterviewDate()
 			.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.KOREAN));
-		context.setVariable("fixedInterviewDate", date + " " + time);
-		context.setVariable("interviewPlace", interview.getPlace());
+		context.setVariable(FIXED_INTERVIEW_DATE_FIELD, date + " " + time);
+		context.setVariable(INTERVIEW_PLACE_FIELD, interview.getPlace());
 	}
 }

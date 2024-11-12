@@ -23,6 +23,9 @@ import lombok.RequiredArgsConstructor;
 public class SendFinalMailImpl implements SendMail {
 
 	private static final String MAIL_TITLE = "[Leets] 면접 결과 안내 메일입니다.";
+	private static final String NAME_FIELD = "name";
+	private static final String THEME_FIELD = "theme";
+	private static final int THEME_COUNT = 3;
 	private static final Map<ApplicationStatus, String> templates = Map.of(
 		ApplicationStatus.PASS, "Pass.html",
 		ApplicationStatus.FAIL, "Fail.html"
@@ -41,7 +44,7 @@ public class SendFinalMailImpl implements SendMail {
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());
 			String message = templateEngine.process(templates.get(status), context);
-			Mail mail = new Mail(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
+			Mail mail = new Mail(MAIL_TITLE, application.getUser().getEmail(), message);
 			mails.add(mail);
 		}
 		mailManager.sendEmails(mails);
@@ -49,9 +52,9 @@ public class SendFinalMailImpl implements SendMail {
 
 	private Context makeContext(String name) {
 		Context context = new Context();
-		context.setVariable("name", name);
-		int themeNumber = RANDOM.nextInt(3) + 1;
-		context.setVariable("theme", themeNumber);
+		context.setVariable(NAME_FIELD, name);
+		int themeNumber = RANDOM.nextInt(THEME_COUNT) + 1;
+		context.setVariable(THEME_FIELD, themeNumber);
 		return context;
 	}
 }
