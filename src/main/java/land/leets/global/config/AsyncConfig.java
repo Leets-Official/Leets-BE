@@ -18,7 +18,7 @@ public class AsyncConfig {
 	public Executor taskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.setCorePoolSize(2);
-		executor.setMaxPoolSize(4);
+		executor.setMaxPoolSize(2);
 		executor.setQueueCapacity(200);
 		executor.setThreadNamePrefix("Mailing-");
 		executor.setKeepAliveSeconds(60);
