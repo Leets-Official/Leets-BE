@@ -7,8 +7,8 @@ import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.application.type.Position;
 import land.leets.domain.application.type.SubmitStatus;
+import land.leets.domain.mail.domain.Mail;
 import land.leets.domain.user.domain.User;
-import land.leets.global.mail.dto.MailDto;
 
 public class TestFixture {
 
@@ -19,5 +19,5 @@ public class TestFixture {
 		"schedule", "capability", "conflict", "passion", LocalDateTime.now(),
 		ApplicationStatus.PASS, SubmitStatus.SUBMIT);
 
-	public static MailDto mailDto = new MailDto("제목", new String[] {"naayen@naver.com"}, "body");
+	public static Mail mail = new Mail("제목", new String[] {"naayen@naver.com"}, "body");
 }

@@ -1,4 +1,4 @@
-package land.leets.global.mail;
+package land.leets.domain.mail.service;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +13,8 @@ import org.springframework.util.function.ThrowingSupplier;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import land.leets.global.mail.dto.MailDto;
-import land.leets.global.mail.exception.MailException;
+import land.leets.domain.mail.domain.Mail;
+import land.leets.domain.mail.exception.MailException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,13 +25,13 @@ public class MailFactory {
 
 	private final JavaMailSender javaMailSender;
 
-	public MimeMessage createMail(MailDto mailDto) {
+	public MimeMessage createMail(Mail mail) {
 		try {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-			mimeMessageHelper.setTo(mailDto.to());
-			mimeMessageHelper.setSubject(mailDto.title());
-			mimeMessageHelper.setText(mailDto.body(), true);
+			mimeMessageHelper.setTo(mail.getTo());
+			mimeMessageHelper.setSubject(mail.getTitle());
+			mimeMessageHelper.setText(mail.getBody(), true);
 			return mimeMessage;
 		} catch (MessagingException e) {
 			throw new MailException();

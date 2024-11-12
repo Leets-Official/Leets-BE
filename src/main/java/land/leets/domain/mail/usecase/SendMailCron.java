@@ -1,10 +1,8 @@
-package land.leets.global.cron;
+package land.leets.domain.mail.usecase;
 
 import org.springframework.stereotype.Component;
 
 import land.leets.domain.application.type.ApplicationStatus;
-import land.leets.domain.mail.usecase.SendFinalMailImpl;
-import land.leets.domain.mail.usecase.SendPaperMailImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
