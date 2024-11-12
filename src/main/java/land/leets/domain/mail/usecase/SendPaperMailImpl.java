@@ -26,12 +26,10 @@ import land.leets.domain.interview.domain.Interview;
 import land.leets.domain.interview.domain.repository.InterviewRepository;
 import land.leets.domain.interview.exception.InterviewNotFoundException;
 import land.leets.domain.interview.type.HasInterview;
-import land.leets.global.mail.MailManager;
-import land.leets.global.mail.dto.MailDto;
+import land.leets.domain.mail.domain.Mail;
+import land.leets.domain.mail.service.MailManager;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -60,17 +58,17 @@ public class SendPaperMailImpl implements SendMail {
 	public void execute(ApplicationStatus status) {
 		List<Application> applications = applicationRepository.findAllByApplicationStatus(status);
 
-		List<MailDto> mailDtos = new ArrayList<>();
+		List<Mail> mails = new ArrayList<>();
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());
 			if (status == ApplicationStatus.PASS_PAPER) {
 				setInterviewContext(context, application);
 			}
 			String message = templateEngine.process(templates.get(status), context);
-			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
-			mailDtos.add(mailDto);
+			Mail mail = new Mail(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
+			mails.add(mail);
 		}
-		mailManager.sendEmails(mailDtos);
+		mailManager.sendEmails(mails);
 	}
 
 	private Context makeContext(String name) {

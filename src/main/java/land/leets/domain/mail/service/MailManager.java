@@ -1,4 +1,4 @@
-package land.leets.global.mail;
+package land.leets.domain.mail.service;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 import org.springframework.stereotype.Component;
 
 import jakarta.mail.internet.MimeMessage;
-import land.leets.global.mail.dto.MailDto;
+import land.leets.domain.mail.domain.Mail;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -17,15 +17,15 @@ public class MailManager {
 
 	private final MailFactory mailFactory;
 
-	public void sendEmails(List<MailDto> mailDtos) {
-		List<List<MimeMessage>> batchedMails = createChunkedMails(mailDtos);
+	public void sendEmails(List<Mail> mail) {
+		List<List<MimeMessage>> batchedMails = createChunkedMails(mail);
 
 		batchedMails.parallelStream()
 			.forEach(mailFactory::sendMails);
 	}
 
-	private List<List<MimeMessage>> createChunkedMails(List<MailDto> mailDtos) {
-		List<MimeMessage> messages = mailDtos.parallelStream()
+	private List<List<MimeMessage>> createChunkedMails(List<Mail> mail) {
+		List<MimeMessage> messages = mail.parallelStream()
 			.map(mailFactory::createMail)
 			.toList();
 		return partitionMessages(messages);

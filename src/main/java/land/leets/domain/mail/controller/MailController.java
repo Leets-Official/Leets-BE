@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import land.leets.global.cron.SendMailCron;
+import land.leets.domain.mail.usecase.SendMailCron;
 import land.leets.global.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 

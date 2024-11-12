@@ -13,8 +13,8 @@ import org.thymeleaf.context.Context;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.type.ApplicationStatus;
-import land.leets.global.mail.MailManager;
-import land.leets.global.mail.dto.MailDto;
+import land.leets.domain.mail.domain.Mail;
+import land.leets.domain.mail.service.MailManager;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -37,14 +37,14 @@ public class SendFinalMailImpl implements SendMail {
 	public void execute(ApplicationStatus status) {
 		List<Application> applications = applicationRepository.findAllByApplicationStatus(status);
 
-		List<MailDto> mailDtos = new ArrayList<>();
+		List<Mail> mails = new ArrayList<>();
 		for (Application application : applications) {
 			Context context = makeContext(application.getName());
 			String message = templateEngine.process(templates.get(status), context);
-			MailDto mailDto = new MailDto(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
-			mailDtos.add(mailDto);
+			Mail mail = new Mail(MAIL_TITLE, new String[] {application.getUser().getEmail()}, message);
+			mails.add(mail);
 		}
-		mailManager.sendEmails(mailDtos);
+		mailManager.sendEmails(mails);
 	}
 
 	private Context makeContext(String name) {
