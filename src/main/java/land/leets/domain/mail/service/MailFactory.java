@@ -29,9 +29,9 @@ public class MailFactory {
 		try {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-			mimeMessageHelper.setTo(mail.to());
-			mimeMessageHelper.setSubject(mail.title());
-			mimeMessageHelper.setText(mail.body(), true);
+			mimeMessageHelper.setTo(mail.getTo());
+			mimeMessageHelper.setSubject(mail.getTitle());
+			mimeMessageHelper.setText(mail.getBody(), true);
 			return mimeMessage;
 		} catch (MessagingException e) {
 			throw new MailException();
