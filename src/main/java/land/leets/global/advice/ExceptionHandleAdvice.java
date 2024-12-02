@@ -1,9 +1,12 @@
 package land.leets.global.advice;
 
+import land.leets.global.error.BindExceptionResponse;
 import land.leets.global.error.ErrorCode;
 import land.leets.global.error.ErrorResponse;
 import land.leets.global.error.exception.ServiceException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,5 +31,15 @@ public class ExceptionHandleAdvice {
         ex.printStackTrace();
         ErrorResponse response = new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR);
         return ResponseEntity.internalServerError().body(response);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<BindExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(FieldError::getDefaultMessage)
+                .orElseThrow();
+        BindExceptionResponse response = new BindExceptionResponse(ex.getStatusCode().value(), message);
+        return ResponseEntity.status(ex.getStatusCode()).body(response);
     }
 }
