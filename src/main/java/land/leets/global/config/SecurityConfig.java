@@ -81,6 +81,7 @@ public class SecurityConfig {
 
                 .requestMatchers("/comments/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
+                .requestMatchers(HttpMethod.POST, "/mail/subscribe").permitAll()
                 .requestMatchers(HttpMethod.POST, "/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
                 .requestMatchers("/portfolios/**").permitAll()

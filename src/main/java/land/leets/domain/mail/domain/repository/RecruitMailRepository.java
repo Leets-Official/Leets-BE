@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RecruitMailRepository extends JpaRepository<RecruitMail, Long> {
     List<RecruitMail> findAll();
+
+    boolean existsByEmail(String email);
 }
