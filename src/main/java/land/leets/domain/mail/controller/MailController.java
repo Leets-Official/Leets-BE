@@ -1,5 +1,6 @@
 package land.leets.domain.mail.controller;
 
+import jakarta.validation.Valid;
 import land.leets.domain.mail.controller.dto.RecruitMailRequest;
 import land.leets.domain.mail.usecase.SubscribeRecruitMail;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +76,7 @@ public class MailController {
 			@ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	@PostMapping("/subscribe")
-	public boolean subscribeRecruitMail(@RequestBody RecruitMailRequest request) {
+	public boolean subscribeRecruitMail(@Valid @RequestBody RecruitMailRequest request) {
 		subscribeRecruitMail.execute(request);
 		return true;
 	}
