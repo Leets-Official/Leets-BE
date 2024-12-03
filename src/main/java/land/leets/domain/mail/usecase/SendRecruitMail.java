@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 public class SendRecruitMail {
+
     private static final String MAIL_TITLE = "[Leets] 5기 모집 시작 안내 메일입니다.";
     private static final String GENERATION_FIELD = "generation";
     private static final String TEMPLATE = "Recruit.html";
