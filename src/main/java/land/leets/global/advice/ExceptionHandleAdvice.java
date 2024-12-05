@@ -38,7 +38,7 @@ public class ExceptionHandleAdvice {
         String fieldErrors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(fieldError -> String.format("%s", fieldError.getField()))
+                .map(fieldError -> String.format(fieldError.getField()))
                 .collect(Collectors.joining(", "));
 
         String customMessage = String.format(ErrorCode.INVALID_REQUEST_BODY.getMessage(), fieldErrors);
