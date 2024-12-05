@@ -4,6 +4,7 @@ import land.leets.global.error.ErrorCode;
 import land.leets.global.error.ErrorResponse;
 import land.leets.global.error.exception.ServiceException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,7 +39,7 @@ public class ExceptionHandleAdvice {
         String fieldErrors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(fieldError -> String.format(fieldError.getField()))
+                .map(FieldError::getField)
                 .collect(Collectors.joining(", "));
 
         String customMessage = String.format(ErrorCode.INVALID_REQUEST_BODY.getMessage(), fieldErrors);
