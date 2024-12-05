@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    INVALID_REQUEST_BODY(400, "INVALID_REQUEST_BODY", "올바르지 않은 요청입니다 [%s]"),
     PATCH_REQUEST_FAIL(404, "PATCH_REQUEST_FAIL", "PATCH 요청에 실패했습니다."),
     INTERVIEW_NOT_FOUND(404, "INTERVIEW_NOT_FOUND", "면접 정보를 찾을 수 없습니다."),
     APPLICATION_ALREADY_EXISTS(409, "APPLICATION_ALREADY_EXISTS", "이미 지원한 지원자입니다."),

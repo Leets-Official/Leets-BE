@@ -1,19 +1,19 @@
 package land.leets.global.advice;
 
-import land.leets.global.error.BindExceptionResponse;
 import land.leets.global.error.ErrorCode;
 import land.leets.global.error.ErrorResponse;
 import land.leets.global.error.exception.ServiceException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.stream.Collectors;
+
 @RestControllerAdvice
 public class ExceptionHandleAdvice {
-    
+
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ErrorResponse> handleServiceException(ServiceException ex) {
         ErrorResponse response = new ErrorResponse(ex.getErrorCode());
@@ -34,12 +34,16 @@ public class ExceptionHandleAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<BindExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        String message = ex.getBindingResult().getFieldErrors().stream()
-                .findFirst()
-                .map(FieldError::getDefaultMessage)
-                .orElseThrow();
-        BindExceptionResponse response = new BindExceptionResponse(ex.getStatusCode().value(), message);
-        return ResponseEntity.status(ex.getStatusCode()).body(response);
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        String fieldErrors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(fieldError -> String.format("%s", fieldError.getField()))
+                .collect(Collectors.joining(", "));
+
+        String customMessage = String.format(ErrorCode.INVALID_REQUEST_BODY.getMessage(), fieldErrors);
+        ErrorResponse response = new ErrorResponse(ErrorCode.INVALID_REQUEST_BODY, customMessage);
+
+        return ResponseEntity.status(ErrorCode.INVALID_REQUEST_BODY.getHttpStatus()).body(response);
     }
 }
