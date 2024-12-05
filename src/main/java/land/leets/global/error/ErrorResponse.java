@@ -15,6 +15,12 @@ public class ErrorResponse {
         this.code = errorCode.getCode();
     }
 
+    public ErrorResponse(ErrorCode errorCode, String customMessage) {
+        this.httpStatus = errorCode.getHttpStatus();
+        this.message = customMessage;
+        this.code = errorCode.getCode();
+    }
+
     public static ErrorResponse of(ErrorCode errorCode) {
         return new ErrorResponse(errorCode);
     }
