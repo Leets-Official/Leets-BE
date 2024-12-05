@@ -1,5 +1,6 @@
 package land.leets.domain.mail.usecase;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import land.leets.domain.application.type.ApplicationStatus;
@@ -13,6 +14,7 @@ public class SendMailCron {
 
 	private final SendFinalMailImpl sendFinalMailImpl;
 	private final SendPaperMailImpl sendPaperMailImpl;
+	private final SendRecruitMail sendRecruitMail;
 
 	// @Scheduled(cron = "0 0 23 8 9 ?")
 	public void sendPaperMail() {
@@ -42,6 +44,13 @@ public class SendMailCron {
 	//     @Scheduled(cron = "0 28 23 1 9 ?")
 	public void sendPlusMail() {
 		log.info("Send final result mail successfully.");
+	}
+
+	// @Scheduled(cron = "0 0 00 ?? 3 ?")
+	public void sendRecruitMail() {
+		sendRecruitMail.execute();
+
+		log.info("Send recruit result mail successfully.");
 	}
 }
 
