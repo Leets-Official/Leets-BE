@@ -9,14 +9,14 @@
 # 기술스택
 + 프레임워크 : SpringBoot 3.0.9
 + 언어 : Java 17
-+ 데이터베이스 : MariaDB
++ 데이터베이스 : MySQL
 + 인프라 : AWS EC2
 + CI/CD: GitHub Actions
 
 <br>
 
 # Environment
-```java
+```
 # Cors 관련 환경변수
 CORS_ORIGIN_DEVELOPMENT=
 CORS_ORIGIN_PRODUCTION=
