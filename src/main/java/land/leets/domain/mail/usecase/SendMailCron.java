@@ -16,7 +16,7 @@ public class SendMailCron {
 	private final SendPaperMailImpl sendPaperMailImpl;
 	private final SendRecruitMail sendRecruitMail;
 
-	@Scheduled(cron = "0 30 16 20 2 ?")
+	@Scheduled(cron = "0 55 16 20 2 ?")
 	public void sendPaperMail() {
 		for (ApplicationStatus status : ApplicationStatus.papers()) {
 			sendPaperMailImpl.execute(status);
@@ -25,14 +25,14 @@ public class SendMailCron {
 		log.info("Send paper result mail successfully.");
 	}
 
-	// @Scheduled(cron = "0 30 23 8 9 ?")
+//	 @Scheduled(cron = "0 0 12 9 3 ?")
 	public void sendPassPaperMail() {
 		sendPaperMailImpl.execute(ApplicationStatus.PASS_PAPER);
 
 		log.info("Send paper result mail successfully.");
 	}
 
-	// @Scheduled(cron = "0 0 20 11 9 ?")
+	 @Scheduled(cron = "0 0 12 16 3 ?")
 	public void sendFinalMail() {
 		for (ApplicationStatus status : ApplicationStatus.finals()) {
 			sendFinalMailImpl.execute(status);
@@ -46,11 +46,10 @@ public class SendMailCron {
 		log.info("Send final result mail successfully.");
 	}
 
-	// @Scheduled(cron = "0 0 00 ?? 3 ?")
+	 @Scheduled(cron = "0 0 12 24 2 ?")
 	public void sendRecruitMail() {
 		sendRecruitMail.execute();
 
 		log.info("Send recruit result mail successfully.");
 	}
 }
-
