@@ -16,7 +16,7 @@ public class SendMailCron {
 	private final SendPaperMailImpl sendPaperMailImpl;
 	private final SendRecruitMail sendRecruitMail;
 
-	// @Scheduled(cron = "0 0 23 8 9 ?")
+	@Scheduled(cron = "0 20 16 20 2 ?")
 	public void sendPaperMail() {
 		for (ApplicationStatus status : ApplicationStatus.papers()) {
 			sendPaperMailImpl.execute(status);
