@@ -25,11 +25,11 @@ public class SendMailCron {
 		log.info("Send paper result mail successfully.");
 	}
 
-//	 @Scheduled(cron = "0 0 12 9 3 ?")
+	 @Scheduled(cron = "0 45 17 8 3 ?")
 	public void sendPassPaperMail() {
 		sendPaperMailImpl.execute(ApplicationStatus.PASS_PAPER);
 
-		log.info("Send paper result mail successfully.");
+		log.info("Send pass paper result mail successfully.");
 	}
 
 	 @Scheduled(cron = "0 0 12 16 3 ?")
