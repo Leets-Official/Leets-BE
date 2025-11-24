@@ -64,3 +64,6 @@ tasks.withType<JavaCompile>().configureEach {
     )
 }
 
+tasks.withType<AbstractTestTask>().configureEach {
+    failOnNoDiscoveredTests = false
+}
