@@ -94,13 +94,13 @@ public class SendPaperMailImpl implements SendMail {
 			.anyMatch(env -> env.equalsIgnoreCase(ENV_PROD));
 
 		UUID uid = application.getUser().getUid();
-		UriComponents attendUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
+		UriComponents attendUrl = UriComponentsBuilder.fromUriString(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
 			.queryParam(UID_FIELD, uid)
 			.queryParam(HAS_INTERVIEW_FIELD, HasInterview.CHECK)
 			.build();
 		context.setVariable(ATTEND_URL_FIELD, attendUrl);
 
-		UriComponents absentUrl = UriComponentsBuilder.fromHttpUrl(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
+		UriComponents absentUrl = UriComponentsBuilder.fromUriString(isProd ? SERVER_TARGET_URL : LOCAL_TARGET_URL)
 			.queryParam(UID_FIELD, uid)
 			.queryParam(HAS_INTERVIEW_FIELD, HasInterview.UNCHECK)
 			.build();
