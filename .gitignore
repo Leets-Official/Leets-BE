@@ -36,3 +36,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Generated Sources ###
+src/main/generated/
+src/test/generated/
+
