@@ -69,8 +69,6 @@ public class SecurityConfig {
                         .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
                         .requestMatchers("/admin/me").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                        .requestMatchers("/interview").permitAll()
-
                         .requestMatchers(HttpMethod.GET, "/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
                         .requestMatchers(HttpMethod.POST, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
                         .requestMatchers(HttpMethod.PATCH, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
