@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,64 +34,65 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
-                .formLogin().disable()
-                .cors().and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .cors(cors -> {
+                })
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, authException) -> {
-                    throw new PermissionDeniedException();
-                })
-                .accessDeniedHandler((request, response, authException) -> {
-                    throw new PermissionDeniedException();
-                });
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            throw new PermissionDeniedException();
+                        })
+                        .accessDeniedHandler((request, response, authException) -> {
+                            throw new PermissionDeniedException();
+                        }));
 
         //요청에 대한 권한 설정
         http
-                .authorizeHttpRequests()
-                .requestMatchers(CorsUtils::isCorsRequest).permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(CorsUtils::isCorsRequest).permitAll()
 
-                .requestMatchers(HttpMethod.GET, "/health-check").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/health-check").permitAll()
 
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
 
-                .requestMatchers("/oauth2/**", "/auth/**").permitAll()
-                .requestMatchers("/login/oauth2/callback/*").permitAll()
-                .requestMatchers("/oauth2/authorization/*").permitAll()
+                        .requestMatchers("/oauth2/**", "/auth/**").permitAll()
+                        .requestMatchers("/login/oauth2/callback/*").permitAll()
+                        .requestMatchers("/oauth2/authorization/*").permitAll()
 
-                .requestMatchers("/user/login", "/admin/login").permitAll()
-                .requestMatchers("/user/refresh", "/admin/refresh").permitAll()
+                        .requestMatchers("/user/login", "/admin/login").permitAll()
+                        .requestMatchers("/user/refresh", "/admin/refresh").permitAll()
 
-                .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers("/admin/me").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers("/user/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+                        .requestMatchers("/admin/me").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers("/interview").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers(HttpMethod.POST, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
+                        .requestMatchers(HttpMethod.PATCH, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
+                        .requestMatchers(HttpMethod.GET, "/application/me").hasAuthority(AuthRole.ROLE_USER.getRole())
+                        .requestMatchers(HttpMethod.GET, "/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers(HttpMethod.PATCH, "/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers(HttpMethod.GET, "/application").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
-                .requestMatchers(HttpMethod.POST, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.PATCH, "/application").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.GET, "/application/me").hasAuthority(AuthRole.ROLE_USER.getRole())
-                .requestMatchers(HttpMethod.GET, "/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
-                .requestMatchers(HttpMethod.PATCH, "/application/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers(HttpMethod.GET, "/interview").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/interview/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers(HttpMethod.GET, "/interview").permitAll()
-                .requestMatchers(HttpMethod.PATCH, "/interview/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers("/comments/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers("/comments/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers(HttpMethod.POST, "/mail/subscribe").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
 
-                .requestMatchers(HttpMethod.POST, "/mail/subscribe").permitAll()
-                .requestMatchers(HttpMethod.POST, "/mail/**").hasAuthority(AuthRole.ROLE_ADMIN.getRole())
+                        .requestMatchers("/portfolios/**").permitAll()
+                        .requestMatchers("/images/**").permitAll()
 
-                .requestMatchers("/portfolios/**").permitAll()
-                .requestMatchers("/images/**").permitAll()
-            
-                .anyRequest().authenticated();
+                        .anyRequest().authenticated()
+                );
 
         //oauth2Login
-        http.oauth2Login();
+        http.oauth2Login(oauth2 -> {
+        });
 
         //jwt filter 설정
         http
