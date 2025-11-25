@@ -1,7 +1,7 @@
 ---
 name: bug(fix)
 about: Create a report to help us improve
-title: '[bug or fix] #[number] [name]'
+title: '[bug or fix] [name]'
 labels: ''
 assignees: ''
 ---
