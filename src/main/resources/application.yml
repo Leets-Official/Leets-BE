@@ -27,20 +27,6 @@ spring:
             client-secret: ${GOOGLE_PASSWORD}
             redirect-uri: ${GOOGLE_REDIRECT_URL}
             scope: email, profile
-  mail:
-    host: ${MAIL_HOST}
-    port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          timeout: 10000          # 응답 타임아웃 (10초)
-          connectiontimeout: 5000 # 연결 타임아웃 (5초)
-          writetimeout: 5000      # 쓰기 타임아웃 (5초)
-          starttls:
-            enable: true
   thymeleaf:
     check-template-location: true
     prefix: classpath:/templates/
