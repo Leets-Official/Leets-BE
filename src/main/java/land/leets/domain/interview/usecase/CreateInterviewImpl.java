@@ -8,7 +8,6 @@ import land.leets.domain.interview.domain.repository.InterviewRepository;
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest;
 import land.leets.domain.interview.presentation.dto.req.InterviewRequest;
 import land.leets.domain.interview.type.HasInterview;
-import land.leets.domain.mail.exception.PatchRequestFailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -51,7 +50,7 @@ public class CreateInterviewImpl implements CreateInterview {
                     .bodyToMono(String.class)
                     .block();
         } catch (WebClientResponseException ex) {
-            throw new PatchRequestFailException();
+            throw new IllegalArgumentException();
         }
     }
 
