@@ -4,7 +4,6 @@ import land.leets.domain.admin.domain.Admin;
 import land.leets.domain.admin.domain.repository.AdminRepository;
 import land.leets.domain.admin.exception.AdminNotFoundException;
 import land.leets.domain.admin.presentation.dto.AdminDetailsResponse;
-import land.leets.domain.admin.presentation.mapper.AdminMapper;
 import land.leets.domain.auth.AuthDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +15,11 @@ import java.util.UUID;
 public class GetAdminDetailsImpl implements GetAdminDetails {
 
     private final AdminRepository adminRepository;
-    private final AdminMapper adminMapper;
 
     @Override
     public AdminDetailsResponse execute(AuthDetails authDetails) {
         UUID uid = authDetails.getUid();
         Admin admin = adminRepository.findById(uid).orElseThrow(AdminNotFoundException::new);
-        return adminMapper.mappingAdminToDto(admin);
+        return AdminDetailsResponse.from(admin);
     }
 }

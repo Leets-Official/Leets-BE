@@ -1,10 +1,10 @@
 package land.leets.domain.application.usecase;
 
+import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.presentation.dto.ApplicationResponse;
-import land.leets.domain.application.presentation.mapper.ApplicationMapper;
+import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.application.type.Position;
-import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.interview.presentation.dto.res.InterviewResponse;
 import land.leets.domain.interview.usecase.GetInterview;
 import lombok.RequiredArgsConstructor;
@@ -17,40 +17,35 @@ import java.util.List;
 public class GetAllApplicationImpl implements GetAllApplication {
 
     private final ApplicationRepository applicationRepository;
-    private final ApplicationMapper applicationMapper;
     private final GetInterview getInterview;
 
     @Override
     public List<ApplicationResponse> execute() {
-        return applicationRepository.findAllByOrderByAppliedAtDesc().stream()
-                .map(application -> {
-                    InterviewResponse interview = getInterview.execute(application);
-                    String phone = application.getUser().getPhone();
-                    return applicationMapper.mappingToDto(application, interview, phone);
-                })
-                .toList();
+        return mapApplications(applicationRepository.findAllByOrderByAppliedAtDesc());
     }
 
     @Override
     public List<ApplicationResponse> execute(String position, String status) {
+        Position pos = position != null ? Position.valueOf(position.toUpperCase()) : null;
+        ApplicationStatus stat = status != null ? ApplicationStatus.valueOf(status.toUpperCase()) : null;
 
-        if (position != null) {
-            Position filter = Position.valueOf(position.toUpperCase());
-            return applicationRepository.findAllByPositionOrderByAppliedAtDesc(filter).stream()
-                    .map(application -> {
-                        InterviewResponse interview = getInterview.execute(application);
-                        String phone = application.getUser().getPhone();
-                        return applicationMapper.mappingToDto(application, interview, phone);
-                    })
-                    .toList();
+        if (pos != null && stat != null) {
+            return mapApplications(applicationRepository.findAllByPositionAndApplicationStatusOrderByAppliedAtDesc(pos, stat));
         }
 
-        SubmitStatus filter = SubmitStatus.valueOf(status.toUpperCase());
-        return applicationRepository.findAllBySubmitStatusOrderByAppliedAtDesc(filter).stream()
+        if (pos != null) {
+            return mapApplications(applicationRepository.findAllByPositionOrderByAppliedAtDesc(pos));
+        }
+
+        return mapApplications(applicationRepository.findAllByApplicationStatusOrderByAppliedAtDesc(stat));
+    }
+
+    private List<ApplicationResponse> mapApplications(List<Application> applications) {
+        return applications.stream()
                 .map(application -> {
                     InterviewResponse interview = getInterview.execute(application);
                     String phone = application.getUser().getPhone();
-                    return applicationMapper.mappingToDto(application, interview, phone);
+                    return ApplicationResponse.of(application, interview, phone);
                 })
                 .toList();
     }

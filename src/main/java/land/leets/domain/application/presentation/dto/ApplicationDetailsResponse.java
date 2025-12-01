@@ -1,5 +1,6 @@
 package land.leets.domain.application.presentation.dto;
 
+import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.application.type.Position;
 import land.leets.domain.application.type.SubmitStatus;
@@ -35,4 +36,31 @@ public class ApplicationDetailsResponse {
     private LocalDateTime appliedAt;
     private LocalDateTime updatedAt;
     private InterviewDetailsResponse interview;
+
+    public static ApplicationDetailsResponse of(Application application, InterviewDetailsResponse interview, String phone) {
+        return new ApplicationDetailsResponse(
+                application.getId(),
+                phone,
+                application.getName(),
+                application.getMajor(),
+                application.getGrade(),
+                application.getProject(),
+                application.getAlgorithm(),
+                application.getPortfolio(),
+                application.getPosition(),
+                application.getCareer(),
+                application.getInterviewDay(),
+                application.getInterviewTime(),
+                application.getMotive(),
+                application.getExpectation(),
+                application.getCapability(),
+                application.getConflict(),
+                application.getPassion(),
+                application.getApplicationStatus(),
+                application.getSubmitStatus(),
+                application.getAppliedAt(),
+                application.getUpdatedAt(),
+                interview
+        );
+    }
 }

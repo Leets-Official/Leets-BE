@@ -15,5 +15,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findAllByOrderByAppliedAtDesc();
     List<Application> findAllByPositionOrderByAppliedAtDesc(Position position);
     List<Application> findAllBySubmitStatusOrderByAppliedAtDesc(SubmitStatus submitStatus);
-    List<Application> findAllByApplicationStatus(ApplicationStatus applicationStatus);
+    List<Application> findAllByApplicationStatusOrderByAppliedAtDesc(ApplicationStatus applicationStatus);
+    List<Application> findAllByPositionAndApplicationStatusOrderByAppliedAtDesc(Position position, ApplicationStatus applicationStatus);
 }
