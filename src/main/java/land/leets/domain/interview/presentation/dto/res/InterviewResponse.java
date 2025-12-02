@@ -16,9 +16,6 @@ public class InterviewResponse {
     private LocalDateTime fixedInterviewDate;
 
     public static InterviewResponse from(Interview interview) {
-        if (interview == null) {
-            return null;
-        }
         return InterviewResponse.builder()
                 .hasInterview(interview.getHasInterview())
                 .fixedInterviewDate(interview.getFixedInterviewDate())

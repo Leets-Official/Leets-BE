@@ -18,9 +18,6 @@ public class InterviewDetailsResponse {
     private String place;
 
     public static InterviewDetailsResponse from(Interview interview) {
-        if (interview == null) {
-            return null;
-        }
         return InterviewDetailsResponse.builder()
                 .id(interview.getId())
                 .hasInterview(interview.getHasInterview())
