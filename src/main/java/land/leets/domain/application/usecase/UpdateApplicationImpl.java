@@ -4,7 +4,9 @@ import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.exception.ApplicationNotFoundException;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
+import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.auth.AuthDetails;
+import land.leets.domain.user.usecase.UpdateUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,17 @@ import java.util.UUID;
 public class UpdateApplicationImpl implements UpdateApplication {
 
     private final ApplicationRepository applicationRepository;
+    private final UpdateUser updateUser;
 
     @Override
     public Application execute(AuthDetails authDetails, ApplicationRequest request) {
         UUID uid = authDetails.getUid();
+        updateUser.execute(uid, request);
+
         Application application = applicationRepository.findByUser_Uid(uid).orElseThrow(ApplicationNotFoundException::new);
-        application.updateInfo(LocalDateTime.now());
+        if (request.getSubmitStatus() == SubmitStatus.SUBMIT) {
+            application.updateInfo(LocalDateTime.now());
+        }
         request.updateApplication(application);
 
         return applicationRepository.save(application);

@@ -3,8 +3,8 @@ package land.leets.domain.application.usecase;
 import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.presentation.dto.ApplicationResponse;
-import land.leets.domain.application.type.ApplicationStatus;
 import land.leets.domain.application.type.Position;
+import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.interview.presentation.dto.res.InterviewResponse;
 import land.leets.domain.interview.usecase.GetInterview;
 import lombok.RequiredArgsConstructor;
@@ -26,18 +26,15 @@ public class GetAllApplicationImpl implements GetAllApplication {
 
     @Override
     public List<ApplicationResponse> execute(String position, String status) {
-        Position pos = position != null ? Position.valueOf(position.toUpperCase()) : null;
-        ApplicationStatus stat = status != null ? ApplicationStatus.valueOf(status.toUpperCase()) : null;
+        if (position != null) {
+            Position filter = Position.valueOf(position.toUpperCase());
 
-        if (pos != null && stat != null) {
-            return mapApplications(applicationRepository.findAllByPositionAndApplicationStatusOrderByAppliedAtDesc(pos, stat));
+            return mapApplications(applicationRepository.findAllByPositionOrderByAppliedAtDesc(filter));
         }
 
-        if (pos != null) {
-            return mapApplications(applicationRepository.findAllByPositionOrderByAppliedAtDesc(pos));
-        }
+        SubmitStatus filter = SubmitStatus.valueOf(status.toUpperCase());
 
-        return mapApplications(applicationRepository.findAllByApplicationStatusOrderByAppliedAtDesc(stat));
+        return mapApplications(applicationRepository.findAllBySubmitStatusOrderByAppliedAtDesc(filter));
     }
 
     private List<ApplicationResponse> mapApplications(List<Application> applications) {

@@ -26,7 +26,7 @@ public class GetApplicationDetailsImpl implements GetApplicationDetails {
 
     @Override
     public Application execute(UUID uid) {
-         return applicationRepository.findByUser_Uid(uid).orElseThrow(ApplicationNotFoundException::new);
+        return applicationRepository.findByUser_Uid(uid).orElseThrow(ApplicationNotFoundException::new);
     }
 
     private ApplicationDetailsResponse getDetails(Application application) {
