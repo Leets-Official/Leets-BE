@@ -2,6 +2,7 @@ package land.leets.global.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import land.leets.domain.auth.AdminAuthDetailsService;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.auth.UserAuthDetailsService;
@@ -73,7 +74,7 @@ public class JwtProvider {
     public void validateToken(String token, boolean isRefreshToken) {
         try {
             parseClaims(token, isRefreshToken);
-        } catch (io.jsonwebtoken.security.SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             throw new InvalidTokenException();
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();

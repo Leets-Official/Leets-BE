@@ -1,5 +1,6 @@
 package land.leets.domain.application.presentation.dto;
 
+import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.type.Position;
 import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.user.domain.User;
@@ -32,7 +33,7 @@ public class ApplicationRequest {
         user.updateUserInfo(this.sid, this.phone);
     }
 
-    public void updateApplication(land.leets.domain.application.domain.Application application) {
+    public void updateApplication(Application application) {
         application.setName(this.name);
         application.setMajor(this.major);
         application.setGrade(this.grade);

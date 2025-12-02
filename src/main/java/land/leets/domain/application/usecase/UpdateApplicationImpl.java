@@ -9,6 +9,7 @@ import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.user.usecase.UpdateUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class UpdateApplicationImpl implements UpdateApplication {
     private final UpdateUser updateUser;
 
     @Override
+    @Transactional
     public Application execute(AuthDetails authDetails, ApplicationRequest request) {
         UUID uid = authDetails.getUid();
         updateUser.execute(uid, request);
