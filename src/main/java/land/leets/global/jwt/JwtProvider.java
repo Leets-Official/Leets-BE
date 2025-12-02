@@ -1,6 +1,8 @@
 package land.leets.global.jwt;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import land.leets.domain.auth.AdminAuthDetailsService;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.auth.UserAuthDetailsService;
@@ -15,6 +17,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -25,8 +29,8 @@ import java.util.UUID;
 
 @Component
 public class JwtProvider {
-    private final String accessSecret;
-    private final String refreshSecret;
+    private final SecretKey accessSecret;
+    private final SecretKey refreshSecret;
     private final UserAuthDetailsService userAuthDetailsService;
     private final AdminAuthDetailsService adminAuthDetailsService;
 
@@ -35,8 +39,8 @@ public class JwtProvider {
                        @Value("${jwt.auth.refresh_secret}") String refreshSecret,
                        UserAuthDetailsService userAuthDetailsService,
                        AdminAuthDetailsService adminAuthDetailsService) {
-        this.accessSecret = accessSecret;
-        this.refreshSecret = refreshSecret;
+        this.accessSecret = Keys.hmacShaKeyFor(accessSecret.getBytes(StandardCharsets.UTF_8));
+        this.refreshSecret = Keys.hmacShaKeyFor(refreshSecret.getBytes(StandardCharsets.UTF_8));
         this.userAuthDetailsService = userAuthDetailsService;
         this.adminAuthDetailsService = adminAuthDetailsService;
     }
@@ -48,9 +52,9 @@ public class JwtProvider {
         return Jwts.builder()
                 .claim("role", role.getRole())
                 .claim("uid", uuid.toString())
-                .setSubject(sub)
-                .setExpiration(isRefreshToken ? Date.from(refreshDate) : Date.from(accessDate))
-                .signWith(SignatureAlgorithm.HS256, isRefreshToken ? refreshSecret : accessSecret)
+                .subject(sub)
+                .expiration(isRefreshToken ? Date.from(refreshDate) : Date.from(accessDate))
+                .signWith(isRefreshToken ? refreshSecret : accessSecret)
                 .compact();
     }
 
@@ -70,7 +74,7 @@ public class JwtProvider {
     public void validateToken(String token, boolean isRefreshToken) {
         try {
             parseClaims(token, isRefreshToken);
-        } catch (SignatureException | UnsupportedJwtException | IllegalArgumentException | MalformedJwtException e) {
+        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             throw new InvalidTokenException();
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
@@ -79,8 +83,11 @@ public class JwtProvider {
 
     public Claims parseClaims(String token, boolean isRefreshToken) {
         try {
-            JwtParser parser = Jwts.parser().setSigningKey(isRefreshToken ? refreshSecret : accessSecret);
-            return parser.parseClaimsJws(token).getBody();
+            return Jwts.parser()
+                    .verifyWith(isRefreshToken ? refreshSecret : accessSecret)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }

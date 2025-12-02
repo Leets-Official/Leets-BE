@@ -1,6 +1,7 @@
 package land.leets.domain.portfolio.presentation.dto;
 
 import land.leets.domain.contributor.domain.Contributor;
+import land.leets.domain.portfolio.domain.Portfolio;
 import land.leets.domain.portfolio.domain.ProjectScope;
 import land.leets.domain.portfolio.domain.ProjectType;
 import lombok.AllArgsConstructor;
@@ -38,4 +39,22 @@ public class PortfolioResponse {
     private String mainImgName;
 
     private List<Contributor> contributors;
+
+    public static PortfolioResponse from(Portfolio portfolio) {
+        return new PortfolioResponse(
+                portfolio.getPortfolioId(),
+                portfolio.getGeneration(),
+                portfolio.getName(),
+                portfolio.getSummary(),
+                portfolio.getDescription(),
+                portfolio.getType(),
+                portfolio.getScope(),
+                portfolio.getStartDate(),
+                portfolio.getEndDate(),
+                portfolio.getServiceUrl(),
+                portfolio.getLogoImgName(),
+                portfolio.getMainImgName(),
+                portfolio.getContributors()
+        );
+    }
 }

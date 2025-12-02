@@ -4,7 +4,7 @@ import land.leets.domain.application.domain.Application;
 import land.leets.domain.application.domain.repository.ApplicationRepository;
 import land.leets.domain.application.exception.ApplicationNotFoundException;
 import land.leets.domain.application.presentation.dto.ApplicationRequest;
-import land.leets.domain.application.presentation.mapper.ApplicationMapper;
+import land.leets.domain.application.type.SubmitStatus;
 import land.leets.domain.auth.AuthDetails;
 import land.leets.domain.user.usecase.UpdateUser;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static land.leets.domain.application.type.SubmitStatus.SUBMIT;
-
 @Service
 @RequiredArgsConstructor
 public class UpdateApplicationImpl implements UpdateApplication {
 
     private final ApplicationRepository applicationRepository;
-    private final ApplicationMapper applicationMapper;
     private final UpdateUser updateUser;
 
     @Override
@@ -31,10 +28,11 @@ public class UpdateApplicationImpl implements UpdateApplication {
         updateUser.execute(uid, request);
 
         Application application = applicationRepository.findByUser_Uid(uid).orElseThrow(ApplicationNotFoundException::new);
-        applicationMapper.updateApplicationFromDto(application, request);
+        if (request.getSubmitStatus() == SubmitStatus.SUBMIT) {
+            application.updateInfo(LocalDateTime.now());
+        }
+        request.updateApplication(application);
 
-        LocalDateTime appliedAt = request.getSubmitStatus() == SUBMIT ? LocalDateTime.now() : null;
-        application.updateInfo(appliedAt);
         return applicationRepository.save(application);
     }
 }

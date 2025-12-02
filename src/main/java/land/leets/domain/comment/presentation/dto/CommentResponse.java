@@ -3,6 +3,7 @@ package land.leets.domain.comment.presentation.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import land.leets.domain.admin.presentation.dto.AdminDetailsResponse;
+import land.leets.domain.comment.domain.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -23,4 +24,13 @@ public class CommentResponse {
 
     @NotNull
     private AdminDetailsResponse admin;
+
+    public static CommentResponse from(Comment comment) {
+        return new CommentResponse(
+                comment.getContent(),
+                comment.getCreatedAt(),
+                comment.getUpdatedAt(),
+                AdminDetailsResponse.from(comment.getAdmin())
+        );
+    }
 }
