@@ -1,4 +1,4 @@
-package land.leets.domain.admin.usercase
+package land.leets.domain.admin.usecase
 
 import land.leets.global.jwt.dto.JwtResponse
 

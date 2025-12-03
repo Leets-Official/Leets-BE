@@ -10,9 +10,9 @@ import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import land.leets.domain.admin.presentation.dto.AdminDetailsResponse
 import land.leets.domain.admin.presentation.dto.AdminLoginRequest
-import land.leets.domain.admin.usercase.AdminLogin
-import land.leets.domain.admin.usercase.AdminRefreshToken
-import land.leets.domain.admin.usercase.GetAdminDetails
+import land.leets.domain.admin.usecase.AdminLogin
+import land.leets.domain.admin.usecase.AdminRefreshToken
+import land.leets.domain.admin.usecase.GetAdminDetails
 import land.leets.domain.auth.AuthDetails
 import land.leets.global.error.ErrorResponse
 import land.leets.global.jwt.dto.JwtResponse

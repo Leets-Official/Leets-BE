@@ -1,4 +1,4 @@
-package land.leets.domain.admin.usercase
+package land.leets.domain.admin.usecase
 
 import land.leets.domain.admin.presentation.dto.AdminDetailsResponse
 import land.leets.domain.auth.AuthDetails

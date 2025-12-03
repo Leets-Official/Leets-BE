@@ -1,6 +1,5 @@
-package land.leets.domain.admin.usercase
+package land.leets.domain.admin.usecase
 
-import io.jsonwebtoken.Claims
 import land.leets.domain.shared.AuthRole
 import land.leets.global.jwt.JwtProvider
 import land.leets.global.jwt.dto.JwtResponse
