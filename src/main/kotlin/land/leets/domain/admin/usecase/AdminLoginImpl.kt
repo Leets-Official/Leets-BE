@@ -16,15 +16,15 @@ class AdminLoginImpl(
     private val passwordEncoder: PasswordEncoder
 ) : AdminLogin {
 
-    override fun execute(id: String, password: String): JwtResponse {
-        val admin = adminRepository.findById(id).orElseThrow { AdminNotFoundException() }
+    override fun execute(username: String, password: String): JwtResponse {
+        val admin = adminRepository.findByUsername(username).orElseThrow { AdminNotFoundException() }
 
         if (!passwordEncoder.matches(password, admin.password)) {
             throw PasswordNotMatchException()
         }
 
-        val accessToken = jwtProvider.generateToken(admin.uid!!, admin.id, AuthRole.ROLE_ADMIN, false)
-        val refreshToken = jwtProvider.generateToken(admin.uid, admin.id, AuthRole.ROLE_ADMIN, true)
+        val accessToken = jwtProvider.generateToken(admin.id!!, admin.username, AuthRole.ROLE_ADMIN, false)
+        val refreshToken = jwtProvider.generateToken(admin.id, admin.username, AuthRole.ROLE_ADMIN, true)
 
         return JwtResponse(accessToken, refreshToken)
     }

@@ -40,7 +40,7 @@ class AdminController(
     )
     @PostMapping("/login")
     fun login(res: HttpServletResponse, @Validated @RequestBody request: AdminLoginRequest): JwtResponse {
-        val jwt = adminLogin.execute(request.id, request.password)
+        val jwt = adminLogin.execute(request.username, request.password)
         val cookie = Cookie("refreshToken", jwt.refreshToken).apply {
             secure = false
             isHttpOnly = true

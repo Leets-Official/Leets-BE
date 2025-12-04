@@ -6,5 +6,5 @@ import java.util.Optional
 import java.util.UUID
 
 interface AdminRepository : JpaRepository<Admin, UUID> {
-    fun findById(id: String): Optional<Admin>
+    fun findByUsername(username: String): Optional<Admin>
 }

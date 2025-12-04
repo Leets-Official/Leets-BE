@@ -7,7 +7,7 @@ import java.util.UUID
 @Entity(name = "admins")
 class Admin(
     @Column(nullable = false)
-    val id: String,
+    val username: String,
 
     @Column(nullable = false)
     val password: String,
@@ -21,5 +21,5 @@ class Admin(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    val uid: UUID? = null
+    val id: UUID? = null
 ) : BaseTimeEntity()

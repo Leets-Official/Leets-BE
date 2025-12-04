@@ -25,38 +25,38 @@ class AdminLoginImplTest : DescribeSpec({
 
     describe("AdminLoginImpl") {
         context("execute") {
-            val id = "admin"
+            val username = "admin"
             val password = "password"
             val encodedPassword = "encodedPassword"
-            val uid = UUID.randomUUID()
-            val admin = Admin(id, encodedPassword, "name", "email", uid)
+            val id = UUID.randomUUID()
+            val admin = Admin(username, encodedPassword, "name", "email", id)
 
             it("should return JwtResponse when login is successful") {
-                every { adminRepository.findById(id) } returns Optional.of(admin)
+                every { adminRepository.findByUsername(username) } returns Optional.of(admin)
                 every { passwordEncoder.matches(password, encodedPassword) } returns true
-                every { jwtProvider.generateToken(uid, id, AuthRole.ROLE_ADMIN, false) } returns "accessToken"
-                every { jwtProvider.generateToken(uid, id, AuthRole.ROLE_ADMIN, true) } returns "refreshToken"
+                every { jwtProvider.generateToken(id, username, AuthRole.ROLE_ADMIN, false) } returns "accessToken"
+                every { jwtProvider.generateToken(id, username, AuthRole.ROLE_ADMIN, true) } returns "refreshToken"
 
-                val response = adminLogin.execute(id, password)
+                val response = adminLogin.execute(username, password)
 
                 response.accessToken shouldBe "accessToken"
                 response.refreshToken shouldBe "refreshToken"
             }
 
             it("should throw AdminNotFoundException when admin not found") {
-                every { adminRepository.findById(id) } returns Optional.empty()
+                every { adminRepository.findByUsername(username) } returns Optional.empty()
 
                 shouldThrow<AdminNotFoundException> {
-                    adminLogin.execute(id, password)
+                    adminLogin.execute(username, password)
                 }
             }
 
             it("should throw PasswordNotMatchException when password does not match") {
-                every { adminRepository.findById(id) } returns Optional.of(admin)
+                every { adminRepository.findByUsername(username) } returns Optional.of(admin)
                 every { passwordEncoder.matches(password, encodedPassword) } returns false
 
                 shouldThrow<PasswordNotMatchException> {
-                    adminLogin.execute(id, password)
+                    adminLogin.execute(username, password)
                 }
             }
         }
