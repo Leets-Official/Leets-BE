@@ -23,7 +23,7 @@ class AdminLoginImpl(
             throw PasswordNotMatchException()
         }
 
-        val accessToken = jwtProvider.generateToken(admin.uid, admin.id, AuthRole.ROLE_ADMIN, false)
+        val accessToken = jwtProvider.generateToken(admin.uid!!, admin.id, AuthRole.ROLE_ADMIN, false)
         val refreshToken = jwtProvider.generateToken(admin.uid, admin.id, AuthRole.ROLE_ADMIN, true)
 
         return JwtResponse(accessToken, refreshToken)

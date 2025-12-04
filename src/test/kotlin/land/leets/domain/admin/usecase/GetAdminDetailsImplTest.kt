@@ -10,7 +10,7 @@ import land.leets.domain.admin.domain.repository.AdminRepository
 import land.leets.domain.admin.exception.AdminNotFoundException
 import land.leets.domain.auth.AuthDetails
 import land.leets.domain.shared.AuthRole
-import java.util.Optional
+import org.springframework.data.repository.findByIdOrNull
 import java.util.UUID
 
 class GetAdminDetailsImplTest : DescribeSpec({
@@ -25,7 +25,7 @@ class GetAdminDetailsImplTest : DescribeSpec({
             val admin = Admin("admin", "password", "name", "email", uid)
 
             it("should return AdminDetailsResponse when admin exists") {
-                every { adminRepository.findById(uid) } returns Optional.of(admin)
+                every { adminRepository.findByIdOrNull(uid) } returns admin
 
                 val response = getAdminDetails.execute(authDetails)
 
@@ -33,7 +33,7 @@ class GetAdminDetailsImplTest : DescribeSpec({
             }
 
             it("should throw AdminNotFoundException when admin not found") {
-                every { adminRepository.findById(uid) } returns Optional.empty()
+                every { adminRepository.findByIdOrNull(uid) } returns null
 
                 shouldThrow<AdminNotFoundException> {
                     getAdminDetails.execute(authDetails)
