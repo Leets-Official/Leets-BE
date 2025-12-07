@@ -18,8 +18,8 @@ public class AdminAuthDetailsService implements UserDetailsService {
     @Override
     public AuthDetails loadUserByUsername(String sub) throws UsernameNotFoundException {
         Admin admin = this.adminRepository
-                .findById(sub)
+                .findByUsername(sub)
                 .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.ADMIN_NOT_FOUND.getMessage()));
-        return new AuthDetails(admin.getUid(), admin.getId(), AuthRole.ROLE_ADMIN);
+        return new AuthDetails(admin.getId(), admin.getUsername(), AuthRole.ROLE_ADMIN);
     }
 }

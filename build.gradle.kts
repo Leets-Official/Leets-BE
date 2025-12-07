@@ -2,6 +2,9 @@ plugins {
     id("java")
     id("org.springframework.boot") version "4.0.0"
     id("io.spring.dependency-management") version "1.1.6"
+    id("org.jetbrains.kotlin.jvm") version "2.2.0"
+    id("org.jetbrains.kotlin.plugin.spring") version "2.2.0"
+    id("org.jetbrains.kotlin.plugin.jpa") version "2.2.0"
 }
 
 group = "land"
@@ -29,6 +32,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -48,6 +53,11 @@ dependencies {
     implementation("com.google.api-client:google-api-client:2.8.1")
 
     testImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
+
+    testImplementation("io.kotest:kotest-runner-junit5:6.0.5")
+    testImplementation("io.kotest:kotest-assertions-core:6.0.5")
+    testImplementation("io.kotest:kotest-extensions-spring:6.0.5")
+    testImplementation("io.mockk:mockk:1.14.6")
 }
 
 tasks.named<Test>("test") {
@@ -63,3 +73,11 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<AbstractTestTask>().configureEach {
     failOnNoDiscoveredTests = false
 }
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xjsr305=strict")
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
