@@ -18,6 +18,10 @@ public class GetInterviewImpl implements GetInterview {
     @Override
     public InterviewResponse execute(Application application) {
         Optional<Interview> interview = interviewRepository.findByApplication(application);
-        return interview.map(InterviewResponse::from).orElse(null);
+        return interview.map(InterviewResponse::from)
+                .orElse(InterviewResponse.builder()
+                        .hasInterview(null)
+                        .fixedInterviewDate(null)
+                        .build());
     }
 }
