@@ -18,6 +18,11 @@ public class GetInterviewDetailsImpl implements GetInterviewDetails {
     @Override
     public InterviewDetailsResponse execute(Application application) {
         Optional<Interview> interview = interviewRepository.findByApplication(application);
-        return interview.map(InterviewDetailsResponse::from).orElse(null);
+        return interview.map(InterviewDetailsResponse::from).orElse(InterviewDetailsResponse.builder()
+                .id(null)
+                .hasInterview(null)
+                .fixedInterviewDate(null)
+                .place(null)
+                .build());
     }
 }
