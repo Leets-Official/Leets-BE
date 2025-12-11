@@ -1,9 +1,10 @@
 package land.leets.domain.comment.presentation.dto
 
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 
 data class CommentRequest(
-    @field:NotBlank
+    @field:NotNull
     val applicationId: Long,
 
     @field:NotBlank

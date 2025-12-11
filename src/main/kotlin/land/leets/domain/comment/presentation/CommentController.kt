@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.validation.Valid
 import land.leets.domain.auth.AuthDetails
 import land.leets.domain.comment.presentation.dto.CommentRequest
 import land.leets.domain.comment.presentation.dto.CommentResponse
@@ -32,7 +33,7 @@ class CommentController(
     @PostMapping
     fun create(
         @AuthenticationPrincipal authDetails: AuthDetails,
-        @RequestBody request: CommentRequest
+        @Valid @RequestBody request: CommentRequest
     ): CommentResponse {
         return createComment.execute(authDetails, request)
     }

@@ -12,7 +12,7 @@ class Comment(
     @Column(nullable = false)
     val content: String,
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     val admin: Admin,
 
     @Id
