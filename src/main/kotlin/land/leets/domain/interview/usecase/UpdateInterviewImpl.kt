@@ -7,6 +7,7 @@ import land.leets.domain.interview.presentation.dto.req.FixedInterviewRequest
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest
 import land.leets.domain.user.domain.repository.UserRepository
 import land.leets.domain.user.exception.UserNotFoundException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,14 +20,14 @@ class UpdateInterviewImpl(
     @Transactional
     override fun byUser(request: InterviewAttendanceRequest): Interview {
         val user = userRepository.findById(request.uid).orElseThrow { UserNotFoundException() }
-        val interview = interviewRepository.findByApplication_User(user).orElseThrow { InterviewNotFoundException() }
+        val interview = interviewRepository.findByApplication_User(user) ?: throw InterviewNotFoundException()
         request.updateInterview(interview)
         return interviewRepository.save(interview)
     }
 
     @Transactional
     override fun byAdmin(id: Long, request: FixedInterviewRequest): Interview {
-        val interview = interviewRepository.findById(id).orElseThrow { InterviewNotFoundException() }
+        val interview = interviewRepository.findByIdOrNull(id) ?: throw InterviewNotFoundException()
         request.updateInterview(interview)
         return interviewRepository.save(interview)
     }

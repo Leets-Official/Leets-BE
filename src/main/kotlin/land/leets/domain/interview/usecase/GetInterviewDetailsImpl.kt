@@ -11,8 +11,8 @@ class GetInterviewDetailsImpl(
 ) : GetInterviewDetails {
 
     override fun execute(application: Application): InterviewDetailsResponse {
-        val interview = interviewRepository.findByApplication(application)
-        return interview.map { InterviewDetailsResponse.from(it) }
-            .orElse(InterviewDetailsResponse(null, null, null, null))
+        return interviewRepository.findByApplication(application)
+            ?.let { InterviewDetailsResponse.from(it) }
+            ?: InterviewDetailsResponse(null, null, null, null)
     }
 }
