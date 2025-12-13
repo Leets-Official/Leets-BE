@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 
 data class CommentRequest(
-    @field:NotNull
+    @NotNull
     val applicationId: Long,
 
-    @field:NotBlank
+    @NotBlank
     val content: String
 )

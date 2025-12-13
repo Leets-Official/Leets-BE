@@ -3,9 +3,9 @@ package land.leets.domain.admin.presentation.dto
 import jakarta.validation.constraints.NotBlank
 
 data class AdminLoginRequest(
-    @field:NotBlank
+    @NotBlank
     val username: String,
 
-    @field:NotBlank
+    @NotBlank
     val password: String
 )
