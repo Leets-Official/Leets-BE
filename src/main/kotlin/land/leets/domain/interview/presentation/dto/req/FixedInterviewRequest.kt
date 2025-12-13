@@ -5,10 +5,10 @@ import land.leets.domain.interview.domain.Interview
 import java.time.LocalDateTime
 
 data class FixedInterviewRequest(
-    @field:NotNull
+    @NotNull
     val fixedInterviewDate: LocalDateTime,
 
-    @field:NotNull
+    @NotNull
     val place: String
 ) {
     fun updateInterview(interview: Interview) {

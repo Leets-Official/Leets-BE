@@ -6,10 +6,10 @@ import land.leets.domain.interview.type.HasInterview
 import java.util.UUID
 
 data class InterviewAttendanceRequest(
-    @field:NotNull
+    @NotNull
     val uid: UUID,
 
-    @field:NotNull
+    @NotNull
     val hasInterview: HasInterview
 ) {
     fun updateInterview(interview: Interview) {

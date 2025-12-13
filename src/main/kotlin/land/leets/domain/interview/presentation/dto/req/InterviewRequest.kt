@@ -4,12 +4,12 @@ import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
 data class InterviewRequest(
-    @field:NotNull
+    @NotNull
     val applicationId: Long,
 
-    @field:NotNull
+    @NotNull
     val fixedInterviewDate: LocalDateTime,
 
-    @field:NotNull
+    @NotNull
     val place: String
 )
