@@ -5,18 +5,15 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
-import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import land.leets.domain.interview.domain.Interview
 import land.leets.domain.interview.presentation.dto.req.FixedInterviewRequest
 import land.leets.domain.interview.presentation.dto.req.InterviewAttendanceRequest
 import land.leets.domain.interview.presentation.dto.req.InterviewRequest
-import land.leets.domain.interview.type.HasInterview
 import land.leets.domain.interview.usecase.CreateInterview
 import land.leets.domain.interview.usecase.UpdateInterview
 import land.leets.global.error.ErrorResponse
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.view.RedirectView
-import java.util.UUID
 
 @RestController
 @RequestMapping("/interview")
@@ -48,7 +45,7 @@ class InterviewController(
         ]
     )
     @PatchMapping
-    fun update(@RequestBody request: InterviewAttendanceRequest): Interview {
+    fun update(@Valid @RequestBody request: InterviewAttendanceRequest): Interview {
         return updateInterview.byUser(request)
     }
 
@@ -75,7 +72,7 @@ class InterviewController(
         ]
     )
     @PatchMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody request: FixedInterviewRequest): Interview {
+    fun update(@PathVariable id: Long, @Valid @RequestBody request: FixedInterviewRequest): Interview {
         return updateInterview.byAdmin(id, request)
     }
 
@@ -102,7 +99,7 @@ class InterviewController(
         ]
     )
     @PostMapping
-    fun create(@RequestBody request: InterviewRequest): Interview {
+    fun create(@Valid @RequestBody request: InterviewRequest): Interview {
         return createInterview.execute(request)
     }
 }

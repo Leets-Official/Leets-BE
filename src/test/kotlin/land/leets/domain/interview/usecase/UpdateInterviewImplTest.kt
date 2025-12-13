@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import land.leets.domain.interview.domain.Interview
 import land.leets.domain.interview.domain.repository.InterviewRepository

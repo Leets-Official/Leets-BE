@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
 
 @ExtendWith(MockKExtension::class)
 class CreateInterviewImplTest {
