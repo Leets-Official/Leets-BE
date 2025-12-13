@@ -51,7 +51,7 @@ class UpdateInterviewImplTest {
         val interview = mockk<Interview>(relaxed = true)
 
         every { userRepository.findById(uid) } returns Optional.of(user)
-        every { interviewRepository.findByApplication_User(user) } returns Optional.of(interview)
+        every { interviewRepository.findByApplication_User(user) } returns interview
         every { interviewRepository.save(interview) } returns interview
 
         // when
@@ -91,7 +91,7 @@ class UpdateInterviewImplTest {
         val user = mockk<User>()
 
         every { userRepository.findById(uid) } returns Optional.of(user)
-        every { interviewRepository.findByApplication_User(user) } returns Optional.empty()
+        every { interviewRepository.findByApplication_User(user) } returns null
 
         // when & then
         assertThrows<InterviewNotFoundException> {

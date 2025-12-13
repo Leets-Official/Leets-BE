@@ -41,7 +41,7 @@ class GetInterviewImplTest {
             place = "Room A"
         )
 
-        every { interviewRepository.findByApplication(application) } returns Optional.of(interview)
+        every { interviewRepository.findByApplication(application) } returns interview
 
         // when
         val result = getInterview.execute(application)
@@ -57,7 +57,7 @@ class GetInterviewImplTest {
         // given
         val application = mockk<Application>()
 
-        every { interviewRepository.findByApplication(application) } returns Optional.empty()
+        every { interviewRepository.findByApplication(application) } returns null
 
         // when
         val result = getInterview.execute(application)
