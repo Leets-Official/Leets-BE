@@ -18,7 +18,7 @@ public class UpdateUserImpl implements UpdateUser {
     @Override
     public User execute(UUID uid, ApplicationRequest request) {
         User user = userRepository.findById(uid).orElseThrow(UserNotFoundException::new);
-        request.updateUser(user);
+        user.updateUserInfo(request.getSid(), request.getPhone());
         return userRepository.save(user);
     }
 }
