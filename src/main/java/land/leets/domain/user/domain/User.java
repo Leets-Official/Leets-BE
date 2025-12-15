@@ -41,6 +41,14 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String sub;
 
+    public UUID getUid() {
+        return uid;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public void updateUserInfo(String sid, String phone) {
         this.sid = sid;
         this.phone = phone;
