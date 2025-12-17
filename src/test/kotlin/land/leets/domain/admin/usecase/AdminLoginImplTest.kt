@@ -11,7 +11,6 @@ import land.leets.domain.admin.exception.AdminNotFoundException
 import land.leets.domain.shared.AuthRole
 import land.leets.domain.shared.exception.PasswordNotMatchException
 import land.leets.global.jwt.JwtProvider
-import land.leets.global.jwt.dto.JwtResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.Optional
 import java.util.UUID
@@ -24,14 +23,14 @@ class AdminLoginImplTest : DescribeSpec({
     val adminLogin = AdminLoginImpl(jwtProvider, adminRepository, passwordEncoder)
 
     describe("AdminLoginImpl") {
-        context("execute") {
+        context("로그인을 실행할 때") {
             val username = "admin"
             val password = "password"
             val encodedPassword = "encodedPassword"
             val id = UUID.randomUUID()
             val admin = Admin(username, encodedPassword, "name", "email", id)
 
-            it("should return JwtResponse when login is successful") {
+            it("로그인이 성공하면 JwtResponse를 반환한다") {
                 every { adminRepository.findByUsername(username) } returns Optional.of(admin)
                 every { passwordEncoder.matches(password, encodedPassword) } returns true
                 every { jwtProvider.generateToken(id, username, AuthRole.ROLE_ADMIN, false) } returns "accessToken"
@@ -43,7 +42,7 @@ class AdminLoginImplTest : DescribeSpec({
                 response.refreshToken shouldBe "refreshToken"
             }
 
-            it("should throw AdminNotFoundException when admin not found") {
+            it("관리자를 찾을 수 없으면 AdminNotFoundException을 던진다") {
                 every { adminRepository.findByUsername(username) } returns Optional.empty()
 
                 shouldThrow<AdminNotFoundException> {
@@ -51,7 +50,7 @@ class AdminLoginImplTest : DescribeSpec({
                 }
             }
 
-            it("should throw PasswordNotMatchException when password does not match") {
+            it("비밀번호가 일치하지 않으면 PasswordNotMatchException을 던진다") {
                 every { adminRepository.findByUsername(username) } returns Optional.of(admin)
                 every { passwordEncoder.matches(password, encodedPassword) } returns false
 

@@ -24,7 +24,7 @@ public class GetUserDetailsImpl implements GetUserDetails {
     public UserDetailsResponse execute(AuthDetails authDetails) {
         UUID uid = authDetails.getUid();
         User user = userRepository.findById(uid).orElseThrow(UserNotFoundException::new);
-        Application application = applicationRepository.findByUser_Uid(uid).orElse(null);
+        Application application = applicationRepository.findByUser_Uid(uid);
 
         return UserDetailsResponse.of(user, application == null ? SubmitStatus.NONE : application.getSubmitStatus());
     }
