@@ -9,7 +9,6 @@ import io.mockk.mockk
 import io.mockk.runs
 import land.leets.domain.shared.AuthRole
 import land.leets.global.jwt.JwtProvider
-import land.leets.global.jwt.dto.JwtResponse
 import java.util.UUID
 
 class AdminRefreshTokenImplTest : DescribeSpec({
@@ -17,15 +16,15 @@ class AdminRefreshTokenImplTest : DescribeSpec({
     val jwtProvider = mockk<JwtProvider>()
     val adminRefreshToken = AdminRefreshTokenImpl(jwtProvider)
 
-    describe("AdminRefreshTokenImpl") {
-        context("execute") {
+    describe("AdminRefreshTokenImpl 유스케이스는") {
+        context("리프레시 토큰 갱신을 실행할 때") {
             val refreshToken = "refreshToken"
             val newAccessToken = "newAccessToken"
             val role = AuthRole.ROLE_ADMIN
             val uid = UUID.randomUUID()
             val subject = "admin"
 
-            it("should return JwtResponse with new access token") {
+            it("새로운 액세스 토큰이 담긴 JwtResponse를 반환한다") {
                 val claims = mockk<Claims>()
                 every { claims.get("role", String::class.java) } returns role.name
                 every { claims.get("uid", String::class.java) } returns uid.toString()

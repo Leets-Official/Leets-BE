@@ -1,8 +1,9 @@
 package land.leets.domain.interview.usecase
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import io.mockk.verify
 import land.leets.domain.interview.domain.Interview
@@ -14,129 +15,84 @@ import land.leets.domain.interview.type.HasInterview
 import land.leets.domain.user.domain.User
 import land.leets.domain.user.domain.repository.UserRepository
 import land.leets.domain.user.exception.UserNotFoundException
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.api.extension.ExtendWith
 import java.time.LocalDateTime
 import java.util.Optional
 import java.util.UUID
 
-@ExtendWith(MockKExtension::class)
-class UpdateInterviewImplTest {
+class UpdateInterviewImplTest : DescribeSpec({
 
-    @MockK
-    private lateinit var userRepository: UserRepository
+    val userRepository = mockk<UserRepository>()
+    val interviewRepository = mockk<InterviewRepository>()
+    val updateInterview = UpdateInterviewImpl(userRepository, interviewRepository)
 
-    @MockK
-    private lateinit var interviewRepository: InterviewRepository
+    describe("UpdateInterviewImpl 유스케이스는") {
+        context("유저에 의해 면접을 수정할 때") {
+            val uid = UUID.randomUUID()
+            val request = InterviewAttendanceRequest(
+                uid = uid,
+                hasInterview = HasInterview.CHECK
+            )
+            val user = mockk<User>()
+            val interview = mockk<Interview>(relaxed = true)
 
-    private lateinit var updateInterview: UpdateInterview
+            it("유저에 의해 면접을 수정한다") {
+                every { userRepository.findById(uid) } returns Optional.of(user)
+                every { interviewRepository.findByApplication_User(user) } returns interview
+                every { interviewRepository.save(interview) } returns interview
 
-    @BeforeEach
-    fun setUp() {
-        updateInterview = UpdateInterviewImpl(userRepository, interviewRepository)
-    }
+                val result = updateInterview.byUser(request)
 
-    @Test
-    fun `should update interview by user`() {
-        // given
-        val uid = UUID.randomUUID()
-        val request = InterviewAttendanceRequest(
-            uid = uid,
-            hasInterview = HasInterview.CHECK
-        )
-        val user = mockk<User>()
-        val interview = mockk<Interview>(relaxed = true)
+                result shouldBe interview
+                verify { interview.hasInterview = HasInterview.CHECK }
+                verify { interviewRepository.save(interview) }
+            }
 
-        every { userRepository.findById(uid) } returns Optional.of(user)
-        every { interviewRepository.findByApplication_User(user) } returns interview
-        every { interviewRepository.save(interview) } returns interview
+            it("알 수 없는 유저가 면접을 수정하려 하면 UserNotFoundException을 던진다") {
+                every { userRepository.findById(uid) } returns Optional.empty()
 
-        // when
-        val result = updateInterview.byUser(request)
+                shouldThrow<UserNotFoundException> {
+                    updateInterview.byUser(request)
+                }
+            }
 
-        // then
-        assertThat(result).isEqualTo(interview)
-        verify { interview.hasInterview = HasInterview.CHECK }
-        verify { interviewRepository.save(interview) }
-    }
+            it("존재하지 않는 면접을 유저가 수정하려 하면 InterviewNotFoundException을 던진다") {
+                every { userRepository.findById(uid) } returns Optional.of(user)
+                every { interviewRepository.findByApplication_User(user) } returns null
 
-    @Test
-    fun `should throw UserNotFoundException when updating interview by unknown user`() {
-        // given
-        val uid = UUID.randomUUID()
-        val request = InterviewAttendanceRequest(
-            uid = uid,
-            hasInterview = HasInterview.CHECK
-        )
+                shouldThrow<InterviewNotFoundException> {
+                    updateInterview.byUser(request)
+                }
+            }
+        }
 
-        every { userRepository.findById(uid) } returns Optional.empty()
+        context("관리자에 의해 면접을 수정할 때") {
+            val id = 1L
+            val fixedDate = LocalDateTime.now()
+            val request = FixedInterviewRequest(
+                fixedInterviewDate = fixedDate,
+                place = "New Room"
+            )
+            val interview = mockk<Interview>(relaxed = true)
 
-        // when & then
-        assertThrows<UserNotFoundException> {
-            updateInterview.byUser(request)
+            it("관리자에 의해 면접을 수정한다") {
+                every { interviewRepository.findById(id) } returns Optional.of(interview)
+                every { interviewRepository.save(interview) } returns interview
+
+                val result = updateInterview.byAdmin(id, request)
+
+                result shouldBe interview
+                verify { interview.fixedInterviewDate = fixedDate }
+                verify { interview.place = "New Room" }
+                verify { interviewRepository.save(interview) }
+            }
+
+            it("존재하지 않는 면접을 관리자가 수정하려 하면 InterviewNotFoundException을 던진다") {
+                every { interviewRepository.findById(id) } returns Optional.empty()
+
+                shouldThrow<InterviewNotFoundException> {
+                    updateInterview.byAdmin(id, request)
+                }
+            }
         }
     }
-
-    @Test
-    fun `should throw InterviewNotFoundException when updating non-existent interview by user`() {
-        // given
-        val uid = UUID.randomUUID()
-        val request = InterviewAttendanceRequest(
-            uid = uid,
-            hasInterview = HasInterview.CHECK
-        )
-        val user = mockk<User>()
-
-        every { userRepository.findById(uid) } returns Optional.of(user)
-        every { interviewRepository.findByApplication_User(user) } returns null
-
-        // when & then
-        assertThrows<InterviewNotFoundException> {
-            updateInterview.byUser(request)
-        }
-    }
-
-    @Test
-    fun `should update interview by admin`() {
-        // given
-        val id = 1L
-        val fixedDate = LocalDateTime.now()
-        val request = FixedInterviewRequest(
-            fixedInterviewDate = fixedDate,
-            place = "New Room"
-        )
-        val interview = mockk<Interview>(relaxed = true)
-
-        every { interviewRepository.findById(id) } returns Optional.of(interview)
-        every { interviewRepository.save(interview) } returns interview
-
-        // when
-        val result = updateInterview.byAdmin(id, request)
-
-        // then
-        assertThat(result).isEqualTo(interview)
-        verify { interview.fixedInterviewDate = fixedDate }
-        verify { interview.place = "New Room" }
-        verify { interviewRepository.save(interview) }
-    }
-
-    @Test
-    fun `should throw InterviewNotFoundException when updating non-existent interview by admin`() {
-        // given
-        val id = 1L
-        val request = FixedInterviewRequest(
-            fixedInterviewDate = LocalDateTime.now(),
-            place = "New Room"
-        )
-
-        every { interviewRepository.findById(id) } returns Optional.empty()
-
-        // when & then
-        assertThrows<InterviewNotFoundException> {
-            updateInterview.byAdmin(id, request)
-        }
-    }
-}
+})
