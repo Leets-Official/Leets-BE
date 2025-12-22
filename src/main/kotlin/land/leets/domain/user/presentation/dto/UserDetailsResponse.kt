@@ -16,7 +16,7 @@ data class UserDetailsResponse(
     companion object {
         fun of(user: User, submitStatus: SubmitStatus): UserDetailsResponse {
             return UserDetailsResponse(
-                uid = user.uid,
+                uid = user.id,
                 sid = user.sid,
                 name = user.name,
                 phone = user.phone,

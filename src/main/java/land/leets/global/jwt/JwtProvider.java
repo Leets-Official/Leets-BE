@@ -51,7 +51,7 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .claim("role", role.getRole())
-                .claim(role == AuthRole.ROLE_USER ? "uid" : "id", uuid.toString())
+                .claim(role == AuthRole.ROLE_USER ? "id" : "id", uuid.toString())
                 .subject(sub)
                 .expiration(isRefreshToken ? Date.from(refreshDate) : Date.from(accessDate))
                 .signWith(isRefreshToken ? refreshSecret : accessSecret)

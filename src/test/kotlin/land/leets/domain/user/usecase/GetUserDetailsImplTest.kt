@@ -32,7 +32,7 @@ class GetUserDetailsImplTest : DescribeSpec({
                 phone = "010-1234-5678",
                 email = "user@test.com",
                 sub = "google-oauth2|123456",
-                uid = uid
+                id = uid
             )
 
             it("유저가 존재하고 지원서가 없으면 NONE 상태로 반환한다") {

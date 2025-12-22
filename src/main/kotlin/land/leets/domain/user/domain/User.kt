@@ -24,7 +24,7 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    val uid: UUID? = null
+    val id: UUID? = null
 ) : BaseTimeEntity() {
 
     fun updateUserInfo(sid: String?, phone: String) {

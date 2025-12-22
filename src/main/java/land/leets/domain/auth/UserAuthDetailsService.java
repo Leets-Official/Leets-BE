@@ -19,6 +19,6 @@ public class UserAuthDetailsService implements UserDetailsService {
         User user = this.userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
-        return new AuthDetails(user.getUid(), user.getEmail(), AuthRole.ROLE_USER);
+        return new AuthDetails(user.getId(), user.getEmail(), AuthRole.ROLE_USER);
     }
 }

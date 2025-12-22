@@ -55,7 +55,7 @@ class CreateApplicationImplTest : DescribeSpec({
                 phone = "010-1234-5678",
                 email = "test@test.com",
                 sub = "google-oauth2|123456",
-                uid = uid
+                id = uid
             )
 
             it("지원서를 성공적으로 생성한다") {

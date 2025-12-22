@@ -51,7 +51,7 @@ class UpdateUserImplTest : DescribeSpec({
                     phone = null,
                     email = "user@test.com",
                     sub = "google-oauth2|123456",
-                    uid = uid
+                    id = uid
                 )
                 every { userRepository.findById(uid) } returns Optional.of(user)
                 every { userRepository.save(any()) } returnsArgument 0
