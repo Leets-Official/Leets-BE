@@ -14,7 +14,6 @@ data class UserDetailsResponse(
     val submitStatus: SubmitStatus
 ) {
     companion object {
-        @JvmStatic
         fun of(user: User, submitStatus: SubmitStatus): UserDetailsResponse {
             return UserDetailsResponse(
                 uid = user.uid,
