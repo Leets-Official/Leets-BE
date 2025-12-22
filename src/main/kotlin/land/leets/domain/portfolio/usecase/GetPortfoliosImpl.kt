@@ -15,17 +15,16 @@ class GetPortfoliosImpl(
 
     @Transactional(readOnly = true)
     override fun all(generation: String?): List<List<PortfoliosResponse>> {
-        return if (generation == null) {
-            listOf(
+        if (generation == null) {
+            return  listOf(
                 getPortfoliosByScope(ProjectScope.FINAL),
                 getPortfoliosByScope(ProjectScope.TOY)
             )
-        } else {
-            listOf(
-                getPortfoliosByGenerationAndScope(generation.toLong(), ProjectScope.FINAL),
-                getPortfoliosByGenerationAndScope(generation.toLong(), ProjectScope.TOY)
-            )
         }
+        return listOf(
+            getPortfoliosByGenerationAndScope(generation.toLong(), ProjectScope.FINAL),
+            getPortfoliosByGenerationAndScope(generation.toLong(), ProjectScope.TOY)
+        )
     }
 
     @Transactional(readOnly = true)
