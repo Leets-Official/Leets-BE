@@ -87,11 +87,14 @@ public class AuthService {
             return bySub.get();
         }
 
-        User user = User.builder()
-                .sub(userId)
-                .name((String) payload.get("name"))
-                .email(payload.getEmail())
-                .build();
+        User user = new User(
+                null,
+                (String) payload.get("name"),
+                null,
+                payload.getEmail(),
+                userId,
+                null
+        );
 
         return userRepository.save(user);
     }
