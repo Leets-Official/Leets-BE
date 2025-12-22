@@ -15,15 +15,9 @@ class GetPortfoliosImpl(
 
     @Transactional(readOnly = true)
     override fun all(generation: String?): List<List<PortfoliosResponse>> {
-        if (generation == null) {
-            return  listOf(
-                getPortfoliosByScope(ProjectScope.FINAL),
-                getPortfoliosByScope(ProjectScope.TOY)
-            )
-        }
         return listOf(
-            getPortfoliosByGenerationAndScope(generation.toLong(), ProjectScope.FINAL),
-            getPortfoliosByGenerationAndScope(generation.toLong(), ProjectScope.TOY)
+            getPortfolios(generation?.toLong(), ProjectScope.FINAL),
+            getPortfolios(generation?.toLong(), ProjectScope.TOY)
         )
     }
 
@@ -35,18 +29,17 @@ class GetPortfoliosImpl(
         return PortfolioResponse.from(portfolio)
     }
 
-    private fun getPortfoliosByScope(scope: ProjectScope): List<PortfoliosResponse> {
-        return portfolioRepository.findAllByScopeOrderByGenerationDesc(scope)
-            .map { PortfoliosResponse.from(it) }
-            .toList()
-    }
-
-    private fun getPortfoliosByGenerationAndScope(
-        generation: Long,
+    private fun getPortfolios(
+        generation: Long?,
         scope: ProjectScope
     ): List<PortfoliosResponse> {
-        return portfolioRepository.findAllByGenerationAndScope(generation, scope)
-            .map { PortfoliosResponse.from(it) }
-            .toList()
+
+        val list = if (generation == null) {
+            portfolioRepository.findAllByScopeOrderByGenerationDesc(scope)
+        } else {
+            portfolioRepository.findAllByGenerationAndScope(generation, scope)
+        }
+
+        return list.map { PortfoliosResponse.from(it) }
     }
 }
