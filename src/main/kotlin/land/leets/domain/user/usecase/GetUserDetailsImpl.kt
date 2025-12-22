@@ -20,7 +20,7 @@ class GetUserDetailsImpl(
 
     override fun execute(authDetails: AuthDetails): UserDetailsResponse {
         val uid: UUID = authDetails.uid
-        val user: User = userRepository.findById(uid).orElseThrow{ throw UserNotFoundException() }
+        val user: User = userRepository.findByIdOrNull(uid) ?: throw UserNotFoundException()
 
         val application: Application? = applicationRepository.findByUser_Uid(uid)
 
