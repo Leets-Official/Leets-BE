@@ -27,7 +27,7 @@ class User(
     val uid: UUID? = null
 ) : BaseTimeEntity() {
 
-    fun updateUserInfo(sid: String, phone: String) {
+    fun updateUserInfo(sid: String?, phone: String) {
         this.sid = sid
         this.phone = phone
     }
