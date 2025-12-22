@@ -49,9 +49,14 @@ class CreateApplicationImplTest : DescribeSpec({
                 passion = "Passion",
                 submitStatus = SubmitStatus.SAVE
             )
-            val user = mockk<User>(relaxed = true) {
-                every { getUid() } returns uid
-            }
+            val user = User(
+                sid = "20202020",
+                name = "Test",
+                phone = "010-1234-5678",
+                email = "test@test.com",
+                sub = "google-oauth2|123456",
+                id = uid
+            )
 
             it("지원서를 성공적으로 생성한다") {
                 every { userRepository.findById(uid) } returns Optional.of(user)

@@ -27,7 +27,7 @@ class AdminRefreshTokenImplTest : DescribeSpec({
             it("새로운 액세스 토큰이 담긴 JwtResponse를 반환한다") {
                 val claims = mockk<Claims>()
                 every { claims.get("role", String::class.java) } returns role.name
-                every { claims.get("uid", String::class.java) } returns uid.toString()
+                every { claims.get("id", String::class.java) } returns uid.toString()
                 every { claims.subject } returns subject
 
                 every { jwtProvider.validateToken(refreshToken, true) } just runs

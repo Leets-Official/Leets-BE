@@ -15,7 +15,7 @@ class AdminRefreshTokenImpl(
         jwtProvider.validateToken(refreshToken, true)
         val claims = jwtProvider.parseClaims(refreshToken, true)
         val role = claims.get("role", String::class.java)
-        val uuid = UUID.fromString(claims.get("uid", String::class.java))
+        val uuid = UUID.fromString(claims.get("id", String::class.java))
         val newAccessToken = jwtProvider.generateToken(uuid, claims.subject, AuthRole.valueOf(role), false)
         return JwtResponse(newAccessToken, null)
     }

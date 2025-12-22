@@ -31,7 +31,7 @@ class GetAllApplicationImpl(
     private fun mapApplications(applications: List<Application>): List<ApplicationResponse> {
         return applications.map { application ->
             val interview = getInterview.execute(application)
-            val phone = application.user.getPhone()
+            val phone = application.user.phone ?: ""
             ApplicationResponse.of(application, interview, phone)
         }
     }
