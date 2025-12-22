@@ -10,9 +10,7 @@ class CreateContributorImpl(
     private val contributorRepository: ContributorRepository
 ) : CreateContributor {
     override fun execute(request: List<Contributor>, portfolio: Portfolio) {
-        for (contributor in request) {
-            contributor.updatePortfolio(portfolio)
-            contributorRepository.save(contributor)
-        }
+        request.forEach { contribution -> contribution.updatePortfolio(portfolio) }
+        contributorRepository.saveAll(request)
     }
 }
