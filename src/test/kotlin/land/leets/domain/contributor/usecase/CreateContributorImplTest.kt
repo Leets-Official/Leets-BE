@@ -33,19 +33,19 @@ class CreateContributorImplTest : DescribeSpec({
                 profile = null
             )
             val contributors = listOf(contributor1, contributor2)
-            val capturedContributors = mutableListOf<Contributor>()
+            val capturedList = slot<List<Contributor>>()
 
-            every { contributorRepository.save(capture(capturedContributors)) } returnsArgument 0
+            every { contributorRepository.saveAll(capture(capturedList)) } returnsArgument 0
 
             it("각 기여자에게 포트폴리오를 설정하고 저장해야 한다") {
                 createContributor.execute(contributors, portfolio)
 
-                verify(exactly = 2) { contributorRepository.save(any()) }
-                capturedContributors.size shouldBe 2
-                capturedContributors[0].portfolio shouldBe portfolio
-                capturedContributors[0].name shouldBe "이근표"
-                capturedContributors[1].portfolio shouldBe portfolio
-                capturedContributors[1].name shouldBe "조혜원"
+                verify(exactly = 1) { contributorRepository.saveAll(any<List<Contributor>>()) }
+                capturedList.captured.size shouldBe 2
+                capturedList.captured[0].portfolio shouldBe portfolio
+                capturedList.captured[0].name shouldBe "이근표"
+                capturedList.captured[1].portfolio shouldBe portfolio
+                capturedList.captured[1].name shouldBe "조혜원"
             }
         }
 
@@ -55,12 +55,12 @@ class CreateContributorImplTest : DescribeSpec({
             val portfolio = mockk<Portfolio>(relaxed = true)
             val contributors = emptyList<Contributor>()
 
-            every { contributorRepository.save(any()) } returnsArgument 0
+            every { contributorRepository.saveAll(any<List<Contributor>>()) } returnsArgument 0
 
-            it("아무것도 저장하지 않아야 한다") {
+            it("saveAll이 빈 리스트로 한 번 호출되어야 한다") {
                 createContributor.execute(contributors, portfolio)
 
-                verify(exactly = 0) { contributorRepository.save(any()) }
+                verify(exactly = 1) { contributorRepository.saveAll(emptyList()) }
             }
         }
     }
