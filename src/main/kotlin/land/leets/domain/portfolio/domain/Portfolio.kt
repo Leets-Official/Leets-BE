@@ -49,5 +49,5 @@ class Portfolio(
 
     @OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
-    val contributors: MutableList<Contributor> = mutableListOf()
+    val contributors: ArrayList<Contributor> = arrayListOf()
 ) : BaseTimeEntity()
