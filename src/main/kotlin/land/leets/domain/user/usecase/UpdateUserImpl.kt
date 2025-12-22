@@ -14,7 +14,7 @@ class UpdateUserImpl(
 ) : UpdateUser {
 
     override fun execute(uid: UUID, request: ApplicationRequest): User {
-        val user = userRepository.findByIdOrNull(uid) ?: throw UserNotFoundException()
+        val user = userRepository.findById(uid).orElseThrow(){ throw UserNotFoundException()}
         user.updateUserInfo(request.sid, request.phone)
         return userRepository.save(user)
     }
