@@ -2,8 +2,6 @@ server:
   port: ${PORT:8080}
 
 spring:
-  profiles:
-    default: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DATABASE_USERNAME}
