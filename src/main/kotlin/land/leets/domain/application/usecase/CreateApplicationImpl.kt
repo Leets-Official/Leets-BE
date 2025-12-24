@@ -21,7 +21,7 @@ class CreateApplicationImpl(
     override fun execute(authDetails: AuthDetails, request: ApplicationRequest): Application {
         val user: User = userRepository.findById(authDetails.uid).orElseThrow { UserNotFoundException() }
 
-        if (applicationRepository.findByUser_Uid(user.id!!) != null) {
+        if (applicationRepository.findByUser_Id(user.id!!) != null) {
             throw ApplicationAlreadyExistsException()
         }
 

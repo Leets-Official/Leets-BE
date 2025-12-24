@@ -21,7 +21,7 @@ class GetApplicationDetailsImpl(
     }
 
     override fun execute(uid: UUID): Application {
-        return applicationRepository.findByUser_Uid(uid) ?: throw ApplicationNotFoundException()
+        return applicationRepository.findByUser_Id(uid) ?: throw ApplicationNotFoundException()
     }
 
     private fun getDetails(application: Application): ApplicationDetailsResponse {

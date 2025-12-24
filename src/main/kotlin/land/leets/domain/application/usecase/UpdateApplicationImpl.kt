@@ -22,7 +22,7 @@ class UpdateApplicationImpl(
         val uid = authDetails.uid
         updateUser.execute(uid, request)
 
-        val application = applicationRepository.findByUser_Uid(uid) ?: throw ApplicationNotFoundException()
+        val application = applicationRepository.findByUser_Id(uid) ?: throw ApplicationNotFoundException()
 
         if (request.submitStatus == SubmitStatus.SUBMIT) {
             application.updateInfo(LocalDateTime.now())

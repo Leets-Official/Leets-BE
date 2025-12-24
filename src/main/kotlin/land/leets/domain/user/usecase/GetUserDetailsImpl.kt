@@ -22,7 +22,7 @@ class GetUserDetailsImpl(
         val uid: UUID = authDetails.uid
         val user: User = userRepository.findByIdOrNull(uid) ?: throw UserNotFoundException()
 
-        val application: Application? = applicationRepository.findByUser_Uid(uid)
+        val application: Application? = applicationRepository.findByUser_Id(uid)
 
         return UserDetailsResponse.of(user, application?.submitStatus ?: SubmitStatus.NONE)
     }

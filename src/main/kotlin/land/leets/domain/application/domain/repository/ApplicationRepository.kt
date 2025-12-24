@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface ApplicationRepository : JpaRepository<Application, Long> {
-    fun findByUser_Uid(uid: UUID): Application?
+    fun findByUser_Id(id: UUID): Application?
     fun findAllByOrderByAppliedAtDesc(): List<Application>
     fun findAllByPositionOrderByAppliedAtDesc(position: Position): List<Application>
     fun findAllBySubmitStatusOrderByAppliedAtDesc(submitStatus: SubmitStatus): List<Application>

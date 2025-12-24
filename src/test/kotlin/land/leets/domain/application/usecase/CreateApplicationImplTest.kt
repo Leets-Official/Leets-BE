@@ -60,7 +60,7 @@ class CreateApplicationImplTest : DescribeSpec({
 
             it("지원서를 성공적으로 생성한다") {
                 every { userRepository.findById(uid) } returns Optional.of(user)
-                every { applicationRepository.findByUser_Uid(uid) } returns null
+                every { applicationRepository.findByUser_Id(uid) } returns null
                 every { userRepository.save(any()) } returns user
                 every { applicationRepository.save(any()) } returnsArgument 0
 
@@ -75,7 +75,7 @@ class CreateApplicationImplTest : DescribeSpec({
                 val application = mockk<Application>()
 
                 every { userRepository.findById(uid) } returns Optional.of(user)
-                every { applicationRepository.findByUser_Uid(uid) } returns application
+                every { applicationRepository.findByUser_Id(uid) } returns application
 
                 shouldThrow<ApplicationAlreadyExistsException> {
                     createApplication.execute(authDetails, request)
