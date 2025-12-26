@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 @Entity(name = "applications")
 class Application(
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     var user: User,
 
     @Column(nullable = false)
