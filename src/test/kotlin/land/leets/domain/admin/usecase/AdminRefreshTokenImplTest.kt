@@ -4,9 +4,7 @@ import io.jsonwebtoken.Claims
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import land.leets.domain.shared.AuthRole
 import land.leets.global.jwt.JwtProvider
 import java.util.UUID
@@ -30,7 +28,7 @@ class AdminRefreshTokenImplTest : DescribeSpec({
                 every { claims.get("id", String::class.java) } returns uid.toString()
                 every { claims.subject } returns subject
 
-                every { jwtProvider.validateToken(refreshToken, true) } just runs
+                every { jwtProvider.validateToken(refreshToken, true) } returns Result.success(claims)
                 every { jwtProvider.parseClaims(refreshToken, true) } returns claims
                 every { jwtProvider.generateToken(uid, subject, role, false) } returns newAccessToken
 
