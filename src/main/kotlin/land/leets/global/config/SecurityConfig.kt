@@ -88,6 +88,7 @@ class SecurityConfig(
                 authorize(HttpMethod.GET, "/comments/{applicationId}", hasAuthority(AuthRole.ROLE_ADMIN.role))
 
                 // portfolios
+                authorize(HttpMethod.GET, "/portfolios", permitAll)
                 authorize(HttpMethod.GET, "/portfolios/{portfolioId}", permitAll)
 
                 // images
