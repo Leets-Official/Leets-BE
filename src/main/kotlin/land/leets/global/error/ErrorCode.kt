@@ -1,12 +1,10 @@
-package land.leets.global.error;
+package land.leets.global.error
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
-public enum ErrorCode {
-
+enum class ErrorCode(
+    val httpStatus: Int,
+    val code: String,
+    val message: String
+) {
     INVALID_REQUEST_BODY(400, "INVALID_REQUEST_BODY", "올바르지 않은 요청입니다 [%s]"),
     PATCH_REQUEST_FAIL(404, "PATCH_REQUEST_FAIL", "PATCH 요청에 실패했습니다."),
     INTERVIEW_NOT_FOUND(404, "INTERVIEW_NOT_FOUND", "면접 정보를 찾을 수 없습니다."),
@@ -24,8 +22,4 @@ public enum ErrorCode {
     PORTFOLIO_NOT_FOUND(404, "PORTFOLIO_NOT_FOUND", "포트폴리오를 찾을 수 없습니다."),
     MAIL_SEND_FAIL(500, "MAIL_SEND_FAIL", "메일 전송에 실패했습니다"),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다.");
-
-    private final int httpStatus;
-    private final String code;
-    private final String message;
 }
