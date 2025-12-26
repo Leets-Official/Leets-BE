@@ -29,7 +29,7 @@ class SecurityConfig(
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun SecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
 
         http {
             httpBasic { disable() }
@@ -49,6 +49,10 @@ class SecurityConfig(
 
         http {
             authorizeHttpRequests {
+
+                // CORS preflight
+                authorize(HttpMethod.OPTIONS, "/**", permitAll)
+
                 // health check
                 authorize(HttpMethod.GET, "/health-check", permitAll)
 

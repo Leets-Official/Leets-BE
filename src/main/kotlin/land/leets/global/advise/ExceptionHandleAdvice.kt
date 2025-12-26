@@ -34,10 +34,10 @@ class ExceptionHandleAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationExceptions(ex: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
-        val fieldErrors = ex.getBindingResult()
-            .getFieldErrors()
+        val fieldErrors = ex.bindingResult
+            .fieldErrors
             .stream()
-            .map { obj: FieldError? -> obj!!.getField() }
+            .map { obj: FieldError? -> obj!!.field }
             .collect(Collectors.joining(", "))
 
         val customMessage = String.format(ErrorCode.INVALID_REQUEST_BODY.message, fieldErrors)
