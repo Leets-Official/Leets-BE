@@ -49,7 +49,7 @@ class UpdateApplicationImplTest : DescribeSpec({
 
             it("지원서를 성공적으로 수정한다") {
                 every { updateUser.execute(uid, request) } returns mockk()
-                every { applicationRepository.findByUser_Uid(uid) } returns application
+                every { applicationRepository.findByUser_Id(uid) } returns application
                 every { applicationRepository.save(any()) } returnsArgument 0
 
                 updateApplication.execute(authDetails, request)

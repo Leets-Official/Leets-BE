@@ -37,7 +37,7 @@ class GetUserDetailsImplTest : DescribeSpec({
 
             it("유저가 존재하고 지원서가 없으면 NONE 상태로 반환한다") {
                 every { userRepository.findById(uid) } returns Optional.of(user)
-                every { applicationRepository.findByUser_Uid(uid) } returns null
+                every { applicationRepository.findByUser_Id(uid) } returns null
 
                 val response = getUserDetails.execute(authDetails)
 
@@ -51,7 +51,7 @@ class GetUserDetailsImplTest : DescribeSpec({
                     every { submitStatus } returns SubmitStatus.SUBMIT
                 }
                 every { userRepository.findById(uid) } returns Optional.of(user)
-                every { applicationRepository.findByUser_Uid(uid) } returns application
+                every { applicationRepository.findByUser_Id(uid) } returns application
 
                 val response = getUserDetails.execute(authDetails)
 

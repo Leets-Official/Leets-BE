@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: ${GOOGLE_REDIRECT_URL}
+
+cors:
+  origin:
+    development: ${CORS_ORIGIN_DEVELOPMENT}
+
+google:
+  redirect:
+    url: ${GOOGLE_REDIRECT_URL}
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

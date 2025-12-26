@@ -43,3 +43,6 @@ src/test/generated/
 
 ### Agents ###
 .gemini/
+
+### env ###
+.env
