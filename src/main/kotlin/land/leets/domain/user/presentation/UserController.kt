@@ -42,7 +42,7 @@ class UserController(
     fun login(@RequestBody request: LoginRequest): JwtResponse {
         val user = authService.getUser(request.idToken)
 
-        val accessToken = jwtProvider.generateToken(user.id, user.email, AuthRole.ROLE_USER, false)
+        val accessToken = jwtProvider.generateToken(user.id!!, user.email, AuthRole.ROLE_USER, false)
         val refreshToken = jwtProvider.generateToken(user.id, user.email, AuthRole.ROLE_USER, true)
 
         return JwtResponse(accessToken, refreshToken)
