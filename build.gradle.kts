@@ -1,5 +1,4 @@
 plugins {
-    id("java")
     id("org.springframework.boot") version "4.0.0"
     id("io.spring.dependency-management") version "1.1.6"
     id("org.jetbrains.kotlin.jvm") version "2.2.0"
@@ -9,17 +8,6 @@ plugins {
 
 group = "land"
 version = "0.0.1-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
 
 repositories {
     mavenCentral()
@@ -35,9 +23,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
     runtimeOnly("com.mysql:mysql-connector-j")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -52,6 +37,8 @@ dependencies {
 
     implementation("com.google.api-client:google-api-client:2.8.1")
 
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+
     testImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
     testImplementation("com.h2database:h2")
 
@@ -65,20 +52,16 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.generatedSourceOutputDirectory.set(
-        layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main")
-    )
-}
-
 tasks.withType<AbstractTestTask>().configureEach {
     failOnNoDiscoveredTests = false
 }
 
 kotlin {
     compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict")
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        freeCompilerArgs.set(listOf("-Xannotation-default-target=param-property"))
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        freeCompilerArgs.addAll(
+            "-Xjsr305=strict",
+            "-Xannotation-default-target=param-property"
+        )
     }
 }

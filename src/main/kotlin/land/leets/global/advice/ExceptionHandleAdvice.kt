@@ -1,4 +1,4 @@
-package land.leets.global.advise
+package land.leets.global.advice
 
 import land.leets.global.error.ErrorCode
 import land.leets.global.error.ErrorResponse
