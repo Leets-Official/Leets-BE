@@ -1,5 +1,4 @@
 plugins {
-    id("java")
     id("org.springframework.boot") version "4.0.0"
     id("io.spring.dependency-management") version "1.1.6"
     id("org.jetbrains.kotlin.jvm") version "2.2.0"
@@ -9,17 +8,6 @@ plugins {
 
 group = "land"
 version = "0.0.1-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
 
 repositories {
     mavenCentral()
@@ -34,9 +22,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
 
     runtimeOnly("com.mysql:mysql-connector-j")
 
@@ -65,12 +50,6 @@ dependencies {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.generatedSourceOutputDirectory.set(
-        layout.buildDirectory.dir("generated/sources/annotationProcessor/java/main")
-    )
 }
 
 tasks.withType<AbstractTestTask>().configureEach {
