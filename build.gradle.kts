@@ -52,6 +52,8 @@ dependencies {
 
     implementation("com.google.api-client:google-api-client:2.8.1")
 
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+
     testImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
     testImplementation("com.h2database:h2")
 

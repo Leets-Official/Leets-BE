@@ -3,6 +3,7 @@ package land.leets.domain.auth
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.gson.GsonFactory
+import io.github.oshai.kotlinlogging.KotlinLogging
 import land.leets.domain.auth.exception.PermissionDeniedException
 import land.leets.domain.auth.presentation.dto.OAuthTokenDto
 import land.leets.domain.user.domain.User
@@ -13,13 +14,15 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
+private val log = KotlinLogging.logger {}
+
 @Service
 class AuthService(
     @Value("\${google.auth.url}") private val googleAuthUrl: String,
     @Value("\${google.redirect.url}") private val googleRedirectUrl: String,
     @Value("\${spring.security.oauth2.client.registration.google.client-id}") private val googleClientId: String,
     @Value("\${spring.security.oauth2.client.registration.google.client-secret}") private val googleClientPassword: String,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) {
 
     fun getGoogleToken(code: String): User {
@@ -47,11 +50,16 @@ class AuthService(
             .setAudience(listOf(googleClientId))
             .build()
 
-        val googleIdToken = try {
+        val googleIdToken = runCatching {
             verifier.verify(idToken)
-        } catch (e: Exception) {
-            null
-        } ?: throw InvalidTokenException()
+        }.onFailure { e ->
+            log.debug {
+                "${"Google ID 토큰 인증 실패: {}"} ${
+                    e::class.simpleName
+                }"
+            }
+        }.getOrNull() ?: throw InvalidTokenException()
+
 
         val payload = googleIdToken.payload
         val userId = payload.subject
