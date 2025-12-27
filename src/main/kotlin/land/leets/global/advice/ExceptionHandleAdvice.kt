@@ -1,4 +1,4 @@
-package land.leets.global.advise
+package land.leets.global.advice
 
 import land.leets.global.error.ErrorCode
 import land.leets.global.error.ErrorResponse
@@ -15,20 +15,20 @@ import java.util.stream.Collectors
 class ExceptionHandleAdvice {
     @ExceptionHandler(ServiceException::class)
     fun handleServiceException(ex: ServiceException): ResponseEntity<ErrorResponse> {
-        val response = ErrorResponse.from(ex.errorCode)
+        val response = ErrorResponse.Companion.from(ex.errorCode)
         return ResponseEntity.status(ex.httpStatusCode()).body(response)
     }
 
     @ExceptionHandler(MissingRequestCookieException::class)
     fun handleMissingRequestCookieException(ex: MissingRequestCookieException): ResponseEntity<ErrorResponse> {
-        val response = ErrorResponse.from(ErrorCode.COOKIE_NOT_FOUND)
+        val response = ErrorResponse.Companion.from(ErrorCode.COOKIE_NOT_FOUND)
         return ResponseEntity.status(ex.statusCode).body(response)
     }
 
     @ExceptionHandler(Exception::class)
     fun handleException(ex: Exception): ResponseEntity<ErrorResponse> {
         ex.printStackTrace()
-        val response = ErrorResponse.from(ErrorCode.INTERNAL_SERVER_ERROR)
+        val response = ErrorResponse.Companion.from(ErrorCode.INTERNAL_SERVER_ERROR)
         return ResponseEntity.internalServerError().body(response)
     }
 
@@ -40,8 +40,8 @@ class ExceptionHandleAdvice {
             .map { obj: FieldError? -> obj!!.field }
             .collect(Collectors.joining(", "))
 
-        val customMessage = String.format(ErrorCode.INVALID_REQUEST_BODY.message, fieldErrors)
-        val response = ErrorResponse.of(ErrorCode.INVALID_REQUEST_BODY, customMessage)
+        val customMessage = String.Companion.format(ErrorCode.INVALID_REQUEST_BODY.message, fieldErrors)
+        val response = ErrorResponse.Companion.of(ErrorCode.INVALID_REQUEST_BODY, customMessage)
 
         return ResponseEntity.status(ErrorCode.INVALID_REQUEST_BODY.httpStatus).body(response)
     }
