@@ -13,6 +13,7 @@ import land.leets.domain.application.presentation.dto.ApplicationRequest
 import land.leets.domain.application.type.Position
 import land.leets.domain.application.type.SubmitStatus
 import land.leets.domain.auth.AuthDetails
+import land.leets.domain.shared.AuthRole
 import land.leets.domain.user.domain.User
 import land.leets.domain.user.domain.repository.UserRepository
 import java.util.*
@@ -26,9 +27,7 @@ class CreateApplicationImplTest : DescribeSpec({
     describe("CreateApplicationImpl 유스케이스는") {
         context("지원서 생성을 요청할 때") {
             val uid = UUID.randomUUID()
-            val authDetails = mockk<AuthDetails> {
-                every { getUid() } returns uid
-            }
+            val authDetails = AuthDetails(uid, "test@test.com", AuthRole.ROLE_USER)
             val request = ApplicationRequest(
                 name = "Test",
                 sid = "20202020",
