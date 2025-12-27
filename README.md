@@ -1,6 +1,7 @@
 # [Leets](https://leets.land) : 함께 도전하며 우리의 가치를 증명하는 곳
 
 <div align="center">
+<img width="2580" height="1200" alt="Frame 19" src="https://github.com/user-attachments/assets/c33c8c32-b706-4623-a5e3-2fbd3d61de11" />
 
 가천대학교 IT 창업 동아리 **Leets**의 활동과 모집을 위한 랜딩 레포지토리입니다.<br/>
 
