@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre
+FROM amazoncorretto:21
 
 ARG JAR_FILE=./build/libs/leets-0.0.1-SNAPSHOT.jar
 

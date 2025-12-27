@@ -7,9 +7,9 @@ import java.time.LocalDateTime
 data class CommentResponse(
     val content: String,
 
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime?,
 
-    val updatedAt: LocalDateTime,
+    val updatedAt: LocalDateTime?,
 
     val admin: AdminDetailsResponse
 ) {

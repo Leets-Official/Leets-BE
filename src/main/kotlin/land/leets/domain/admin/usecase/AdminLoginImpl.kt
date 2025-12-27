@@ -17,7 +17,7 @@ class AdminLoginImpl(
 ) : AdminLogin {
 
     override fun execute(username: String, password: String): JwtResponse {
-        val admin = adminRepository.findByUsername(username).orElseThrow { AdminNotFoundException() }
+        val admin = adminRepository.findByUsername(username) ?: throw AdminNotFoundException()
 
         if (!passwordEncoder.matches(password, admin.password)) {
             throw PasswordNotMatchException()

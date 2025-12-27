@@ -12,7 +12,6 @@ import land.leets.domain.shared.AuthRole
 import land.leets.domain.shared.exception.PasswordNotMatchException
 import land.leets.global.jwt.JwtProvider
 import org.springframework.security.crypto.password.PasswordEncoder
-import java.util.Optional
 import java.util.UUID
 
 class AdminLoginImplTest : DescribeSpec({
@@ -31,7 +30,7 @@ class AdminLoginImplTest : DescribeSpec({
             val admin = Admin(username, encodedPassword, "name", "email", id)
 
             it("로그인이 성공하면 JwtResponse를 반환한다") {
-                every { adminRepository.findByUsername(username) } returns Optional.of(admin)
+                every { adminRepository.findByUsername(username) } returns admin
                 every { passwordEncoder.matches(password, encodedPassword) } returns true
                 every { jwtProvider.generateToken(id, username, AuthRole.ROLE_ADMIN, false) } returns "accessToken"
                 every { jwtProvider.generateToken(id, username, AuthRole.ROLE_ADMIN, true) } returns "refreshToken"
@@ -43,7 +42,7 @@ class AdminLoginImplTest : DescribeSpec({
             }
 
             it("관리자를 찾을 수 없으면 AdminNotFoundException을 던진다") {
-                every { adminRepository.findByUsername(username) } returns Optional.empty()
+                every { adminRepository.findByUsername(username) } returns null
 
                 shouldThrow<AdminNotFoundException> {
                     adminLogin.execute(username, password)
@@ -51,7 +50,7 @@ class AdminLoginImplTest : DescribeSpec({
             }
 
             it("비밀번호가 일치하지 않으면 PasswordNotMatchException을 던진다") {
-                every { adminRepository.findByUsername(username) } returns Optional.of(admin)
+                every { adminRepository.findByUsername(username) } returns admin
                 every { passwordEncoder.matches(password, encodedPassword) } returns false
 
                 shouldThrow<PasswordNotMatchException> {
