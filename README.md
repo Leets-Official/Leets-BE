@@ -1,53 +1,22 @@
-# [Leets](https://leets.land)
+# [Leets](https://leets.land) : 함께 도전하며 우리의 가치를 증명하는 곳
 
-- 가천대학교 IT 학술 동아리 `Leets`의 활동과 모집을 위한 홈페이지 레포지토리입니다.
-- Elite에서 파생된 단어 Leet은 엘리트의 의미를 담고 있습니다.
-- `Leets`는 여러 엘리트가 모인 공동체입니다.
+<div align="center">
 
-<br>
+가천대학교 IT 창업 동아리 **Leets**의 활동과 모집을 위한 랜딩 레포지토리입니다.<br/>
 
-# 기술스택
-+ 프레임워크 : SpringBoot 3.0.9
-+ 언어 : Java 17
-+ 데이터베이스 : MySQL
-+ 인프라 : AWS EC2
-+ CI/CD: GitHub Actions
+Leets는 가천대학교 내에서 IT 서비스에 관심을 가진 이들의 첫 도전이 되고, 세상을 넓게 바라볼 수 있는 시야를 만들어주는 동아리가 되고자 합니다.
 
 <br>
 
-# Environment
-```
-# Cors 관련 환경변수
-CORS_ORIGIN_DEVELOPMENT=
-CORS_ORIGIN_PRODUCTION=
+<img src="https://img.shields.io/badge/SpringBoot-4.0.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/Kotlin-JDK%2021-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white">
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white">
+<img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white">
 
-# Database 관련 환경변수
-DATABASE_PASSWORD=
-DATABASE_URL=
-DATABASE_USERNAME=
-
-# Oauth2 관련 환경변수
-GOOGLE_AUTH_URL=
-GOOGLE_ID=
-GOOGLE_LOGIN_URL=
-GOOGLE_PASSWORD=
-GOOGLE_REDIRECT_URL=
-
-# Jwt 관련 환경변수
-JWT_ACCESS_SECRET=
-JWT_REFRESH_SECRET=
-
-# 메일 관련 환경변수
-MAIL_HOST=
-MAIL_USERNAME=
-
-# Url 관련 환경변수
-TARGET_URL_DEV=
-TARGET_URL_PROD=
-```
-
-
+</div>
 <br>
 
-# 관련 Repository
-[Leets 공식 홈페이지 프론트엔드](https://github.com/Leets-Official/Leets-FE)
+## 🔗 관련 Repository
+
+- [Leets 공식 홈페이지 프론트엔드](https://github.com/Leets-Official/Leets-FE)
