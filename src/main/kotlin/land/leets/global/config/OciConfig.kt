@@ -4,9 +4,6 @@ import com.oracle.bmc.auth.SimpleAuthenticationDetailsProvider
 import com.oracle.bmc.objectstorage.ObjectStorage
 import com.oracle.bmc.objectstorage.ObjectStorageClient
 import io.github.oshai.kotlinlogging.KotlinLogging
-import land.leets.global.error.ErrorCode
-import land.leets.global.error.exception.OciConfigFailException
-import land.leets.global.error.exception.ServiceException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
