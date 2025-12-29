@@ -61,3 +61,13 @@ target:
 image:
   path: images/
 
+oci:
+  tenant-id: ${OCI_TENANT_ID}
+  user-id: ${OCI_USER_ID}
+  fingerprint: ${OCI_FINGERPRINT}
+  private-key-path: ${OCI_PRIVATE_KEY_PATH}
+  region: ${OCI_REGION}
+  bucket:
+    name: ${OCI_BUCKET_NAME}
+    namespace: ${OCI_BUCKET_NAMESPACE}
+
