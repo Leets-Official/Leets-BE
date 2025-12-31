@@ -17,7 +17,6 @@ import land.leets.domain.auth.AuthDetails
 import land.leets.global.error.ErrorResponse
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @RequestMapping("/application")
