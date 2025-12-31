@@ -99,7 +99,7 @@ class SecurityConfig(
                 authorize(HttpMethod.GET, "/images/{imageName}", permitAll)
 
                 // storages
-                authorize(HttpMethod.POST, "/storages/presigned-url", hasAnyAuthority(AuthRole.ROLE_USER.role))
+                authorize(HttpMethod.POST, "/storages/pre-authenticated-url", hasAnyAuthority(AuthRole.ROLE_USER.role))
 
                 // default
                 authorize(anyRequest, denyAll)

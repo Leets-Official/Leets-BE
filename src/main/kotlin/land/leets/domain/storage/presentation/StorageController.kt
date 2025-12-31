@@ -30,7 +30,7 @@ class StorageController(
         ApiResponse(responseCode = "500", content = [Content(schema = Schema(implementation = ErrorResponse::class))])
     )
     @PostMapping("/pre-authenticated-url")
-    fun getPresignedUrl(
+    fun getPreAuthenticatedUrl(
         @Parameter(description = "버킷에 업로드할 파일 이름 및 경로", example = "profile/{username}.jpg")
         @RequestParam fileName: String
     ): ResponseEntity<PreAuthenticatedUrlResponse> {

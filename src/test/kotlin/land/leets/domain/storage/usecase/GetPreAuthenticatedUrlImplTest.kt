@@ -19,7 +19,7 @@ class GetPreAuthenticatedUrlImplTest : DescribeSpec({
 
     val getPresignedUrl = GetPreAuthenticatedUrlImpl(objectStorage, bucketName, namespaceName)
 
-    describe("GetPresignedUrlImpl") {
+    describe("GetPreAuthenticatedUrl") {
         context("Presigned URL 생성을 요청할 때") {
             val fileName = "test.jpg"
             val accessUri = "/p/some-random-string/b/bucket/o/test.jpg"
