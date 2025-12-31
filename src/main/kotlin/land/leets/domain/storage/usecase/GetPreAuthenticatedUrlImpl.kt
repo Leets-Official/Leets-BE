@@ -39,7 +39,7 @@ class GetPreAuthenticatedUrlImpl(
         val uuid = UUID.randomUUID()
 
         return if ('/' in fileName) {
-            "${fileName.substringBeforeLast('/')}/$uuid${"_"}${fileName.substringAfterLast('/')}"
+            "${fileName.substringBeforeLast('/')}/${uuid}_${fileName.substringAfterLast('/')}"
         } else {
             "${uuid}_$fileName"
         }
