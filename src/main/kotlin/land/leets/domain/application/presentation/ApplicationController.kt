@@ -10,13 +10,13 @@ import land.leets.domain.application.domain.Application
 import land.leets.domain.application.presentation.dto.ApplicationDetailsResponse
 import land.leets.domain.application.presentation.dto.ApplicationRequest
 import land.leets.domain.application.presentation.dto.ApplicationResponse
+import land.leets.domain.application.presentation.dto.ApplicationStatusResponse
 import land.leets.domain.application.presentation.dto.StatusRequest
 import land.leets.domain.application.usecase.*
 import land.leets.domain.auth.AuthDetails
 import land.leets.global.error.ErrorResponse
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @RequestMapping("/application")
@@ -25,7 +25,8 @@ class ApplicationController(
     private val updateApplication: UpdateApplication,
     private val getApplication: GetAllApplication,
     private val getApplicationDetails: GetApplicationDetails,
-    private val updateResult: UpdateResult
+    private val updateResult: UpdateResult,
+    private val getApplicationStatus: GetApplicationStatus,
 ) {
 
     @Operation(summary = "(유저) 지원서 작성", description = "지원서를 작성합니다.")
@@ -115,5 +116,19 @@ class ApplicationController(
     fun get(@AuthenticationPrincipal authDetails: AuthDetails): Application {
         val uid = authDetails.uid
         return getApplicationDetails.execute(uid)
+    }
+
+    @Operation(summary = "(유저) 지원서 상태 불러오기", description = "작성한 지원서 상태를 불러옵니다.")
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ErrorResponse::class))]),
+        ApiResponse(responseCode = "403", content = [Content(schema = Schema(implementation = ErrorResponse::class))]),
+        ApiResponse(responseCode = "404", content = [Content(schema = Schema(implementation = ErrorResponse::class))]),
+        ApiResponse(responseCode = "500", content = [Content(schema = Schema(implementation = ErrorResponse::class))])
+    )
+    @GetMapping("/status")
+    fun getStatus(@AuthenticationPrincipal authDetails: AuthDetails): ApplicationStatusResponse {
+        val uid = authDetails.uid
+        return getApplicationStatus.execute(uid)
     }
 }
