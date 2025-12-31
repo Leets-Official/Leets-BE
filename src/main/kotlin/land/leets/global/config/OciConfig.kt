@@ -3,15 +3,12 @@ package land.leets.global.config
 import com.oracle.bmc.auth.SimpleAuthenticationDetailsProvider
 import com.oracle.bmc.objectstorage.ObjectStorage
 import com.oracle.bmc.objectstorage.ObjectStorageClient
-import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.io.FileInputStream
 import java.io.InputStream
 import java.util.function.Supplier
-
-private val log = KotlinLogging.logger {}
 
 @Configuration
 class OciConfig(
