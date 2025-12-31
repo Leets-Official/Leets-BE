@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.validation.constraints.NotBlank
 import land.leets.domain.storage.presentation.dto.PreAuthenticatedUrlResponse
 import land.leets.domain.storage.usecase.GetPreAuthenticatedUrl
 import land.leets.global.error.ErrorResponse
@@ -31,6 +32,7 @@ class StorageController(
     )
     @PostMapping("/pre-authenticated-url")
     fun getPreAuthenticatedUrl(
+        @NotBlank
         @Parameter(description = "버킷에 업로드할 파일 이름 및 경로", example = "profile/{username}.jpg")
         @RequestParam fileName: String
     ): ResponseEntity<PreAuthenticatedUrlResponse> {
