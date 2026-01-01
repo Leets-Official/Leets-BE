@@ -10,17 +10,15 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
 
+private const val PRESIGNED_URL_EXPIRATION_MINUTES = 15L
+private const val PRESIGNED_REQUEST_NAME_PREFIX = "PAR_Request_"
+
 @Service
 class GetPreAuthenticatedUrlImpl(
     private val objectStorage: ObjectStorage,
     @Value("\${oci.bucket.name}") private val bucketName: String,
     @Value("\${oci.bucket.namespace}") private val bucketNamespace: String,
 ) : GetPreAuthenticatedUrl {
-
-    companion object {
-        private const val PRESIGNED_URL_EXPIRATION_MINUTES = 15L
-        private const val PRESIGNED_REQUEST_NAME_PREFIX = "PAR_Request_"
-    }
 
     override fun execute(fileName: String): PreAuthenticatedUrlResponse {
         val uniqueFileName = generateUniqueFileName(fileName)
