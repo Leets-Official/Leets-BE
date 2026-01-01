@@ -39,6 +39,9 @@ dependencies {
 
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
 
+    implementation("com.oracle.oci.sdk:oci-java-sdk-objectstorage:3.77.2")
+    implementation("com.oracle.oci.sdk:oci-java-sdk-common-httpclient-jersey3:3.77.2")
+
     testImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
     testImplementation("com.h2database:h2")
 
