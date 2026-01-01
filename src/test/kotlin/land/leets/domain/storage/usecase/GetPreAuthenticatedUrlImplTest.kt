@@ -17,7 +17,7 @@ class GetPreAuthenticatedUrlImplTest : DescribeSpec({
     val region = "ap-seoul-1"
     val endpoint = "https://$namespaceName.objectstorage.$region.oci.customer-oci.com"
 
-    val getPresignedUrl = GetPreAuthenticatedUrlImpl(objectStorage, bucketName, namespaceName)
+    val getPreAuthenticatedUrlImpl = GetPreAuthenticatedUrlImpl(objectStorage, bucketName, namespaceName)
 
     describe("GetPreAuthenticatedUrl") {
         context("Presigned URL 생성을 요청할 때") {
@@ -33,7 +33,7 @@ class GetPreAuthenticatedUrlImplTest : DescribeSpec({
             every { objectStorage.endpoint } returns endpoint
 
             it("객체 업로드 권한이 있는 전체 URL을 반환한다") {
-                val result = getPresignedUrl.execute(fileName)
+                val result = getPreAuthenticatedUrlImpl.execute(fileName)
 
                 result.url shouldBe "$endpoint$accessUri"
                 verify { objectStorage.createPreauthenticatedRequest(any()) }
