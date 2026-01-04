@@ -46,3 +46,6 @@ src/test/generated/
 
 ### env ###
 .env
+
+### key ###
+*.pem
