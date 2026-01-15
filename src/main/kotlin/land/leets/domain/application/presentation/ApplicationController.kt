@@ -45,7 +45,7 @@ class ApplicationController(
         return createApplication.execute(authDetails, request)
     }
 
-    @Operation(summary = "(유저) 지원서 수정", description = "지원서를 수정합니다.")
+    @Operation(summary = "(유저) 지원서 수정 (미사용)", description = "지원서를 수정합니다. (미사용)")
     @ApiResponses(
         ApiResponse(responseCode = "200"),
         ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ErrorResponse::class))]),

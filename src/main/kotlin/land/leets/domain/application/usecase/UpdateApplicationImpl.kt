@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
+@Deprecated("임시 저장 테이블 분리에 따른 미사용")
 class UpdateApplicationImpl(
     private val applicationRepository: ApplicationRepository,
     private val updateUser: UpdateUser
