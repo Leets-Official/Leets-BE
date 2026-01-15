@@ -84,7 +84,7 @@ class SecurityConfig(
 
                 // temporary applications
                 authorize(HttpMethod.GET, "/temporary-application", hasAuthority(AuthRole.ROLE_USER.role))
-                authorize(HttpMethod.PATCH, "/temporary-application", hasAuthority(AuthRole.ROLE_USER.role))
+                authorize(HttpMethod.PUT, "/temporary-application", hasAuthority(AuthRole.ROLE_USER.role))
 
                 // interviews
                 authorize(HttpMethod.PATCH, "/interview", hasAuthority(AuthRole.ROLE_USER.role))

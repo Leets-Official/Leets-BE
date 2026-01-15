@@ -43,7 +43,7 @@ class TemporaryApplicationController(
         ApiResponse(responseCode = "404", content = [Content(schema = Schema(implementation = ErrorResponse::class))]),
         ApiResponse(responseCode = "500", content = [Content(schema = Schema(implementation = ErrorResponse::class))])
     )
-    @PatchMapping
+    @PutMapping
     fun save(
         @AuthenticationPrincipal authDetails: AuthDetails,
         @RequestBody request: TemporaryApplicationRequest
