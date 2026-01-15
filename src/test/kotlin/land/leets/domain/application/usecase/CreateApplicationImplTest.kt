@@ -14,6 +14,8 @@ import land.leets.domain.application.type.Position
 import land.leets.domain.application.type.SubmitStatus
 import land.leets.domain.auth.AuthDetails
 import land.leets.domain.shared.AuthRole
+import land.leets.domain.temporaryApplication.domain.TemporaryApplication
+import land.leets.domain.temporaryApplication.domain.repository.TemporaryApplicationRepository
 import land.leets.domain.user.domain.User
 import land.leets.domain.user.domain.repository.UserRepository
 import java.util.*
@@ -21,8 +23,9 @@ import java.util.*
 class CreateApplicationImplTest : DescribeSpec({
 
     val applicationRepository = mockk<ApplicationRepository>()
+    val temporaryApplicationRepository = mockk<TemporaryApplicationRepository>()
     val userRepository = mockk<UserRepository>()
-    val createApplication = CreateApplicationImpl(applicationRepository, userRepository)
+    val createApplication = CreateApplicationImpl(applicationRepository, userRepository, temporaryApplicationRepository)
 
     describe("CreateApplicationImpl 유스케이스는") {
         context("지원서 생성을 요청할 때") {
@@ -62,12 +65,28 @@ class CreateApplicationImplTest : DescribeSpec({
                 every { applicationRepository.findByUser_Id(uid) } returns null
                 every { userRepository.save(any()) } returns user
                 every { applicationRepository.save(any()) } returnsArgument 0
+                every { temporaryApplicationRepository.findByUser_Id(uid) } returns null
 
                 val result = createApplication.execute(authDetails, request)
 
                 result.name shouldBe request.name
                 verify { userRepository.save(user) }
                 verify { applicationRepository.save(any()) }
+            }
+
+            it("임시 저장 지원서가 있으면 삭제한다") {
+                val temporaryApplication = mockk<TemporaryApplication>()
+                every { userRepository.findById(uid) } returns Optional.of(user)
+                every { applicationRepository.findByUser_Id(uid) } returns null
+                every { userRepository.save(any()) } returns user
+                every { applicationRepository.save(any()) } returnsArgument 0
+                every { temporaryApplicationRepository.findByUser_Id(uid) } returns temporaryApplication
+                every { temporaryApplicationRepository.delete(temporaryApplication) } returns Unit
+
+                val result = createApplication.execute(authDetails, request)
+
+                result.name shouldBe request.name
+                verify { temporaryApplicationRepository.delete(temporaryApplication) }
             }
 
             it("이미 지원서가 존재하면 ApplicationAlreadyExistsException을 던진다") {
