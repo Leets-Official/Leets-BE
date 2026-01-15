@@ -6,6 +6,7 @@ import land.leets.domain.application.exception.ApplicationAlreadyExistsException
 import land.leets.domain.application.presentation.dto.ApplicationRequest
 import land.leets.domain.application.type.SubmitStatus
 import land.leets.domain.auth.AuthDetails
+import land.leets.domain.temporaryApplication.domain.repository.TemporaryApplicationRepository
 import land.leets.domain.user.domain.User
 import land.leets.domain.user.domain.repository.UserRepository
 import land.leets.domain.user.exception.UserNotFoundException
@@ -15,7 +16,8 @@ import java.time.LocalDateTime
 @Service
 class CreateApplicationImpl(
     private val applicationRepository: ApplicationRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val temporaryApplicationRepository: TemporaryApplicationRepository
 ) : CreateApplication {
 
     override fun execute(authDetails: AuthDetails, request: ApplicationRequest): Application {
@@ -48,6 +50,12 @@ class CreateApplicationImpl(
             submitStatus = request.submitStatus,
             appliedAt = if (request.submitStatus == SubmitStatus.SUBMIT) LocalDateTime.now() else null
         )
-        return applicationRepository.save(application)
+        val savedApplication = applicationRepository.save(application)
+
+        temporaryApplicationRepository.findByUser_Id(user.id)?.let {
+            temporaryApplicationRepository.delete(it)
+        }
+
+        return savedApplication
     }
 }
