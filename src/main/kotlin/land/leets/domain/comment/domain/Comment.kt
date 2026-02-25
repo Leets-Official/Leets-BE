@@ -9,7 +9,7 @@ class Comment(
     @Column(nullable = false)
     val applicationId: Long,
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     val content: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
