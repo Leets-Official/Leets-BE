@@ -79,6 +79,7 @@ class SecurityConfig(
                 authorize(HttpMethod.POST, "/application", hasAuthority(AuthRole.ROLE_USER.role))
                 authorize(HttpMethod.PATCH, "/application", hasAuthority(AuthRole.ROLE_USER.role))
                 authorize(HttpMethod.GET, "/application/me", hasAuthority(AuthRole.ROLE_USER.role))
+                authorize(HttpMethod.GET, "/application/status", hasAuthority(AuthRole.ROLE_USER.role))
                 authorize(HttpMethod.GET, "/application/{id}", hasAuthority(AuthRole.ROLE_ADMIN.role))
                 authorize(HttpMethod.PATCH, "/application/{id}", hasAuthority(AuthRole.ROLE_ADMIN.role))
 
