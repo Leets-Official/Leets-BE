@@ -89,7 +89,7 @@ class SecurityConfig(
 
                 // interviews
                 authorize(HttpMethod.PATCH, "/interview", hasAuthority(AuthRole.ROLE_USER.role))
-                authorize(HttpMethod.POST, "/interview/{id}", hasAuthority(AuthRole.ROLE_ADMIN.role))
+                authorize(HttpMethod.POST, "/interview", hasAuthority(AuthRole.ROLE_ADMIN.role))
                 authorize(HttpMethod.PATCH, "/interview/{id}", hasAuthority(AuthRole.ROLE_ADMIN.role))
 
                 // comments
