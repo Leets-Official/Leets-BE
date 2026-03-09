@@ -18,6 +18,13 @@ class CreateInterviewImpl(
         val application = applicationRepository.findById(request.applicationId)
             .orElseThrow { ApplicationNotFoundException() }
 
+        val existingInterview = interviewRepository.findByApplication(application)
+        if (existingInterview != null) {
+            existingInterview.fixedInterviewDate = request.fixedInterviewDate
+            existingInterview.place = request.place
+            return interviewRepository.save(existingInterview)
+        }
+
         val interview = Interview(
             application = application,
             fixedInterviewDate = request.fixedInterviewDate,

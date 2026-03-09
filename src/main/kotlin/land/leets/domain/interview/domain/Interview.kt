@@ -9,6 +9,7 @@ import java.time.LocalDateTime
 @Entity(name = "interviews")
 class Interview(
     @OneToOne
+    @JoinColumn(name = "application_id", foreignKey = ForeignKey(ConstraintMode.NO_CONSTRAINT))
     val application: Application,
 
     @Column(columnDefinition = "char(10)")
