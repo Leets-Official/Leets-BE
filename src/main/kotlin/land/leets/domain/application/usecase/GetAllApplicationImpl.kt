@@ -32,7 +32,8 @@ class GetAllApplicationImpl(
         return applications.map { application ->
             val interview = getInterview.execute(application)
             val phone = application.user.phone ?: ""
-            ApplicationResponse.of(application, interview, phone)
+            val email = application.user.email
+            ApplicationResponse.of(application, interview, phone, email)
         }
     }
 }

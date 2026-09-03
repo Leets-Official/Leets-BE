@@ -27,6 +27,7 @@ class GetApplicationDetailsImpl(
     private fun getDetails(application: Application): ApplicationDetailsResponse {
         val interview = getInterviewDetails.execute(application)
         val phone = application.user.phone ?: ""
-        return ApplicationDetailsResponse.of(application, interview, phone)
+        val email = application.user.email
+        return ApplicationDetailsResponse.of(application, interview, phone, email)
     }
 }

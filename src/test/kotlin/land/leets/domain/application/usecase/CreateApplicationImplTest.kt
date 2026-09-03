@@ -61,7 +61,7 @@ class CreateApplicationImplTest : DescribeSpec({
             )
 
             it("지원서를 성공적으로 생성한다") {
-                every { userRepository.findById(uid) } returns Optional.of(user)
+                every { userRepository.findByIdForUpdate(uid) } returns user
                 every { applicationRepository.findByUser_Id(uid) } returns null
                 every { userRepository.save(any()) } returns user
                 every { applicationRepository.save(any()) } returnsArgument 0
@@ -76,7 +76,7 @@ class CreateApplicationImplTest : DescribeSpec({
 
             it("임시 저장 지원서가 있으면 삭제한다") {
                 val temporaryApplication = mockk<TemporaryApplication>()
-                every { userRepository.findById(uid) } returns Optional.of(user)
+                every { userRepository.findByIdForUpdate(uid) } returns user
                 every { applicationRepository.findByUser_Id(uid) } returns null
                 every { userRepository.save(any()) } returns user
                 every { applicationRepository.save(any()) } returnsArgument 0
@@ -92,7 +92,7 @@ class CreateApplicationImplTest : DescribeSpec({
             it("이미 지원서가 존재하면 ApplicationAlreadyExistsException을 던진다") {
                 val application = mockk<Application>()
 
-                every { userRepository.findById(uid) } returns Optional.of(user)
+                every { userRepository.findByIdForUpdate(uid) } returns user
                 every { applicationRepository.findByUser_Id(uid) } returns application
 
                 shouldThrow<ApplicationAlreadyExistsException> {

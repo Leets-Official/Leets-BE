@@ -13,6 +13,7 @@ import land.leets.domain.temporaryApplication.usecase.SaveTemporaryApplication
 import land.leets.global.error.ErrorResponse
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
+import jakarta.validation.Valid
 
 @RestController
 @RequestMapping("/temporary-application")
@@ -46,7 +47,7 @@ class TemporaryApplicationController(
     @PutMapping
     fun save(
         @AuthenticationPrincipal authDetails: AuthDetails,
-        @RequestBody request: TemporaryApplicationRequest
+        @Valid @RequestBody request: TemporaryApplicationRequest
     ): TemporaryApplicationResponse =
         saveTemporaryApplication.execute(authDetails, request)
 }

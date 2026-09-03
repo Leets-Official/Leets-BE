@@ -40,7 +40,7 @@ class ApplicationController(
     @PostMapping
     fun create(
         @AuthenticationPrincipal authDetails: AuthDetails,
-        @RequestBody request: ApplicationRequest
+        @Valid @RequestBody request: ApplicationRequest
     ): Application {
         return createApplication.execute(authDetails, request)
     }
@@ -56,7 +56,7 @@ class ApplicationController(
     @PatchMapping
     fun update(
         @AuthenticationPrincipal authDetails: AuthDetails,
-        @RequestBody request: ApplicationRequest
+        @Valid @RequestBody request: ApplicationRequest
     ): Application {
         return updateApplication.execute(authDetails, request)
     }

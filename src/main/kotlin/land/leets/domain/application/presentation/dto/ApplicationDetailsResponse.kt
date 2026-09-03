@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 data class ApplicationDetailsResponse(
     val id: Long,
     val phone: String,
+    val email: String,
     val name: String,
     val major: String,
     val grade: String,
@@ -35,11 +36,13 @@ data class ApplicationDetailsResponse(
         fun of(
             application: Application,
             interview: InterviewDetailsResponse?,
-            phone: String
+            phone: String,
+            email: String
         ): ApplicationDetailsResponse {
             return ApplicationDetailsResponse(
                 id = application.id!!,
                 phone = phone,
+                email = email,
                 name = application.name,
                 major = application.major,
                 grade = application.grade,
