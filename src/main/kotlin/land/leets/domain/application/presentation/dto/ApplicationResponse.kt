@@ -13,10 +13,11 @@ data class ApplicationResponse(
     val career: String?,
     val applicationStatus: ApplicationStatus,
     val phone: String,
+    val email: String,
     val interview: InterviewResponse?
 ) {
     companion object {
-        fun of(application: Application, interview: InterviewResponse?, phone: String): ApplicationResponse {
+        fun of(application: Application, interview: InterviewResponse?, phone: String, email: String): ApplicationResponse {
             return ApplicationResponse(
                 id = application.id!!,
                 name = application.name,
@@ -25,6 +26,7 @@ data class ApplicationResponse(
                 career = application.career,
                 applicationStatus = application.applicationStatus,
                 phone = phone,
+                email = email,
                 interview = interview
             )
         }
