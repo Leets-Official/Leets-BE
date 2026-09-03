@@ -60,8 +60,11 @@ tasks.withType<AbstractTestTask>().configureEach {
 }
 
 kotlin {
+    // Java / Kotlin 컴파일 타깃을 함께 21 로 고정한다.
+    // (CI 는 JDK 21 로 동작한다: .github/workflows/*.yml)
+    jvmToolchain(21)
+
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         freeCompilerArgs.addAll(
             "-Xjsr305=strict",
             "-Xannotation-default-target=param-property"
