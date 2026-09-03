@@ -35,12 +35,14 @@ class CreateInterviewTest : DescribeSpec({
 
             it("면접을 성공적으로 생성한다") {
                 every { applicationRepository.findById(1L) } returns Optional.of(application)
+                every { interviewRepository.findByApplication(application) } returns null
                 every { interviewRepository.save(any()) } returns interview
 
                 val result = createInterview.execute(request)
 
                 result shouldBe interview
                 verify { applicationRepository.findById(1L) }
+                verify { interviewRepository.findByApplication(application) }
                 verify { interviewRepository.save(any()) }
             }
         }
