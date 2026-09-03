@@ -2,6 +2,7 @@ package land.leets.global.advice
 
 import land.leets.global.error.ErrorCode
 import land.leets.global.error.ErrorResponse
+import land.leets.global.error.exception.InvalidRequestBodyException
 import land.leets.global.error.exception.ServiceException
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.FieldError
@@ -16,6 +17,13 @@ class ExceptionHandleAdvice {
     @ExceptionHandler(ServiceException::class)
     fun handleServiceException(ex: ServiceException): ResponseEntity<ErrorResponse> {
         val response = ErrorResponse.from(ex.errorCode)
+        return ResponseEntity.status(ex.httpStatusCode()).body(response)
+    }
+
+    @ExceptionHandler(InvalidRequestBodyException::class)
+    fun handleInvalidRequestBodyException(ex: InvalidRequestBodyException): ResponseEntity<ErrorResponse> {
+        val customMessage = String.format(ErrorCode.INVALID_REQUEST_BODY.message, ex.field)
+        val response = ErrorResponse.of(ErrorCode.INVALID_REQUEST_BODY, customMessage)
         return ResponseEntity.status(ex.httpStatusCode()).body(response)
     }
 

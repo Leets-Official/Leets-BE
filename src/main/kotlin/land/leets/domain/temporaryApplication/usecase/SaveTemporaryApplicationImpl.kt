@@ -22,10 +22,9 @@ class SaveTemporaryApplicationImpl(
             ?.also { it.updateContent(request) }
             ?: TemporaryApplication.of(user, request)
 
-        request.phone?.let { phone ->
-            user.updateUserInfo(request.sid, phone)
-            userRepository.save(user)
-        }
+        // updateUserInfo 는 값이 들어온 항목만 갱신하므로 빈 값으로 기존 정보가 지워지지 않는다.
+        user.updateUserInfo(request.sid, request.phone)
+        userRepository.save(user)
 
         return TemporaryApplicationResponse.from(
             temporaryApplicationRepository.save(temporaryApplication)

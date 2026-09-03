@@ -1,5 +1,6 @@
 package land.leets.domain.temporaryApplication.presentation.dto
 
+import jakarta.validation.constraints.NotNull
 import land.leets.domain.application.type.Position
 
 data class TemporaryApplicationRequest(
@@ -11,6 +12,7 @@ data class TemporaryApplicationRequest(
     val project: String?,
     val algorithm: String?,
     val portfolio: String?,
+    @field:NotNull(message = "지원 포지션은 필수입니다.")
     val position: Position,
     val career: String?,
     val interviewDay: String?,
