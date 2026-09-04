@@ -10,6 +10,7 @@ import land.leets.domain.application.domain.Application
 import land.leets.domain.application.presentation.dto.ApplicationDetailsResponse
 import land.leets.domain.application.presentation.dto.ApplicationRequest
 import land.leets.domain.application.presentation.dto.ApplicationResponse
+import land.leets.domain.application.presentation.dto.MyApplicationResponse
 import land.leets.domain.application.presentation.dto.ApplicationStatusResponse
 import land.leets.domain.application.presentation.dto.StatusRequest
 import land.leets.domain.application.usecase.*
@@ -113,7 +114,7 @@ class ApplicationController(
         ApiResponse(responseCode = "500", content = [Content(schema = Schema(implementation = ErrorResponse::class))])
     )
     @GetMapping("/me")
-    fun get(@AuthenticationPrincipal authDetails: AuthDetails): Application {
+    fun get(@AuthenticationPrincipal authDetails: AuthDetails): MyApplicationResponse {
         val uid = authDetails.uid
         return getApplicationDetails.execute(uid)
     }
