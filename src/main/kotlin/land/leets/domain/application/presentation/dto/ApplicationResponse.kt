@@ -2,6 +2,8 @@ package land.leets.domain.application.presentation.dto
 
 import land.leets.domain.application.domain.Application
 import land.leets.domain.application.type.ApplicationStatus
+import land.leets.domain.application.type.Round
+import java.time.LocalDateTime
 import land.leets.domain.application.type.Position
 import land.leets.domain.interview.presentation.dto.res.InterviewResponse
 
@@ -14,10 +16,18 @@ data class ApplicationResponse(
     val applicationStatus: ApplicationStatus,
     val phone: String,
     val email: String,
+    val round: Round,
+    val appliedAt: LocalDateTime?,
     val interview: InterviewResponse?
 ) {
     companion object {
-        fun of(application: Application, interview: InterviewResponse?, phone: String, email: String): ApplicationResponse {
+        fun of(
+            application: Application,
+            interview: InterviewResponse?,
+            phone: String,
+            email: String,
+            round: Round
+        ): ApplicationResponse {
             return ApplicationResponse(
                 id = application.id!!,
                 name = application.name,
@@ -27,6 +37,8 @@ data class ApplicationResponse(
                 applicationStatus = application.applicationStatus,
                 phone = phone,
                 email = email,
+                round = round,
+                appliedAt = application.appliedAt,
                 interview = interview
             )
         }
