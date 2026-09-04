@@ -2,6 +2,7 @@ package land.leets.domain.application.presentation.dto
 
 import land.leets.domain.application.domain.Application
 import land.leets.domain.application.type.ApplicationStatus
+import land.leets.domain.application.type.Round
 import land.leets.domain.application.type.Position
 import land.leets.domain.application.type.SubmitStatus
 import land.leets.domain.interview.presentation.dto.res.InterviewDetailsResponse
@@ -11,6 +12,7 @@ data class ApplicationDetailsResponse(
     val id: Long,
     val phone: String,
     val email: String,
+    val round: Round,
     val name: String,
     val major: String,
     val grade: String,
@@ -37,12 +39,14 @@ data class ApplicationDetailsResponse(
             application: Application,
             interview: InterviewDetailsResponse?,
             phone: String,
-            email: String
+            email: String,
+            round: Round
         ): ApplicationDetailsResponse {
             return ApplicationDetailsResponse(
                 id = application.id!!,
                 phone = phone,
                 email = email,
+                round = round,
                 name = application.name,
                 major = application.major,
                 grade = application.grade,
