@@ -8,7 +8,9 @@ import io.mockk.mockk
 import land.leets.domain.application.domain.Application
 import land.leets.domain.application.domain.repository.ApplicationRepository
 import land.leets.domain.application.exception.ApplicationNotFoundException
+import land.leets.domain.application.service.RecruitSchedule
 import land.leets.domain.application.type.ApplicationStatus
+import land.leets.domain.application.type.Round
 import land.leets.domain.interview.domain.Interview
 import land.leets.domain.interview.domain.repository.InterviewRepository
 import land.leets.domain.interview.type.HasInterview
@@ -19,7 +21,9 @@ class GetApplicationStatusImplTest : DescribeSpec({
 
     val applicationRepository = mockk<ApplicationRepository>()
     val interviewRepository = mockk<InterviewRepository>()
-    val getApplicationStatus = GetApplicationStatusImpl(applicationRepository, interviewRepository)
+    // 마스킹 판정은 RecruitScheduleTest 에서 따로 검증한다. 여기서는 시각에 흔들리지 않도록 고정한다.
+    val recruitSchedule = mockk<RecruitSchedule>()
+    val getApplicationStatus = GetApplicationStatusImpl(applicationRepository, interviewRepository, recruitSchedule)
 
     val uid = UUID.randomUUID()
 
@@ -32,6 +36,9 @@ class GetApplicationStatusImplTest : DescribeSpec({
     ): Application = mockk<Application>().also { application ->
         every { application.id } returns applicationId
         every { application.applicationStatus } returns status
+        every { application.appliedAt } returns LocalDateTime.of(2026, 9, 3, 12, 0)
+        every { recruitSchedule.roundOf(any()) } returns Round.REGULAR
+        every { recruitSchedule.visibleStatus(status, any(), any()) } returns status
     }
 
     fun mockInterview(
