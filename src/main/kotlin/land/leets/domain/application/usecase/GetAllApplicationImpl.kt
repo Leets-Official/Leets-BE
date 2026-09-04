@@ -3,6 +3,7 @@ package land.leets.domain.application.usecase
 import land.leets.domain.application.domain.Application
 import land.leets.domain.application.domain.repository.ApplicationRepository
 import land.leets.domain.application.presentation.dto.ApplicationResponse
+import land.leets.domain.application.service.RecruitSchedule
 import land.leets.domain.application.type.Position
 import land.leets.domain.application.type.SubmitStatus
 import land.leets.domain.interview.usecase.GetInterview
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service
 @Service
 class GetAllApplicationImpl(
     private val applicationRepository: ApplicationRepository,
-    private val getInterview: GetInterview
+    private val getInterview: GetInterview,
+    private val recruitSchedule: RecruitSchedule
 ) : GetAllApplication {
 
     override fun execute(): List<ApplicationResponse> {
@@ -33,7 +35,8 @@ class GetAllApplicationImpl(
             val interview = getInterview.execute(application)
             val phone = application.user.phone ?: ""
             val email = application.user.email
-            ApplicationResponse.of(application, interview, phone, email)
+            val round = recruitSchedule.roundOf(application.appliedAt)
+            ApplicationResponse.of(application, interview, phone, email, round)
         }
     }
 }

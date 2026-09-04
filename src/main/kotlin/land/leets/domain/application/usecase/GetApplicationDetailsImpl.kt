@@ -35,6 +35,7 @@ class GetApplicationDetailsImpl(
         val interview = getInterviewDetails.execute(application)
         val phone = application.user.phone ?: ""
         val email = application.user.email
-        return ApplicationDetailsResponse.of(application, interview, phone, email)
+        val round = recruitSchedule.roundOf(application.appliedAt)
+        return ApplicationDetailsResponse.of(application, interview, phone, email, round)
     }
 }
